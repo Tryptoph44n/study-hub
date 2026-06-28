@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>学 Study Hub — Edward</title>
+  <link rel="stylesheet" href="/shared/css/style.css">
+  <style>
+    .hub-hero { position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-strong); margin-bottom: 24px; }
+    .app-card { transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+    .app-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .app-card:active { transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <main class="main-content container" style="padding-top:24px">
+    <div id="hub"></div>
+  </main>
+
+  <script>
+    const icons = {
+      cal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+      note: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+      arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+      moon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>`,
+      sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>`,
+    };
+
+    let dark = JSON.parse(localStorage.getItem('hub_dark') ?? (window.matchMedia('(prefers-color-scheme: dark)').matches));
+
+    function applyTheme() { document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light'); }
+    function toggleDark() { dark = !dark; localStorage.setItem('hub_dark', JSON.stringify(dark)); applyTheme(); render(); }
+
+    // Pull progress counts from each app's localStorage
+    function jpStats() {
+      try { const d = JSON.parse(localStorage.getItem('jp_study_v1') || '{}'); const done = Object.values(d.progress || {}).filter(p => p.completed).length; return { done, streak: d.streak?.count || 0 }; }
+      catch { return { done: 0, streak: 0 }; }
+    }
+    function polyStats() {
+      try { const d = JSON.parse(localStorage.getItem('polymer_study_v1') || '{}'); const read = Object.values(d.progress || {}).filter(p => p.read).length; return { read }; }
+      catch { return { read: 0 }; }
+    }
+
+    function render() {
+      const hour = new Date().getHours();
+      const greet = hour < 11 ? 'おはよう' : hour < 18 ? 'こんにちは' : 'こんばんは';
+      const jp = jpStats(), poly = polyStats();
+
+      document.getElementById('hub').innerHTML = `
+        <div class="flex justify-between items-center mb-4">
+          <div class="nav-logo jp" style="font-size:1.3rem">学 Study Hub</div>
+          <button class="btn btn-ghost btn-sm" onclick="toggleDark()">${dark ? icons.sun : icons.moon}</button>
+        </div>
+
+        <div class="hub-hero">
+          <svg viewBox="0 0 700 200" preserveAspectRatio="xMidYMid slice" style="width:100%;height:150px;display:block">
+            <defs>
+              <linearGradient id="p" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--surface)"/><stop offset="100%" stop-color="var(--surface2)"/></linearGradient>
+              <radialGradient id="b" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="var(--ink)" stop-opacity="0.14"/><stop offset="100%" stop-color="var(--ink)" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="700" height="200" fill="url(#p)"/>
+            <ellipse cx="150" cy="70" rx="200" ry="80" fill="url(#b)"/>
+            <ellipse cx="560" cy="50" rx="160" ry="60" fill="url(#b)"/>
+            <path d="M80 -20 Q105 90 70 220" stroke="var(--ink)" stroke-width="18" fill="none" opacity="0.88" stroke-linecap="round"/>
+            <path d="M125 -20 Q140 100 105 220" stroke="var(--ink)" stroke-width="11" fill="none" opacity="0.7" stroke-linecap="round"/>
+            <g stroke="var(--accent-bright)" stroke-width="4" stroke-linecap="round"><line x1="98" y1="52" x2="106" y2="66"/><line x1="110" y1="48" x2="118" y2="62"/><line x1="122" y1="52" x2="130" y2="66"/></g>
+            <path d="M640 20 Q420 70 250 100" stroke="var(--ink-soft)" stroke-width="2" fill="none" opacity="0.35"/>
+            <text x="640" y="80" font-family="var(--font-jp)" font-size="52" fill="var(--ink)" opacity="0.9" text-anchor="middle">学</text>
+            <text x="640" y="125" font-family="var(--font-jp)" font-size="20" fill="var(--text-muted)" text-anchor="middle">学び舎</text>
+          </svg>
+        </div>
+
+        <h1 class="jp animate-ink mb-1">${greet}、エドワード</h1>
+        <p class="text-muted text-sm mb-6">Choose your path for today. 今日も一歩ずつ。</p>
+
+        <div class="flex flex-col gap-4 mb-6">
+          <a class="card card-lg app-card" href="/apps/japanese/index.html" style="border-left:4px solid var(--ink)">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="text-xs text-muted display mb-1">言語 · Language</div>
+                <h2 class="jp">日本語</h2>
+                <p class="text-sm text-muted mt-1">N3 conversation — lab, daily life, university.</p>
+                <div class="flex gap-2 mt-3">
+                  <span class="badge badge-success">${jp.done} scenarios done</span>
+                  ${jp.streak ? `<span class="badge badge-warning">🔥 ${jp.streak} day streak</span>` : ''}
+                </div>
+              </div>
+              <span style="color:var(--ink)">${icons.arrow}</span>
+            </div>
+          </a>
+
+          <a class="card card-lg app-card" href="/apps/polymer/index.html" style="border-left:4px solid var(--accent)">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="text-xs text-muted display mb-1">研究 · Research</div>
+                <h2 class="jp">高分子化学</h2>
+                <p class="text-sm text-muted mt-1">Polymer Chemistry — foundations to battery materials.</p>
+                <div class="flex gap-2 mt-3">
+                  <span class="badge badge-accent">${poly.read} concepts read</span>
+                </div>
+              </div>
+              <span style="color:var(--accent)">${icons.arrow}</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="ink-divider"></div>
+
+        <h3 class="mb-3">Connected</h3>
+        <div class="grid-2 mb-6">
+          <div class="card card-sm flex items-center gap-3">
+            <span style="color:var(--seal)">${icons.cal}</span>
+            <div>
+              <div class="text-sm font-medium">Google Calendar</div>
+              <div class="text-xs text-muted" id="cal-status">Study reminders</div>
+            </div>
+          </div>
+          <div class="card card-sm flex items-center gap-3">
+            <span style="color:var(--seal)">${icons.note}</span>
+            <div>
+              <div class="text-sm font-medium">Notion</div>
+              <div class="text-xs text-muted" id="notion-status">Notes & review</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-center text-xs text-faint jp mb-4">千里の道も一歩から — A journey of a thousand miles begins with a single step.</p>
+      `;
+    }
+
+    applyTheme();
+    render();
+  </script>
+</body>
+</html>

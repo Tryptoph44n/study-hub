@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>日本語 Study — Edward</title>
+  <link rel="stylesheet" href="../../shared/css/style.css">
+  <style>
+    /* Extra styles specific to Japanese app */
+    .dialogue-bubble { transition: all 0.2s; }
+    .dialogue-bubble:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    input[type="text"] {
+      font-family: var(--font-jp);
+      color: var(--text);
+      background: var(--surface);
+    }
+    input[type="text"]:focus {
+      box-shadow: 0 0 0 3px rgba(91,79,207,0.2);
+    }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

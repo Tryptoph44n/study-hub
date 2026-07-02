@@ -61,6 +61,38 @@ const POLYMER_CONTENT = {
       icon: '🔋',
       desc: 'Polymer electrolytes, binders, separators — your research frontier.',
     },
+    {
+      id: 'batt-fundamentals',
+      order: 8,
+      title: 'Battery Fundamentals & Safety',
+      titleJp: '電池の基礎と安全',
+      icon: '🪫',
+      desc: 'How a Li-ion cell works — intercalation, SEI, and what makes it fail.',
+    },
+    {
+      id: 'cathodes',
+      order: 9,
+      title: 'Cathode Materials',
+      titleJp: '正極材料',
+      icon: '🧱',
+      desc: 'LCO, LMO, LFP, NMC — chemistries, the low-cobalt shift, and degradation.',
+    },
+    {
+      id: 'batt-electrolytes',
+      order: 10,
+      title: 'Polymer Electrolytes for Batteries',
+      titleJp: '高分子電解質',
+      icon: '💧',
+      desc: 'From flammable liquids to SPE & GPE — PEO, ion hopping, synthesis.',
+    },
+    {
+      id: 'batt-advanced',
+      order: 11,
+      title: 'Advanced Innovations',
+      titleJp: '先端技術',
+      icon: '🔬',
+      desc: 'INPC composites with LLZO fillers, and how lithium salts tune performance.',
+    },
   ],
 
   concepts: [
@@ -405,6 +437,390 @@ Key metrics: ionic conductivity σ (target >10⁻³ S/cm at RT), Li⁺ transfere
         { q: 'What safety function can a polymer separator provide during overheating?', a: 'Thermal shutdown: as temperature approaches the polymer melting point, the pores close, shutting off ion transport and stopping the electrochemical reaction before thermal runaway.' },
       ],
       professorMode: `Show breadth — that batteries are a polymer-systems problem: "Polymers appear three times in a cell: electrolyte, binder, and separator. A binder must stay adhesive and electrochemically stable through volume changes — which is why Si anodes break PVDF and motivate self-healing or covalent binders. Separators add a safety layer via thermal shutdown. Each is a structure–property problem I can reason about from IMFs, cross-linking, and thermal transitions." This signals you see the whole device, not just one material.`,
+    },
+
+    // ═══ MODULE 8 — BATTERY FUNDAMENTALS & SAFETY ═══════════════════════════
+    {
+      id: 'how-liion-works',
+      module: 'batt-fundamentals',
+      level: 1,
+      title: 'How a Lithium-Ion Battery Works',
+      titleJp: 'リチウムイオン電池の仕組み',
+      intro: `A lithium-ion battery stores energy by shuttling Li⁺ ions back and forth between two electrodes. Because the ions just "rock" from one side to the other and back during charge/discharge, it's nicknamed the **"rocking chair" model**. Nothing is consumed — the same lithium moves home and away, over and over.`,
+      principle: `Three core components:
+- **Cathode (positive electrode)**: a lithium-containing transition-metal compound (e.g. LiCoO₂). Source of Li⁺ when the cell is made.
+- **Anode (negative electrode)**: usually graphite, which hosts Li⁺ between its layers.
+- **Electrolyte**: an ion conductor (liquid salt solution or polymer) that lets Li⁺ pass but blocks electrons, forcing electrons through the external circuit to do work.
+
+**Intercalation** is the key process: Li⁺ ions insert into (and de-insert from) the layered host structures *without destroying* them.`,
+      deepDive: `Charge vs discharge:
+- **Charging**: Li⁺ leaves the cathode, travels through the electrolyte, and intercalates into the graphite anode. Electrons flow the opposite way through the charger.
+- **Discharging**: the reverse — Li⁺ returns to the cathode, pushing electrons through your device.
+
+The "rocking chair" name captures that the host lattices are preserved; only guests (Li⁺) move. This reversibility is *why* Li-ion is rechargeable hundreds of times. The voltage of the cell is set by the energy difference of Li in the cathode vs the anode.`,
+      equations: [
+        { label: 'Cathode (discharge, LCO example)', expr: 'Li₁₋ₓCoO₂ + xLi⁺ + xe⁻ → LiCoO₂' },
+        { label: 'Anode (discharge)', expr: 'LiₓC₆ → C₆ + xLi⁺ + xe⁻' },
+      ],
+      flashcards: [
+        { front: 'Intercalation', back: 'Reversible insertion of Li⁺ ions into a host lattice (e.g. graphite layers, layered oxides) without destroying its structure.' },
+        { front: '"Rocking chair" model', back: 'Li⁺ ions shuttle back and forth between cathode and anode during charge/discharge; the host lattices are preserved.' },
+        { front: 'Role of the electrolyte', back: 'Conducts Li⁺ ions between electrodes while blocking electrons, forcing electrons through the external circuit.' },
+        { front: 'What moves during charging?', back: 'Li⁺ moves from cathode → anode (graphite) internally; electrons flow the same direction externally via the charger.' },
+      ],
+      mcq: [
+        { q: 'In the "rocking chair" model, what is actually moving back and forth?', options: ['The electrode materials', 'Li⁺ ions between the two electrodes', 'Electrons through the electrolyte', 'The separator membrane'], answer: 1, explain: 'Only Li⁺ ions shuttle between cathode and anode; the host lattices stay intact.' },
+        { q: 'During discharge, lithium ions move…', options: ['from anode to cathode', 'from cathode to anode', 'they stay still', 'out of the cell entirely'], answer: 0, explain: 'On discharge, Li⁺ returns from the graphite anode to the cathode, driving electrons through your device.' },
+        { q: 'Why must the electrolyte block electrons?', options: ['To prevent overheating', 'To force electrons through the external circuit to do useful work', 'To stop lithium from moving', 'To keep the cell dry'], answer: 1, explain: 'If electrons could cross internally, the cell would short and do no useful work.' },
+      ],
+      examQA: [
+        { q: 'Explain the "rocking chair" model of a lithium-ion battery.', a: 'Li⁺ ions shuttle reversibly between the cathode and anode during charge and discharge, intercalating into each host lattice without destroying it. The lattices act as fixed "chairs" while the lithium "rocks" between them, enabling rechargeability.' },
+        { q: 'What is intercalation and why is it important for rechargeability?', a: 'Intercalation is the reversible insertion of Li⁺ into a host structure (graphite, layered oxide) without structural breakdown. Because the host is preserved, the process can repeat for hundreds of cycles, which is what makes the battery rechargeable.' },
+      ],
+      professorMode: `Anchor on reversibility: "A Li-ion cell is a rocking-chair device — Li⁺ intercalates reversibly between a layered cathode and a graphite anode, while the electrolyte conducts ions but forces electrons through the external circuit. The host lattices are preserved on cycling, which is precisely what enables hundreds of recharge cycles." Then you can pivot to your interest: the electrolyte is where polymer chemistry enters.`,
+    },
+    {
+      id: 'sei-layer',
+      module: 'batt-fundamentals',
+      level: 2,
+      title: 'The Solid Electrolyte Interphase (SEI)',
+      titleJp: 'SEI被膜',
+      intro: `The SEI is a thin passivating film that forms on the anode surface during the first few charge cycles, when the electrolyte reacts with the highly reducing lithiated graphite. It's a paradox: it *consumes* some lithium and electrolyte (a permanent capacity loss), yet a good SEI is *essential* — it protects the electrolyte from continuous decomposition.`,
+      principle: `Because graphite operates at a potential where the organic electrolyte is thermodynamically unstable, the electrolyte reduces on first charge, depositing a layer of decomposition products (Li₂CO₃, LiF, organic lithium salts). Once formed, a good SEI is:
+- **Electronically insulating** (stops further electrolyte reduction), but
+- **Ionically conducting** (lets Li⁺ pass to the anode).`,
+      deepDive: `A stable, uniform SEI is the difference between a battery that lasts years and one that dies fast:
+- **Good SEI** → self-limiting, mechanically stable, blocks further side reactions → long cycle life.
+- **Bad SEI** → cracks during the volume changes of cycling, exposing fresh surface that consumes more lithium → continuous capacity fade.
+
+The SEI also governs safety: it suppresses lithium plating and dendrite nucleation. Much electrolyte/additive research (e.g. salts like LiBOB, FEC additives) exists purely to engineer a better SEI — a direct link to your salt-selection work in Module 11.`,
+      flashcards: [
+        { front: 'SEI', back: 'Solid Electrolyte Interphase — a passivating film on the anode formed by electrolyte decomposition during initial cycling.' },
+        { front: 'SEI paradox', back: 'It causes an irreversible first-cycle capacity loss, yet is essential because it stops continuous electrolyte decomposition.' },
+        { front: 'Ideal SEI properties', back: 'Electronically insulating (blocks further reduction) but ionically conducting (passes Li⁺), and mechanically stable.' },
+        { front: 'Why SEI matters for cycle life', back: 'A stable SEI is self-limiting; a cracking SEI exposes fresh surface that keeps consuming Li⁺ → capacity fade.' },
+      ],
+      mcq: [
+        { q: 'The ideal SEI layer should be…', options: ['conductive to both ions and electrons', 'insulating to ions, conductive to electrons', 'ionically conducting but electronically insulating', 'insulating to both'], answer: 2, explain: 'It must pass Li⁺ to the anode while blocking electrons so the electrolyte stops decomposing.' },
+        { q: 'Why does SEI formation cause an irreversible capacity loss?', options: ['It heats the cell', 'It permanently consumes some lithium and electrolyte', 'It shorts the electrodes', 'It melts the separator'], answer: 1, explain: 'The lithium and electrolyte locked into the SEI film can no longer cycle.' },
+        { q: 'A cracking, unstable SEI leads to…', options: ['higher voltage', 'continuous capacity fade as fresh surface keeps reacting', 'faster charging', 'no effect'], answer: 1, explain: 'Cracks expose fresh anode that consumes more Li⁺ and electrolyte each cycle.' },
+      ],
+      examQA: [
+        { q: 'What is the SEI and why is it both a problem and a necessity?', a: 'The SEI is a passivating film formed on the anode by electrolyte reduction during early cycling. It is a problem because it irreversibly consumes lithium and electrolyte (first-cycle capacity loss), but a necessity because, once formed, it blocks further electrolyte decomposition — being electronically insulating yet ionically conducting.' },
+        { q: 'How does SEI quality affect battery cycle life?', a: 'A stable, uniform, mechanically robust SEI is self-limiting and prevents ongoing side reactions, giving long cycle life. An unstable SEI cracks during volume changes, repeatedly exposing fresh surface that consumes lithium and electrolyte, causing continuous capacity fade.' },
+      ],
+      professorMode: `Frame the SEI as engineered, not accidental: "The SEI forms because graphite sits below the electrolyte's stability window, so the electrolyte reduces and passivates the surface. We want it electronically insulating but ionically conducting and mechanically stable — which is why additives and salts like LiBOB are chosen specifically to tune SEI chemistry. It's a controlled sacrifice of first-cycle capacity for long-term stability and safety."`,
+    },
+    {
+      id: 'battery-safety',
+      module: 'batt-fundamentals',
+      level: 2,
+      title: 'Operational Hazards: Thermal Runaway, Overcharge & Dendrites',
+      titleJp: '熱暴走とデンドライト',
+      intro: `Lithium batteries pack enormous energy into a small space — which is also why they can fail dangerously. The three classic hazards are **thermal runaway**, **overcharging**, and **lithium dendrite formation**. Understanding them is what motivates much of solid-electrolyte research (your field).`,
+      principle: `- **Thermal runaway**: a self-accelerating chain reaction. Heat triggers exothermic decompositions (SEI breakdown → electrolyte reaction → cathode oxygen release), each producing more heat, spiraling to fire/explosion.
+- **Overcharging**: pushing voltage too high over-delithiates the cathode (destabilizing it) and plates metallic lithium on the anode — both dangerous and degrading.
+- **Lithium dendrites**: needle-like metallic lithium growths that form during plating; they can pierce the separator and short-circuit the cell, triggering thermal runaway.`,
+      deepDive: `These hazards are interlinked: overcharge → lithium plating → dendrites → internal short → thermal runaway. The flammable liquid electrolyte is the fuel that makes runaway catastrophic.
+
+This is exactly why **solid polymer electrolytes** are so attractive: a mechanically strong solid electrolyte can physically block dendrite penetration, and a non-flammable polymer removes the fuel. The conductivity–modulus trade-off you studied (block copolymers) is, at its heart, a *safety* engineering problem.`,
+      flashcards: [
+        { front: 'Thermal runaway', back: 'A self-accelerating exothermic chain reaction: heat → decomposition → more heat → fire/explosion.' },
+        { front: 'Lithium dendrite', back: 'Needle-like metallic Li growth during plating that can pierce the separator and short the cell.' },
+        { front: 'Overcharging hazard', back: 'Excess voltage over-delithiates the cathode and plates Li metal on the anode — degrading and dangerous.' },
+        { front: 'Why solid electrolytes improve safety', back: 'A strong, non-flammable solid electrolyte blocks dendrite penetration and removes the flammable liquid fuel.' },
+      ],
+      mcq: [
+        { q: 'Thermal runaway is best described as…', options: ['a slow, steady discharge', 'a self-accelerating exothermic chain reaction', 'normal charging behavior', 'the SEI forming'], answer: 1, explain: 'Each exothermic step generates heat that triggers the next, spiraling out of control.' },
+        { q: 'Lithium dendrites are dangerous because they…', options: ['increase capacity', 'can pierce the separator and cause an internal short', 'improve conductivity', 'form the SEI'], answer: 1, explain: 'A dendrite bridging the electrodes shorts the cell and can trigger thermal runaway.' },
+        { q: 'Why are solid polymer electrolytes promising for safety?', options: ['They are cheaper', 'They are non-flammable and can mechanically block dendrites', 'They charge faster', 'They weigh less only'], answer: 1, explain: 'Removing flammable liquid and adding mechanical strength addresses both fuel and dendrite penetration.' },
+      ],
+      examQA: [
+        { q: 'Describe the chain of events that leads from overcharging to thermal runaway.', a: 'Overcharging raises voltage beyond safe limits, over-delithiating the cathode and plating metallic lithium on the anode. The plated lithium grows dendrites that can pierce the separator, causing an internal short circuit. The short generates heat, triggering exothermic decomposition reactions that self-accelerate into thermal runaway — fire or explosion, fueled by the flammable liquid electrolyte.' },
+        { q: 'Why does solid-electrolyte research directly address battery safety?', a: 'Solid electrolytes are non-flammable (removing the fuel for runaway) and, if mechanically strong enough, physically block lithium dendrite penetration. This is why the conductivity-versus-modulus trade-off in polymer electrolytes is fundamentally a safety engineering challenge.' },
+      ],
+      professorMode: `Connect hazard to your research motivation: "The three failure modes — thermal runaway, overcharge, and dendrite-induced shorts — are interlinked, and the flammable liquid electrolyte makes them catastrophic. That's the core case for solid polymer electrolytes: non-flammable, and mechanically capable of blocking dendrites. So when I optimize a block-copolymer electrolyte for both conductivity and modulus, I'm really engineering safety."`,
+    },
+
+    // ═══ MODULE 9 — CATHODE MATERIALS ═══════════════════════════════════════
+    {
+      id: 'cathode-chemistries',
+      module: 'cathodes',
+      level: 2,
+      title: 'Cathode Chemistries: LCO, LMO, LFP, NMC',
+      titleJp: '正極材料の比較',
+      intro: `The cathode is where most of a Li-ion cell's cost, energy density, and safety character come from. Four families dominate, each a different trade-off between energy, safety, cost, and lifespan. There is no single "best" — the choice depends on the application (phone vs EV vs grid).`,
+      principle: `- **LCO (LiCoO₂)**: high energy density, high voltage — but expensive, low thermal stability, short life. Used in phones/laptops.
+- **LMO (LiMn₂O₄, spinel)**: cheap, safe, high power, good thermal stability — but lower capacity and prone to Mn dissolution.
+- **LFP (LiFePO₄, olivine)**: very safe, long life, cheap, cobalt-free — but lower energy density and voltage. Booming for EVs/grid.
+- **NMC (LiNiₓMnᵧCoᵤO₂)**: balanced — high energy, decent life, tunable by composition. The dominant EV chemistry.`,
+      deepDive: `The structure dictates behavior:
+- **Layered** (LCO, NMC): high capacity, 2D Li diffusion.
+- **Spinel** (LMO): 3D Li diffusion, high power, but Jahn-Teller-prone.
+- **Olivine** (LFP): very stable P–O covalent framework (no oxygen release → safe), but 1D diffusion limits rate.
+
+LFP's strong phosphate bonds are why it doesn't release oxygen on abuse — its core safety advantage. NMC's tunability (vary Ni:Mn:Co) is why it became the EV workhorse, and sets up the high-nickel story in the next concept.`,
+      flashcards: [
+        { front: 'LCO (LiCoO₂)', back: 'High energy density, high voltage; but costly, thermally unstable, short life. Used in consumer electronics.' },
+        { front: 'LMO (LiMn₂O₄)', back: 'Spinel; cheap, safe, high power, thermally stable; but lower capacity and Mn dissolution issues.' },
+        { front: 'LFP (LiFePO₄)', back: 'Olivine; very safe, long life, cheap, cobalt-free; lower energy density/voltage. Strong P–O bonds → no O₂ release.' },
+        { front: 'NMC', back: 'Layered Li(Ni,Mn,Co)O₂; balanced high energy, good life, tunable composition. Dominant EV cathode.' },
+        { front: 'Why LFP is so safe', back: 'The covalent phosphate (P–O) framework resists oxygen release during abuse, avoiding the exothermic O₂-driven reactions.' },
+      ],
+      mcq: [
+        { q: 'Which cathode is cobalt-free and prized for safety and long life?', options: ['LCO', 'LFP', 'NMC', 'NCA'], answer: 1, explain: 'LiFePO₄ contains no cobalt, and its phosphate framework gives excellent thermal stability and cycle life.' },
+        { q: 'Why does LFP have a strong safety advantage?', options: ['It has the highest voltage', 'Its P–O covalent bonds resist oxygen release on abuse', 'It contains cobalt', 'It has 3D diffusion'], answer: 1, explain: 'The strong phosphate bonds prevent the oxygen release that drives thermal runaway in oxide cathodes.' },
+        { q: 'Which cathode family is the dominant choice for EVs due to balanced, tunable properties?', options: ['LCO', 'LMO', 'NMC', 'LFP'], answer: 2, explain: 'NMC balances energy, life, and cost, and its Ni:Mn:Co ratio can be tuned for the target application.' },
+      ],
+      examQA: [
+        { q: 'Compare LCO and LFP across energy density, safety, cost, and typical application.', a: 'LCO has high energy density and voltage but is expensive, thermally unstable, and short-lived — used in phones/laptops. LFP has lower energy density and voltage but is very safe (P–O framework resists oxygen release), long-lasting, cheap, and cobalt-free — used in EVs and grid storage.' },
+        { q: 'How does crystal structure relate to cathode performance for layered, spinel, and olivine types?', a: 'Layered oxides (LCO, NMC) give high capacity with 2D Li diffusion. Spinel (LMO) offers 3D diffusion and high power but is Jahn-Teller-prone. Olivine (LFP) has a very stable covalent framework (1D diffusion) — limiting rate but providing excellent safety and stability.' },
+      ],
+      professorMode: `Resist naming a single "best" cathode — show you think in trade-offs: "Cathode choice is application-driven. LCO maximizes energy for electronics; LFP maximizes safety, life, and cost for EVs and grid; NMC balances everything and is tunable for EVs. The structure explains it — layered for capacity, spinel for power, olivine for stability. LFP's phosphate bonds resisting oxygen release is the textbook example of structure dictating safety."`,
+    },
+    {
+      id: 'high-nickel-nmc',
+      module: 'cathodes',
+      level: 3,
+      title: 'The Shift to High-Nickel, Low-Cobalt NMC',
+      titleJp: 'ハイニッケル化と脱コバルト',
+      intro: `Within NMC, the industry is racing to *increase nickel* and *decrease cobalt* — from NMC-111 (equal parts) toward NMC-811 (80% Ni, 10% Mn, 10% Co) and beyond. This is driven by two forces at once: more energy density, and escaping cobalt's cost and ethics.`,
+      principle: `Each metal plays a role:
+- **Nickel (Ni)**: the main redox-active, capacity-providing element. More Ni → more energy density.
+- **Cobalt (Co)**: stabilizes the layered structure and improves rate, but is expensive and ethically fraught.
+- **Manganese (Mn)**: cheap, provides structural stability, electrochemically less active.
+
+So raising Ni boosts energy and cuts cobalt — but at a cost in stability.`,
+      deepDive: `Why cobalt is being designed out:
+- **Cost**: cobalt is one of the most expensive battery raw materials and price-volatile.
+- **Ethics**: much of the world's cobalt is mined in the DRC under conditions linked to child labor and unsafe artisanal mining — a serious supply-chain and reputational concern.
+
+The catch — high-nickel cathodes are **less stable**: more reactive Ni⁴⁺ at the surface, more parasitic reactions with the electrolyte, cation mixing, microcracking, and faster capacity fade. So high-Ni NMC research leans heavily on surface coatings, single-crystal particles, and electrolyte additives to compensate. This is an active frontier where electrolyte engineering (your area) directly enables higher-Ni cathodes.`,
+      flashcards: [
+        { front: 'NMC-811', back: 'A high-nickel NMC cathode: 80% Ni, 10% Mn, 10% Co — high energy density with minimal cobalt.' },
+        { front: 'Role of nickel in NMC', back: 'The main redox-active element providing capacity; more Ni → higher energy density (but lower stability).' },
+        { front: 'Role of cobalt in NMC', back: 'Stabilizes the layered structure and improves rate — but expensive and ethically problematic.' },
+        { front: 'Why reduce cobalt?', back: 'High cost/price-volatility and ethical concerns (DRC mining, child labor). Also frees energy-density gains via more Ni.' },
+        { front: 'Downside of high-nickel', back: 'Reduced structural/thermal stability: reactive Ni⁴⁺, surface side-reactions, cation mixing, microcracking, faster fade.' },
+      ],
+      mcq: [
+        { q: 'In NMC, which element primarily provides capacity/energy density?', options: ['Manganese', 'Cobalt', 'Nickel', 'Oxygen'], answer: 2, explain: 'Nickel is the main redox-active element, so increasing Ni increases energy density.' },
+        { q: 'A main motivation for reducing cobalt content is…', options: ['it improves energy density directly', 'high cost and ethical/supply-chain concerns', 'it makes cells heavier', 'it lowers voltage'], answer: 1, explain: 'Cobalt is expensive and largely sourced from the DRC under ethically problematic conditions.' },
+        { q: 'A key drawback of high-nickel NMC is…', options: ['lower energy density', 'reduced structural and thermal stability', 'higher cobalt content', 'no rate capability'], answer: 1, explain: 'More reactive Ni⁴⁺ drives side reactions, cation mixing, and microcracking, reducing stability.' },
+      ],
+      examQA: [
+        { q: 'Why is the battery industry shifting toward high-nickel, low-cobalt NMC, and what is the trade-off?', a: 'Raising nickel increases energy density (Ni is the main redox-active element) while reducing cobalt cuts cost and avoids the ethical/supply-chain problems of cobalt mining (largely DRC, linked to child labor). The trade-off is stability: high-Ni cathodes have more reactive Ni⁴⁺, more electrolyte side reactions, cation mixing, and microcracking, leading to faster capacity fade — requiring coatings, single-crystal designs, and electrolyte additives.' },
+        { q: 'What roles do Ni, Mn, and Co play in NMC cathodes?', a: 'Nickel provides capacity (redox-active, energy density); cobalt stabilizes the layered structure and improves rate but is costly/ethically fraught; manganese is cheap and gives structural stability while being largely electrochemically inactive.' },
+      ],
+      professorMode: `Show you grasp the cross-pressures: "High-Ni, low-Co NMC is driven by two simultaneous goals — more energy density from nickel, and escaping cobalt's cost and DRC supply-chain ethics. But high-Ni sacrifices stability through reactive surface Ni⁴⁺ and microcracking, so it's enabled by surface coatings and tailored electrolytes. That's precisely where electrolyte and interphase engineering — my interest — becomes the enabler for next-generation cathodes."`,
+    },
+    {
+      id: 'cathode-degradation',
+      module: 'cathodes',
+      level: 3,
+      title: 'Degradation: Jahn-Teller Distortion & Capacity Fade',
+      titleJp: '劣化機構とヤーン・テラー歪み',
+      intro: `Batteries don't fail all at once — they fade. Understanding *why* cathodes degrade lets you design around it. Two key mechanisms: **Jahn-Teller distortion** (especially in manganese spinels) and general **capacity fade** from structural and interfacial damage.`,
+      principle: `**Jahn-Teller distortion**: when Mn³⁺ (a d⁴ ion) forms, its asymmetric electron configuration distorts the octahedral coordination, elongating the lattice. In LMO spinel during deep discharge, Mn³⁺ accumulates, the distortion stresses the structure, and the lattice can transform/collapse — causing capacity loss.
+
+**Capacity fade** more broadly: loss of cyclable lithium and active material over time.`,
+      deepDive: `Mechanisms of capacity fade:
+- **Structural**: phase transitions, cation mixing (Ni²⁺ migrating into Li sites in high-Ni layered oxides), microcracking from repeated volume change.
+- **Interfacial**: cathode-electrolyte side reactions, surface reconstruction, transition-metal dissolution (e.g. Mn²⁺ from disproportionation of Mn³⁺ → Mn²⁺ + Mn⁴⁺), which then poisons the anode SEI.
+- **Loss of lithium inventory**: Li locked into growing SEI or trapped in dead material.
+
+Jahn-Teller-driven Mn dissolution is the classic LMO weakness; doping (e.g. with Al) and coatings suppress it. These degradation pathways are why electrolyte/additive design (controlling interfaces) is so central.`,
+      flashcards: [
+        { front: 'Jahn-Teller distortion', back: 'Geometric distortion of an octahedral complex (e.g. Mn³⁺, d⁴) that elongates bonds to lower energy — stresses spinel lattices.' },
+        { front: 'Why Mn³⁺ harms LMO', back: 'Accumulating Mn³⁺ drives Jahn-Teller distortion and disproportionation (2Mn³⁺ → Mn²⁺ + Mn⁴⁺); Mn²⁺ dissolves and poisons the anode.' },
+        { front: 'Capacity fade', back: 'Gradual loss of usable capacity from structural damage, interfacial side reactions, and loss of cyclable lithium.' },
+        { front: 'Cation mixing', back: 'Transition-metal ions (e.g. Ni²⁺) migrating into lithium sites, blocking Li diffusion — a fade mechanism in high-Ni layered oxides.' },
+      ],
+      mcq: [
+        { q: 'Jahn-Teller distortion in LMO is associated with which ion?', options: ['Mn⁴⁺', 'Mn³⁺', 'Li⁺', 'Co³⁺'], answer: 1, explain: 'Mn³⁺ (d⁴) has the asymmetric electron configuration that drives the distortion.' },
+        { q: 'Manganese dissolution from LMO degrades the cell mainly by…', options: ['increasing voltage', 'poisoning the anode SEI and losing active material', 'improving conductivity', 'forming dendrites directly'], answer: 1, explain: 'Dissolved Mn²⁺ migrates to the anode and disrupts the SEI, accelerating fade.' },
+        { q: 'Cation mixing causes capacity fade by…', options: ['adding lithium', 'transition metals occupying Li sites and blocking Li diffusion', 'cooling the cell', 'thickening the separator'], answer: 1, explain: 'When TM ions sit in lithium sites, Li⁺ pathways are blocked, reducing usable capacity.' },
+      ],
+      examQA: [
+        { q: 'Explain Jahn-Teller distortion and how it degrades manganese spinel cathodes.', a: 'Jahn-Teller distortion occurs when Mn³⁺ (a d⁴ ion) forms, whose asymmetric electron configuration distorts the octahedral coordination and elongates the lattice. In LMO during deep discharge, accumulating Mn³⁺ stresses and can transform the spinel structure. Mn³⁺ also disproportionates (2Mn³⁺ → Mn²⁺ + Mn⁴⁺); soluble Mn²⁺ dissolves into the electrolyte and poisons the anode SEI — together causing capacity fade.' },
+        { q: 'List the main mechanisms of cathode capacity fade.', a: 'Structural (phase transitions, cation mixing, microcracking from volume change), interfacial (cathode-electrolyte side reactions, surface reconstruction, transition-metal dissolution), and loss of lithium inventory (Li consumed in SEI growth or trapped in dead material).' },
+      ],
+      professorMode: `Demonstrate mechanistic depth: "Degradation is multi-pathway. In LMO specifically, Mn³⁺ triggers Jahn-Teller distortion and disproportionates to soluble Mn²⁺, which poisons the anode SEI. More generally, fade comes from cation mixing, microcracking, interfacial side reactions, and lithium-inventory loss. Crucially, most of these are interfacial — which is the argument for engineering the electrolyte and coatings to stabilize the cathode surface."`,
+    },
+
+    // ═══ MODULE 10 — POLYMER ELECTROLYTES FOR BATTERIES ═════════════════════
+    {
+      id: 'liquid-to-solid',
+      module: 'batt-electrolytes',
+      level: 2,
+      title: 'From Liquid Electrolytes to SPE & GPE',
+      titleJp: '液体から固体電解質へ',
+      intro: `Conventional Li-ion cells use a **liquid electrolyte** (lithium salt dissolved in organic carbonates). It conducts ions superbly — but it's **flammable** and can **leak**, the root of most safety incidents. The response is a move toward **Solid Polymer Electrolytes (SPEs)** and the in-between **Gel Polymer Electrolytes (GPEs)**.`,
+      principle: `- **Liquid electrolyte**: highest conductivity (~10⁻² S/cm), but flammable, volatile, leaks, and allows dendrites.
+- **SPE (solid polymer electrolyte)**: salt dissolved in a solid polymer (e.g. PEO). Non-flammable, no leakage, flexible, blocks dendrites — but low room-temperature conductivity.
+- **GPE (gel polymer electrolyte)**: a polymer matrix swollen with a liquid electrolyte. A compromise — much higher conductivity than SPE, safer and leak-resistant compared to pure liquid.`,
+      deepDive: `Think of it as a spectrum of conductivity vs safety:
+
+liquid (high σ, low safety) → GPE (medium σ, medium safety) → SPE (low σ, high safety).
+
+GPEs are the pragmatic near-term technology (already in some commercial pouch cells): the polymer immobilizes the liquid, reducing leakage and flammability while keeping usable conductivity. SPEs are the long-term goal — fully solid, safest, dendrite-blocking — once the conductivity problem (your research) is solved. This directly extends the Module 7 "Solid Polymer Electrolytes" concept.`,
+      flashcards: [
+        { front: 'Why move away from liquid electrolytes?', back: 'They are flammable, volatile, can leak, and allow dendrite growth — the main safety liabilities of Li-ion cells.' },
+        { front: 'SPE (Solid Polymer Electrolyte)', back: 'Lithium salt in a solid polymer (e.g. PEO). Non-flammable, leak-free, dendrite-blocking; but low room-temp conductivity.' },
+        { front: 'GPE (Gel Polymer Electrolyte)', back: 'A polymer matrix swollen with liquid electrolyte — a compromise: higher conductivity than SPE, safer than pure liquid.' },
+        { front: 'Conductivity–safety spectrum', back: 'Liquid (high σ, low safety) → GPE (medium) → SPE (low σ, high safety).' },
+      ],
+      mcq: [
+        { q: 'The primary safety problem with conventional liquid electrolytes is that they are…', options: ['too viscous', 'flammable and prone to leakage', 'too conductive', 'solid'], answer: 1, explain: 'Flammability and leakage of the organic carbonate solvents drive most safety incidents.' },
+        { q: 'A gel polymer electrolyte (GPE) is best described as…', options: ['a pure dry solid polymer', 'a polymer matrix swollen with liquid electrolyte', 'a liquid with no polymer', 'a ceramic'], answer: 1, explain: 'GPEs trap a liquid electrolyte in a polymer matrix — a compromise between SPE and liquid.' },
+        { q: 'Compared to liquids, the main weakness of solid polymer electrolytes (SPEs) is…', options: ['flammability', 'low room-temperature ionic conductivity', 'leakage', 'high cost only'], answer: 1, explain: 'SPEs are safe but their room-temperature conductivity is much lower than liquids — the key challenge.' },
+      ],
+      examQA: [
+        { q: 'What are the limitations of liquid electrolytes, and how do SPEs and GPEs address them?', a: 'Liquid electrolytes are flammable, volatile, can leak, and permit dendrite growth. SPEs replace the liquid with a solid polymer — non-flammable, leak-free, and dendrite-blocking — but suffer low room-temperature conductivity. GPEs are a compromise: a polymer matrix swollen with liquid electrolyte, giving much higher conductivity than SPEs while being safer and more leak-resistant than pure liquids.' },
+        { q: 'Place liquid, GPE, and SPE on the conductivity–safety spectrum.', a: 'Liquid = highest conductivity but lowest safety; GPE = intermediate conductivity and safety; SPE = lowest (room-temp) conductivity but highest safety. GPEs are the pragmatic near-term option; SPEs are the long-term goal once conductivity is solved.' },
+      ],
+      professorMode: `Present it as an engineering spectrum, not a binary: "Liquid electrolytes win on conductivity but lose on safety — flammable, leaky, dendrite-permeable. SPEs invert that, and GPEs sit in between by immobilizing a liquid in a polymer matrix. GPEs are the realistic near-term step already in some commercial cells, while SPEs are the endgame, gated by the room-temperature conductivity problem I want to work on."`,
+    },
+    {
+      id: 'peo-ion-transport',
+      module: 'batt-electrolytes',
+      level: 3,
+      title: 'PEO Matrices & the Ion-Hopping Mechanism',
+      titleJp: 'PEOとイオン伝導機構',
+      intro: `Polyethylene oxide (**PEO**) is *the* benchmark polymer for solid electrolytes. Its ether oxygens (–CH₂–CH₂–O–) coordinate Li⁺ ions, and the ions move by "hopping" between these coordination sites — but only when the polymer chains are mobile. This concept is the mechanistic heart of your research area.`,
+      principle: `Li⁺ transport in PEO works like this:
+1. Ether oxygens coordinate Li⁺ (typically ~5–6 oxygens wrap around each ion).
+2. **Segmental motion** of the polymer chains constantly makes and breaks these coordinations.
+3. The Li⁺ "hops" from one coordination site to the next, riding the local chain wiggling.
+
+Critically, this only happens in the **amorphous phase** above Tg — crystalline PEO is too ordered/rigid to allow hopping.`,
+      deepDive: `The amorphous-phase requirement is the central tension:
+- PEO readily **crystallizes** at room temperature, and crystalline domains are essentially non-conducting (chains can't wiggle).
+- So PEO conducts well only above its melting point (~60 °C), which is impractical.
+
+**Goal: maximize the amorphous fraction at room temperature.** Strategies: add plasticizers, blend or copolymerize (block copolymers), add ceramic fillers (next module), or cross-link to disrupt crystallization. Because hopping is coupled to segmental motion, conductivity follows **VTF** behavior (tied to Tg), not simple Arrhenius. This is exactly why lowering Tg and crystallinity is the whole game.`,
+      equations: [
+        { label: 'VTF (segmental-motion-coupled conduction)', expr: 'σ = σ₀ exp(−B / (T − T₀))' },
+      ],
+      flashcards: [
+        { front: 'PEO', back: 'Polyethylene oxide — the benchmark solid-electrolyte polymer; ether oxygens coordinate and transport Li⁺.' },
+        { front: 'Ion-hopping mechanism', back: 'Li⁺ moves by hopping between ether-oxygen coordination sites, driven by polymer segmental motion.' },
+        { front: 'Why the amorphous phase matters', back: 'Only mobile amorphous chains (above Tg) allow segmental motion and ion hopping; crystalline PEO is non-conducting.' },
+        { front: 'PEO\'s core problem', back: 'It crystallizes at room temperature, so it only conducts well above ~60 °C — impractical without suppressing crystallinity.' },
+        { front: 'VTF vs Arrhenius', back: 'PEO conductivity follows VTF (coupled to Tg/free volume) because transport depends on segmental motion, not a fixed barrier.' },
+      ],
+      mcq: [
+        { q: 'In PEO, Li⁺ ions are coordinated and transported by…', options: ['the carbon backbone', 'the ether oxygen atoms', 'hydrogen atoms', 'the lithium salt anion'], answer: 1, explain: 'The lone pairs on ether oxygens coordinate Li⁺, and ions hop between these sites.' },
+        { q: 'Ion conduction in PEO requires…', options: ['crystalline, ordered regions', 'mobile amorphous chains above Tg', 'completely frozen chains', 'no lithium salt'], answer: 1, explain: 'Segmental motion in the amorphous phase makes/breaks coordinations to enable hopping.' },
+        { q: 'Why does pure PEO conduct poorly at room temperature?', options: ['It has no oxygen', 'It crystallizes, immobilizing chains', 'It is too amorphous', 'It is flammable'], answer: 1, explain: 'Room-temperature crystallization locks chains in place, preventing segmental motion.' },
+      ],
+      examQA: [
+        { q: 'Describe the ion-hopping mechanism of Li⁺ transport in PEO and why the amorphous phase is essential.', a: 'Ether oxygens in PEO coordinate Li⁺ ions (about 5–6 oxygens per ion). Segmental motion of the polymer chains continuously forms and breaks these coordinations, allowing Li⁺ to hop from one site to the next. This requires the chains to be mobile, which only occurs in the amorphous phase above Tg — crystalline PEO is too ordered to permit segmental motion, so it is essentially non-conducting.' },
+        { q: 'Why does PEO conductivity follow VTF rather than Arrhenius behavior, and what does this imply for design?', a: 'Because transport is coupled to polymer segmental motion (free volume) rather than a fixed activation barrier, conductivity follows the VTF equation tied to Tg. The design implication is to lower Tg and suppress crystallinity (plasticizers, block copolymers, fillers, cross-linking) to maximize the conducting amorphous fraction at room temperature.' },
+      ],
+      professorMode: `This is your core mechanism — own it: "In PEO, ether oxygens coordinate Li⁺, and ions hop between coordination sites driven by chain segmental motion. That coupling means conduction only occurs in the amorphous phase above Tg, and follows VTF, not Arrhenius. Since PEO crystallizes near room temperature, the entire research problem reduces to maximizing the room-temperature amorphous fraction — via plasticizers, block copolymers, ceramic fillers, or cross-linking."`,
+    },
+    {
+      id: 'gpe-synthesis',
+      module: 'batt-electrolytes',
+      level: 2,
+      title: 'GPE Synthesis: Physical vs Chemical',
+      titleJp: 'ゲル電解質の合成法',
+      intro: `Gel polymer electrolytes can be made two fundamentally different ways, distinguished by *how the network holds together*: **physical gelation** (reversible physical interactions) versus **chemical gelation** (permanent covalent cross-links). The choice affects stability, processing, and performance.`,
+      principle: `- **Physical GPE**: the polymer network is held by reversible physical interactions — chain entanglements, crystallites, hydrogen bonding, or van der Waals forces. Formed by dissolving polymer + salt + solvent, then casting/cooling so it gels. **Thermoreversible** (can re-melt).
+- **Chemical GPE**: the network is built by **covalent cross-linking** (e.g. polymerizing monomers/crosslinkers in situ, often by heat or UV). Forms a permanent, **thermoset** network that traps the liquid electrolyte.`,
+      deepDive: `Trade-offs:
+- **Physical** — easy, solvent-castable, recyclable/reprocessable, but mechanically weaker and can lose integrity at higher temperature (the physical junctions melt/loosen) or leak solvent over time.
+- **Chemical** — mechanically robust, thermally stable, better solvent retention and dimensional stability, but irreversible (can't reprocess) and requires controlled cross-linking (curing) chemistry.
+
+This maps directly onto your Module 3 thermoplastic-vs-thermoset distinction: physical GPE ≈ thermoplastic-like (reversible), chemical GPE ≈ thermoset (cross-linked network). Recognizing that connection is exactly the kind of structure–property reasoning professors want.`,
+      flashcards: [
+        { front: 'Physical GPE', back: 'Network held by reversible physical interactions (entanglements, crystallites, H-bonds); thermoreversible, reprocessable, weaker.' },
+        { front: 'Chemical GPE', back: 'Network built by covalent cross-linking (in-situ polymerization/curing); permanent thermoset, robust, better solvent retention, irreversible.' },
+        { front: 'Physical vs chemical — key difference', back: 'Physical = reversible non-covalent junctions; chemical = permanent covalent cross-links.' },
+        { front: 'GPE analogy to Module 3', back: 'Physical GPE ≈ thermoplastic (reversible); chemical GPE ≈ thermoset (cross-linked network).' },
+      ],
+      mcq: [
+        { q: 'A chemically cross-linked GPE is best described as a…', options: ['thermoplastic that re-melts', 'permanent thermoset network', 'pure liquid', 'crystalline solid'], answer: 1, explain: 'Covalent cross-links form an irreversible thermoset that traps the liquid electrolyte.' },
+        { q: 'Which property is characteristic of a physical (not chemical) GPE?', options: ['irreversible covalent network', 'thermoreversibility / reprocessability', 'highest mechanical strength', 'requires UV curing'], answer: 1, explain: 'Physical gels rely on reversible interactions, so they can re-melt and be reprocessed.' },
+        { q: 'A key advantage of chemical GPEs over physical GPEs is…', options: ['easier reprocessing', 'better mechanical and thermal/dimensional stability', 'lower cost always', 'no need for any polymer'], answer: 1, explain: 'Covalent networks are more robust and retain solvent and shape better at temperature.' },
+      ],
+      examQA: [
+        { q: 'Differentiate the physical and chemical synthesis of gel polymer electrolytes.', a: 'Physical GPEs form via reversible physical interactions (chain entanglements, crystallites, hydrogen bonding) — typically by dissolving polymer, salt, and solvent then casting/cooling to gel; they are thermoreversible and reprocessable but mechanically weaker. Chemical GPEs form via covalent cross-linking (in-situ polymerization/curing by heat or UV), giving a permanent thermoset network that is mechanically robust and retains solvent well but is irreversible and cannot be reprocessed.' },
+        { q: 'How does the physical-vs-chemical GPE distinction relate to thermoplastics and thermosets?', a: 'Physical GPEs behave like thermoplastics — held by reversible interactions, so they can re-melt/reprocess. Chemical GPEs behave like thermosets — covalently cross-linked networks that are permanent and do not melt, offering greater stability at the cost of reprocessability.' },
+      ],
+      professorMode: `Tie it back to fundamentals: "GPE synthesis splits on how the network forms. Physical gelation uses reversible junctions — entanglements, crystallites, hydrogen bonds — so it's thermoreversible, essentially a thermoplastic gel. Chemical gelation uses covalent cross-linking for a permanent thermoset network with superior mechanical and solvent-retention stability, at the cost of reprocessability. It's the thermoplastic-versus-thermoset trade-off applied to electrolytes."`,
+    },
+
+    // ═══ MODULE 11 — ADVANCED INNOVATIONS ═══════════════════════════════════
+    {
+      id: 'inpc-llzo',
+      module: 'batt-advanced',
+      level: 3,
+      title: 'INPC Composite Electrolytes & LLZO Fillers',
+      titleJp: 'INPC複合電解質とLLZO',
+      intro: `One of the most promising routes to a practical solid electrolyte is the **composite** approach: combine an organic polymer with an inorganic ceramic. **Interpenetrating Network PolyCarbonate (INPC)** composites with **LLZO** garnet filler are a leading example — marrying the flexibility of polymers with the conductivity and strength of ceramics.`,
+      principle: `- **Polycarbonate matrix**: polycarbonate-based electrolytes have a high dielectric constant (good salt dissociation) and a wide electrochemical window. Built as an **interpenetrating network (IPN)** — two cross-linked networks interlaced — for mechanical robustness plus ion-conducting pathways.
+- **LLZO (Li₇La₃Zr₂O₁₂)**: a garnet-type ceramic with high intrinsic Li⁺ conductivity and high modulus. Added as an **inorganic filler**.`,
+      deepDive: `Why composites beat either component alone:
+- **Ceramic fillers (LLZO)** do three things: (1) provide fast ion-conduction pathways, (2) disrupt polymer crystallization (raising the conducting amorphous fraction), and (3) add mechanical strength to block dendrites.
+- **The polymer** provides flexibility, processability, and good interfacial contact with electrodes (ceramics alone are brittle with poor contact).
+- The **interpenetrating network** architecture decouples mechanical strength from ion transport — similar in spirit to the block-copolymer strategy, achieving both at once.
+
+The remaining challenge is the **polymer–ceramic interface**: Li⁺ must cross between phases, and a poorly designed interface adds resistance. Optimizing filler loading, particle size, and interfacial chemistry is the active research frontier.`,
+      flashcards: [
+        { front: 'LLZO', back: 'Li₇La₃Zr₂O₁₂ — a garnet-type ceramic electrolyte with high Li⁺ conductivity and high modulus; used as an inorganic filler.' },
+        { front: 'INPC', back: 'Interpenetrating Network PolyCarbonate — a composite electrolyte combining interlaced polymer networks with ceramic filler.' },
+        { front: 'Three roles of ceramic fillers', back: '(1) fast ion-conduction pathways, (2) disrupt polymer crystallization (more amorphous phase), (3) add mechanical strength to block dendrites.' },
+        { front: 'Why a composite beats pure ceramic or pure polymer', back: 'Polymer gives flexibility and good electrode contact; ceramic gives conductivity and strength — together they overcome each other\'s weaknesses.' },
+        { front: 'Main challenge in composites', back: 'The polymer–ceramic interface: Li⁺ must cross phases, and poor interfacial design adds resistance.' },
+      ],
+      mcq: [
+        { q: 'LLZO is a…', options: ['flammable liquid solvent', 'garnet-type ceramic with high Li⁺ conductivity', 'lithium salt', 'type of graphite'], answer: 1, explain: 'Li₇La₃Zr₂O₁₂ is a garnet solid electrolyte used as a conductive, high-modulus filler.' },
+        { q: 'Adding a ceramic filler like LLZO to a polymer electrolyte does NOT typically…', options: ['provide ion-conduction pathways', 'disrupt polymer crystallization', 'increase flammability', 'add mechanical strength'], answer: 2, explain: 'Ceramics are non-flammable; fillers improve conduction, reduce crystallinity, and add strength.' },
+        { q: 'The biggest remaining challenge in polymer–ceramic composite electrolytes is…', options: ['too much flexibility', 'the polymer–ceramic interfacial resistance', 'lack of any conductivity', 'excessive flammability'], answer: 1, explain: 'Li⁺ crossing between the polymer and ceramic phases is the key resistance to optimize.' },
+      ],
+      examQA: [
+        { q: 'How do INPC composite electrolytes with LLZO fillers combine the strengths of polymers and ceramics?', a: 'The interpenetrating polycarbonate network provides flexibility, processability, good electrode contact, salt dissociation (high dielectric constant), and a wide electrochemical window. The LLZO garnet filler provides fast Li⁺ conduction pathways, disrupts polymer crystallization to raise the amorphous (conducting) fraction, and adds mechanical strength to block dendrites. The IPN architecture decouples mechanical strength from ion transport, achieving both simultaneously — overcoming the brittleness/poor-contact of pure ceramics and the low conductivity of pure polymers.' },
+        { q: 'What are the three roles of an inorganic ceramic filler in a composite polymer electrolyte?', a: '(1) Provide additional fast ion-conduction pathways, (2) disrupt polymer crystallization to increase the conducting amorphous fraction, and (3) add mechanical strength/modulus to suppress dendrite growth.' },
+      ],
+      professorMode: `Show systems thinking: "Composite electrolytes like INPC with LLZO are compelling because they decouple the conductivity–strength trade-off. The polycarbonate IPN gives flexibility, electrode contact, and a wide window; the LLZO filler adds conduction pathways, suppresses crystallinity, and provides dendrite-blocking modulus. The frontier is the polymer–ceramic interface — minimizing the resistance Li⁺ faces crossing between phases. That interfacial engineering is exactly where I'd want to contribute."`,
+    },
+    {
+      id: 'lithium-salts',
+      module: 'batt-advanced',
+      level: 3,
+      title: 'Lithium Salts: LiPF₆, LiTFSI, LiBOB, LiFSI',
+      titleJp: 'リチウム塩の選択',
+      intro: `The lithium salt is the source of the mobile Li⁺ ions — and the choice of *anion* dramatically affects conductivity, electrochemical stability, SEI quality, and safety. Four salts dominate research and industry, each a different compromise.`,
+      principle: `- **LiPF₆**: the industry standard for liquid cells. Great conductivity and balanced properties — but thermally unstable and hydrolyzes with trace water to form corrosive HF.
+- **LiTFSI** (bis(trifluoromethanesulfonyl)imide): highly stable, large delocalized anion → great salt dissociation and conductivity, especially in polymers; but can corrode the aluminum current collector at high potential.
+- **LiBOB** (bis(oxalato)borate): forms an excellent, stable SEI; good for high-temperature and cycle life — but limited solubility and lower conductivity.
+- **LiFSI** (bis(fluorosulfonyl)imide): high conductivity, good thermal stability, forms a robust SEI — increasingly favored; but also has aluminum-corrosion concerns.`,
+      deepDive: `The anion is the lever:
+- **Dissociation/conductivity**: large, charge-delocalized anions (TFSI⁻, FSI⁻) dissociate easily from Li⁺, freeing more mobile ions → higher conductivity. This makes TFSI/FSI especially good in polymer electrolytes.
+- **SEI formation**: LiBOB's borate decomposes into a particularly stable, protective SEI — sometimes added in small amounts purely as an additive.
+- **Stability window**: governs the highest voltage cathode you can use.
+- **Safety/corrosion**: LiPF₆ → HF risk; TFSI/FSI → Al corrosion at high V.
+
+In practice, **salt blends** and additives are common — e.g. LiFSI for conductivity plus a LiBOB additive for SEI quality. Salt selection is a tuning knob that interacts with everything else (cathode, electrolyte, interface) you've studied.`,
+      flashcards: [
+        { front: 'LiPF₆', back: 'Industry-standard salt: good balanced conductivity, but thermally unstable and hydrolyzes to corrosive HF with trace water.' },
+        { front: 'LiTFSI', back: 'Large delocalized imide anion → excellent dissociation/conductivity (great in polymers) and high stability; but corrodes Al at high potential.' },
+        { front: 'LiBOB', back: 'Borate salt that forms an excellent, stable SEI (good high-T and cycle life); limited solubility and lower conductivity — often used as an additive.' },
+        { front: 'LiFSI', back: 'High conductivity, good thermal stability, robust SEI; increasingly favored, but has Al-corrosion concerns.' },
+        { front: 'Why anion size/delocalization matters', back: 'Larger, charge-delocalized anions (TFSI⁻, FSI⁻) dissociate from Li⁺ more easily, freeing more mobile ions → higher conductivity.' },
+      ],
+      mcq: [
+        { q: 'Which salt is the conventional liquid-cell standard but generates corrosive HF with trace water?', options: ['LiTFSI', 'LiBOB', 'LiPF₆', 'LiFSI'], answer: 2, explain: 'LiPF₆ hydrolyzes with moisture to form HF, a key stability liability.' },
+        { q: 'Why do TFSI⁻ and FSI⁻ anions give high conductivity, especially in polymers?', options: ['they are very small', 'their charge delocalization promotes salt dissociation, freeing more Li⁺', 'they are solid', 'they block lithium'], answer: 1, explain: 'Delocalized charge weakens the Li⁺–anion pairing, releasing more mobile ions.' },
+        { q: 'LiBOB is especially valued for…', options: ['the highest conductivity', 'forming an excellent, stable SEI', 'being the cheapest', 'never corroding aluminum'], answer: 1, explain: 'Its borate decomposition products build a particularly protective SEI, often used as an additive.' },
+      ],
+      examQA: [
+        { q: 'Compare LiPF₆, LiTFSI, LiBOB, and LiFSI in terms of conductivity, stability, and key weaknesses.', a: 'LiPF₆: balanced conductivity and the liquid-cell standard, but thermally unstable and hydrolyzes to corrosive HF. LiTFSI: large delocalized anion giving excellent dissociation/conductivity (great in polymers) and high stability, but corrodes aluminum at high potential. LiBOB: forms an excellent stable SEI with good high-temperature/cycle performance, but has limited solubility and lower conductivity (often an additive). LiFSI: high conductivity, good thermal stability, and a robust SEI — increasingly favored — but also has aluminum-corrosion concerns.' },
+        { q: 'How does the choice of anion influence ionic conductivity?', a: 'Large, charge-delocalized anions (e.g. TFSI⁻, FSI⁻) bind Li⁺ weakly, so the salt dissociates more readily and frees more mobile Li⁺ ions, raising conductivity. This is especially beneficial in polymer electrolytes, where salt dissociation is otherwise limited.' },
+      ],
+      professorMode: `Treat the salt as a multi-objective tuning knob: "The anion controls dissociation, hence conductivity — delocalized TFSI⁻ and FSI⁻ free more Li⁺, which is why they shine in polymers. But each salt trades off: LiPF₆ risks HF, TFSI/FSI risk Al corrosion, and LiBOB sacrifices conductivity for a superb SEI. In practice we blend — e.g. LiFSI for transport with a LiBOB additive for interphase. Salt selection couples to the cathode window and the electrolyte chemistry, so it's never chosen in isolation."`,
     },
   ],
 

@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1f43e0">
   <title>学 Study Hub — Edward</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="/assets/icon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/icon.svg">
+  <link rel="apple-touch-icon" href="/assets/icon.png">
   <link rel="stylesheet" href="/shared/css/style.css">
   <style>
-    .hub-hero { position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-strong); margin-bottom: 24px; }
-    .app-card { transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
-    .app-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .app-card:active { transform: translateY(0); }
+    .app-card { transition: transform 0.15s; cursor: pointer; text-decoration: none; display: block; border-radius: var(--radius); overflow: hidden; }
+    .app-card:hover { transform: translateY(-3px); }
+    .app-card:active { transform: scale(0.99); }
   </style>
 </head>
 <body>
@@ -18,6 +22,8 @@
     <div id="hub"></div>
   </main>
 
+  <script src="/shared/js/usage.js"></script>
+  <script src="/shared/js/pwa.js"></script>
   <script>
     const icons = {
       cal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
@@ -26,6 +32,25 @@
       moon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>`,
       sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>`,
     };
+
+    function star(cx, cy, r, fill) {
+      let pts = '';
+      for (let i = 0; i < 10; i++) { const a = -Math.PI/2 + i*Math.PI/5; const rad = i%2 ? r*0.42 : r; pts += `${(cx+Math.cos(a)*rad).toFixed(1)},${(cy+Math.sin(a)*rad).toFixed(1)} `; }
+      return `<polygon points="${pts.trim()}" fill="${fill}"/>`;
+    }
+    const wizard = `<svg viewBox="0 0 150 185" style="width:100%;height:auto;display:block">
+      <path d="M74 8 C71 42 54 82 41 106 L119 106 C107 76 91 40 74 8 Z" fill="#fff"/>
+      <path d="M74 9 C83 28 97 31 106 23" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="108" cy="21" r="6.5" fill="#fff"/>
+      ${star(64,72,9,'#1f43e0')}${star(93,60,6.5,'#1f43e0')}${star(82,92,5.5,'#1f43e0')}
+      <ellipse cx="80" cy="108" rx="53" ry="10" fill="#fff"/>
+      <path d="M55 114 C53 142 74 154 92 143 L97 153 C68 170 43 150 46 118 Z" fill="#fff"/>
+      <path d="M49 126 C39 130 36 137 45 141" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="64" cy="122" r="2.6" fill="#1f43e0"/>
+      <path d="M55 140 C58 166 88 172 97 152 C92 165 64 162 60 140 Z" fill="#fff"/>
+      <path d="M44 146 C30 150 20 156 13 166" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+      ${star(20,138,7,'#fff')}${star(9,126,5,'#fff')}${star(30,122,4,'#fff')}
+    </svg>`;
 
     let dark = JSON.parse(localStorage.getItem('hub_dark') ?? (window.matchMedia('(prefers-color-scheme: dark)').matches));
 
@@ -42,91 +67,288 @@
       catch { return { read: 0 }; }
     }
 
+    // ── Usage dashboard ─────────────────────────────────────────────
+    let range = localStorage.getItem('hub_range') || 'all';   // 'all' | '30' | '7'
+    function setRange(r) { range = r; localStorage.setItem('hub_range', r); render(); }
+
+    function fmtTime(sec) {
+      if (!sec || sec < 60) return Math.round(sec || 0) + 's';
+      const m = sec / 60;
+      if (m < 60) return Math.round(m) + 'm';
+      const h = m / 60;
+      return (h < 10 ? h.toFixed(1) : Math.round(h)) + 'h';
+    }
+    function daysAgoStr(n) { const d = new Date(); d.setDate(d.getDate() - n); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+    function computeUsage() {
+      const u = (window.StudyUsage ? window.StudyUsage.get() : {}) || {};
+      const days = u.days || {};
+      const rangeN = range === '7' ? 7 : range === '30' ? 30 : 9999;
+      const cutoff = daysAgoStr(rangeN - 1);
+
+      let jpSec = 0, polySec = 0, sessions = 0, activeDays = 0;
+      Object.keys(days).forEach(date => {
+        if (range !== 'all' && date < cutoff) return;
+        const d = days[date];
+        const tot = (d.japanese || 0) + (d.polymer || 0);
+        jpSec += d.japanese || 0; polySec += d.polymer || 0;
+        sessions += d.sessions || 0;
+        if (tot > 0 || d.sessions) activeDays++;
+      });
+      const totalSec = jpSec + polySec;
+
+      // streaks (over all data, any activity)
+      const active = new Set(Object.keys(days).filter(dt => (days[dt].japanese || days[dt].polymer || days[dt].sessions)));
+      let cur = 0;
+      for (let i = 0; i < 4000; i++) { if (active.has(daysAgoStr(i))) cur++; else if (i > 0) break; }
+      let longest = 0, run = 0;
+      const sorted = [...active].sort();
+      let prev = null;
+      sorted.forEach(dt => {
+        if (prev) { const gap = (new Date(dt) - new Date(prev)) / 86400000; run = gap === 1 ? run + 1 : 1; }
+        else run = 1;
+        longest = Math.max(longest, run); prev = dt;
+      });
+
+      // days since first use
+      let usingDays = 1;
+      if (u.firstUse) usingDays = Math.max(1, Math.round((new Date(daysAgoStr(0)) - new Date(u.firstUse)) / 86400000) + 1);
+
+      // peak hour
+      const hours = u.hours || {};
+      let peakH = null, peakV = 0;
+      Object.keys(hours).forEach(h => { if (hours[h] > peakV) { peakV = hours[h]; peakH = +h; } });
+      const peakStr = peakH == null ? '—' : (peakH === 0 ? '12 AM' : peakH < 12 ? peakH + ' AM' : peakH === 12 ? '12 PM' : (peakH - 12) + ' PM');
+
+      const fav = totalSec === 0 ? '—' : (jpSec >= polySec ? '日本語' : 'Polymer');
+      return { jpSec, polySec, totalSec, sessions, activeDays, cur, longest, usingDays, peakStr, fav, days };
+    }
+
+    function heatmap(days) {
+      const COLS = 18, ROWS = 7, N = COLS * ROWS;          // ~18 weeks
+      // find max for scaling
+      let max = 1;
+      Object.values(days).forEach(d => { const t = (d.japanese||0)+(d.polymer||0); if (t > max) max = t; });
+      let cells = '';
+      // oldest -> newest, left to right, filling columns top-to-bottom
+      for (let i = N - 1; i >= 0; i--) {
+        const date = daysAgoStr(i);
+        const d = days[date];
+        const t = d ? (d.japanese || 0) + (d.polymer || 0) : 0;
+        let bg = 'var(--surface2)';
+        if (t > 0) {
+          const lvl = Math.min(1, t / max);
+          const op = 0.3 + 0.7 * lvl;
+          bg = `color-mix(in srgb, var(--accent) ${Math.round(op*100)}%, var(--surface2))`;
+        }
+        cells += `<div title="${date}: ${fmtTime(t)}" style="width:100%;aspect-ratio:1;border-radius:3px;background:${bg}"></div>`;
+      }
+      return `<div style="display:grid;grid-template-rows:repeat(${ROWS},1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:4px">${cells}</div>`;
+    }
+
+    function tile(label, value) {
+      return `<div class="card card-sm" style="padding:12px 14px">
+        <div class="text-xs text-muted" style="margin-bottom:4px">${label}</div>
+        <div class="display" style="font-size:1.35rem;line-height:1">${value}</div>
+      </div>`;
+    }
+
+    function buildDashboard() {
+      const s = computeUsage();
+      const jpPct = s.totalSec ? Math.round(100 * s.jpSec / s.totalSec) : 0;
+      const polyPct = 100 - jpPct;
+      // witty footer (Bleach episodes ≈ 24 min)
+      const eps = s.totalSec / 60 / 24;
+      const footer = s.totalSec < 60
+        ? 'Open an app and your focus starts charting here. ✨'
+        : `That\'s ≈ ${eps < 1 ? 'a fraction of' : eps.toFixed(eps < 10 ? 1 : 0)} ${eps < 1 ? 'one' : ''} Bleach episode${eps >= 2 ? 's' : ''} of pure focus. 🗡️`;
+
+      return `
+        <div class="card" style="padding:18px;margin-bottom:24px">
+          <div class="flex justify-between items-center mb-4">
+            <h3 style="font-size:1.05rem">Your progress</h3>
+            <div class="flex gap-2">
+              ${['all','30','7'].map(r => `<button class="chip ${range===r?'active':''}" style="padding:5px 12px;font-size:0.74rem" onclick="setRange('${r}')">${r==='all'?'All':r+'d'}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="grid-2 mb-2" style="gap:10px">
+            ${tile('Time studied', fmtTime(s.totalSec))}
+            ${tile('Sessions', s.sessions)}
+            ${tile('Active days', s.activeDays)}
+            ${tile('Current streak', s.cur + 'd')}
+          </div>
+          <div class="grid-2 mb-4" style="gap:10px">
+            ${tile('Studying for', s.usingDays + 'd')}
+            ${tile('Longest streak', s.longest + 'd')}
+            ${tile('Top app', s.fav)}
+            ${tile('Peak hour', s.peakStr)}
+          </div>
+
+          <div class="mb-1 flex justify-between items-center">
+            <span class="text-xs text-muted">日本語 ${jpPct}%</span>
+            <span class="text-xs text-muted">Polymer ${polyPct}%</span>
+          </div>
+          <div style="display:flex;height:8px;border-radius:100px;overflow:hidden;background:var(--surface2)" class="mb-4">
+            <div style="width:${jpPct}%;background:#1f43e0"></div>
+            <div style="width:${polyPct}%;background:#b3185f"></div>
+          </div>
+
+          <div class="text-xs text-muted mb-2">Activity (last 18 weeks)</div>
+          ${heatmap(s.days)}
+
+          <p class="text-xs text-faint mt-4">${footer}</p>
+        </div>
+      `;
+    }
+
     function render() {
       const hour = new Date().getHours();
       const greet = hour < 11 ? 'おはよう' : hour < 18 ? 'こんにちは' : 'こんばんは';
       const jp = jpStats(), poly = polyStats();
 
       document.getElementById('hub').innerHTML = `
-        <div class="flex justify-between items-center mb-4">
-          <div class="nav-logo jp" style="font-size:1.3rem">学 Study Hub</div>
+        <div class="flex justify-between items-center mb-6">
+          <div class="nav-logo">Study Hub</div>
           <button class="btn btn-ghost btn-sm" onclick="toggleDark()">${dark ? icons.sun : icons.moon}</button>
         </div>
 
-        <div class="hub-hero">
-          <svg viewBox="0 0 700 200" preserveAspectRatio="xMidYMid slice" style="width:100%;height:150px;display:block">
-            <defs>
-              <linearGradient id="p" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--surface)"/><stop offset="100%" stop-color="var(--surface2)"/></linearGradient>
-              <radialGradient id="b" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="var(--ink)" stop-opacity="0.14"/><stop offset="100%" stop-color="var(--ink)" stop-opacity="0"/></radialGradient>
-            </defs>
-            <rect width="700" height="200" fill="url(#p)"/>
-            <ellipse cx="150" cy="70" rx="200" ry="80" fill="url(#b)"/>
-            <ellipse cx="560" cy="50" rx="160" ry="60" fill="url(#b)"/>
-            <path d="M80 -20 Q105 90 70 220" stroke="var(--ink)" stroke-width="18" fill="none" opacity="0.88" stroke-linecap="round"/>
-            <path d="M125 -20 Q140 100 105 220" stroke="var(--ink)" stroke-width="11" fill="none" opacity="0.7" stroke-linecap="round"/>
-            <g stroke="var(--accent-bright)" stroke-width="4" stroke-linecap="round"><line x1="98" y1="52" x2="106" y2="66"/><line x1="110" y1="48" x2="118" y2="62"/><line x1="122" y1="52" x2="130" y2="66"/></g>
-            <path d="M640 20 Q420 70 250 100" stroke="var(--ink-soft)" stroke-width="2" fill="none" opacity="0.35"/>
-            <text x="640" y="80" font-family="var(--font-jp)" font-size="52" fill="var(--ink)" opacity="0.9" text-anchor="middle">学</text>
-            <text x="640" y="125" font-family="var(--font-jp)" font-size="20" fill="var(--text-muted)" text-anchor="middle">学び舎</text>
-          </svg>
-        </div>
-
         <h1 class="jp animate-ink mb-1">${greet}、エドワード</h1>
-        <p class="text-muted text-sm mb-6">Choose your path for today. 今日も一歩ずつ。</p>
+        <p class="text-muted text-sm mb-6">Choose your path. 今日も一歩ずつ。</p>
 
         <div class="flex flex-col gap-4 mb-6">
-          <a class="card card-lg app-card" href="/apps/japanese/index.html" style="border-left:4px solid var(--ink)">
-            <div class="flex justify-between items-start">
-              <div>
-                <div class="text-xs text-muted display mb-1">言語 · Language</div>
-                <h2 class="jp">日本語</h2>
-                <p class="text-sm text-muted mt-1">N3 conversation — lab, daily life, university.</p>
+          <a class="app-card" href="/apps/japanese/index.html" style="background:#1f43e0">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:24px 0 0 24px;min-height:150px">
+              <div style="padding-bottom:24px">
+                <div class="display" style="color:rgba(255,255,255,0.6);font-size:0.72rem;letter-spacing:0.06em;margin-bottom:8px">LANGUAGE · 言語</div>
+                <div class="display jp" style="color:#fff;font-size:2.2rem;line-height:0.95">日本語</div>
                 <div class="flex gap-2 mt-3">
-                  <span class="badge badge-success">${jp.done} scenarios done</span>
-                  ${jp.streak ? `<span class="badge badge-warning">🔥 ${jp.streak} day streak</span>` : ''}
+                  <span class="badge" style="background:rgba(255,255,255,0.18);color:#fff">${jp.done} done</span>
+                  ${jp.streak ? `<span class="badge" style="background:rgba(255,255,255,0.18);color:#fff">🔥 ${jp.streak} streak</span>` : ''}
                 </div>
               </div>
-              <span style="color:var(--ink)">${icons.arrow}</span>
+              <div style="width:108px;flex-shrink:0;margin-right:12px">${wizard}</div>
             </div>
           </a>
 
-          <a class="card card-lg app-card" href="/apps/polymer/index.html" style="border-left:4px solid var(--accent)">
-            <div class="flex justify-between items-start">
+          <a class="app-card" href="/apps/polymer/index.html" style="background:#e4ee5e">
+            <div style="padding:24px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between">
+              <div class="display" style="color:#5a5e2e;font-size:0.72rem;letter-spacing:0.06em">RESEARCH · 研究</div>
               <div>
-                <div class="text-xs text-muted display mb-1">研究 · Research</div>
-                <h2 class="jp">高分子化学</h2>
-                <p class="text-sm text-muted mt-1">Polymer Chemistry — foundations to battery materials.</p>
+                <div class="display jp" style="color:#b3185f;font-size:2.2rem;line-height:0.95;margin-bottom:4px">高分子化学</div>
+                <div class="display" style="color:#5a5e2e;font-size:1.05rem">Polymer Chemistry</div>
                 <div class="flex gap-2 mt-3">
-                  <span class="badge badge-accent">${poly.read} concepts read</span>
+                  <span class="badge" style="background:#b3185f;color:#fff">${poly.read} read</span>
                 </div>
               </div>
-              <span style="color:var(--accent)">${icons.arrow}</span>
             </div>
           </a>
         </div>
 
-        <div class="ink-divider"></div>
+        ${buildDashboard()}
 
         <h3 class="mb-3">Connected</h3>
         <div class="grid-2 mb-6">
-          <div class="card card-sm flex items-center gap-3">
-            <span style="color:var(--seal)">${icons.cal}</span>
-            <div>
-              <div class="text-sm font-medium">Google Calendar</div>
-              <div class="text-xs text-muted" id="cal-status">Study reminders</div>
+          <div class="card card-sm">
+            <div class="flex items-center gap-3 mb-3">
+              <span style="color:var(--accent)">${icons.cal}</span>
+              <div>
+                <div class="text-sm font-medium">Calendar</div>
+                <div class="text-xs text-muted">Daily study reminder</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary btn-sm" style="flex:1" onclick="addCalendarReminder()">Add to Google</button>
+              <button class="btn btn-ghost btn-sm" onclick="downloadIcs()">.ics</button>
             </div>
           </div>
-          <div class="card card-sm flex items-center gap-3">
-            <span style="color:var(--seal)">${icons.note}</span>
-            <div>
-              <div class="text-sm font-medium">Notion</div>
-              <div class="text-xs text-muted" id="notion-status">Notes & review</div>
+          <div class="card card-sm">
+            <div class="flex items-center gap-3 mb-3">
+              <span style="color:var(--accent)">${icons.note}</span>
+              <div>
+                <div class="text-sm font-medium">Notion</div>
+                <div class="text-xs text-muted">Notes & review</div>
+              </div>
             </div>
+            <button class="btn btn-secondary btn-sm btn-full" onclick="copyStudyLog()">Copy today's log</button>
           </div>
         </div>
 
         <p class="text-center text-xs text-faint jp mb-4">千里の道も一歩から — A journey of a thousand miles begins with a single step.</p>
       `;
+    }
+
+    // ── Calendar / Notion (client-only, no accounts or API keys) ──────
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function reminderWindow() {
+      const start = new Date();
+      start.setHours(20, 0, 0, 0);
+      return { start, end: new Date(start.getTime() + 30 * 60000) };
+    }
+
+    function addCalendarReminder() {
+      const { start, end } = reminderWindow();
+      const fmt = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+      const params = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: 'Study session — 日本語 / Polymer Chemistry',
+        dates: `${fmt(start)}/${fmt(end)}`,
+        details: 'Daily study reminder from Study Hub.',
+        recur: 'RRULE:FREQ=DAILY',
+        ctz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      });
+      window.open(`https://calendar.google.com/calendar/render?${params}`, '_blank');
+    }
+
+    function downloadIcs() {
+      const { start, end } = reminderWindow();
+      const fmtUtc = d => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      const ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Study Hub//EN',
+        'BEGIN:VEVENT',
+        `UID:study-hub-${Date.now()}@edward`,
+        `DTSTAMP:${fmtUtc(new Date())}`,
+        `DTSTART:${fmtUtc(start)}`,
+        `DTEND:${fmtUtc(end)}`,
+        'RRULE:FREQ=DAILY',
+        'SUMMARY:Study session — 日本語 / Polymer Chemistry',
+        'DESCRIPTION:Daily study reminder from Study Hub.',
+        'END:VEVENT', 'END:VCALENDAR',
+      ].join('\r\n');
+      const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = 'study-reminder.ics';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function copyStudyLog() {
+      const jp = jpStats(), poly = polyStats(), s = computeUsage();
+      const md = `### Study Log — ${daysAgoStr(0)}\n\n` +
+        `- 🗾 日本語: ${jp.done} scenarios done, 🔥 ${jp.streak}-day streak\n` +
+        `- 🧪 Polymer Chemistry: ${poly.read} concepts read\n` +
+        `- ⏱️ Time studied (all-time): ${fmtTime(s.totalSec)}\n` +
+        `- 📅 Current streak: ${s.cur}d · Longest: ${s.longest}d\n`;
+      try {
+        await navigator.clipboard.writeText(md);
+        showToast('Copied ✓ — paste into Notion');
+      } catch {
+        showToast('Clipboard blocked — copy manually');
+      }
+    }
+
+    function showToast(msg) {
+      let t = document.getElementById('hub-toast');
+      if (!t) {
+        t = document.createElement('div');
+        t.id = 'hub-toast';
+        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:100px;font-size:0.85rem;z-index:1000;opacity:0;transition:opacity 0.2s;pointer-events:none';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.style.opacity = '1';
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2200);
     }
 
     applyTheme();

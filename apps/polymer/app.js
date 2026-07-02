@@ -80,36 +80,34 @@ function buildPage() {
 }
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
+// Minimalist: all module accents are maroon (single accent), not rainbow.
+const JEWELS = ['--accent', '--accent', '--accent', '--accent', '--accent', '--accent', '--accent'];
+
+function spherulite(cx, cy, r, colorVar, seed) {
+  // a single concentric radial structure, like a polymer spherulite under cross-polarized light
+  const rings = [];
+  for (let i = r; i > 4; i -= Math.max(4, r * 0.18)) {
+    const op = 0.25 + 0.5 * (i / r);
+    rings.push(`<circle cx="${cx}" cy="${cy}" r="${i.toFixed(1)}" fill="none" stroke="var(${colorVar})" stroke-width="${(r*0.07).toFixed(1)}" opacity="${op.toFixed(2)}"/>`);
+  }
+  // radial maltese-cross spokes (signature of real spherulites)
+  let spokes = '';
+  const n = 8;
+  for (let k = 0; k < n; k++) {
+    const a = (k / n) * Math.PI * 2 + seed;
+    const x2 = cx + Math.cos(a) * r, y2 = cy + Math.sin(a) * r;
+    spokes += `<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(${colorVar})" stroke-width="0.8" opacity="0.3"/>`;
+  }
+  return `<g>${spokes}${rings.join('')}<circle cx="${cx}" cy="${cy}" r="${(r*0.22).toFixed(1)}" fill="var(${colorVar})" opacity="0.85"/></g>`;
+}
+
 function buildHero() {
-  const read = readCount(), total = totalConcepts();
+  // Swiss / Helvetica-bold statement (lime + maroon)
   return `
-    <div class="card" style="padding:0;overflow:hidden;position:relative;border-color:var(--border-strong)">
-      <svg viewBox="0 0 700 180" preserveAspectRatio="xMidYMid slice" style="width:100%;height:120px;display:block">
-        <defs>
-          <linearGradient id="ppaper" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="var(--surface)"/><stop offset="100%" stop-color="var(--surface2)"/>
-          </linearGradient>
-          <radialGradient id="pblot" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0%" stop-color="var(--ink)" stop-opacity="0.13"/><stop offset="100%" stop-color="var(--ink)" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="700" height="180" fill="url(#ppaper)"/>
-        <ellipse cx="540" cy="60" rx="170" ry="70" fill="url(#pblot)"/>
-        <!-- polymer chain motif: repeating zig-zag with pendant nodes -->
-        <g stroke="var(--ink)" stroke-width="3.5" fill="none" opacity="0.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M30 110 L70 80 L110 110 L150 80 L190 110 L230 80 L270 110 L310 80 L350 110"/>
-        </g>
-        <g fill="var(--accent)" opacity="0.95">
-          <circle cx="70" cy="80" r="5"/><circle cx="150" cy="80" r="5"/><circle cx="230" cy="80" r="5"/><circle cx="310" cy="80" r="5"/>
-        </g>
-        <!-- Li+ ion hopping suggestion -->
-        <g fill="var(--seal)" opacity="0.6">
-          <circle cx="110" cy="60" r="3.5"/><circle cx="190" cy="55" r="3.5"/>
-        </g>
-        <text x="650" y="60" font-family="var(--font-jp)" font-size="40" fill="var(--ink)" opacity="0.9" text-anchor="middle">鎖</text>
-        <text x="650" y="100" font-family="var(--font-jp)" font-size="18" fill="var(--text-muted)" text-anchor="middle">高分子</text>
-      </svg>
-      <div class="seal-mark" style="top:auto;bottom:10px;right:14px">学</div>
+    <div class="animate-in" style="padding:14px 0 20px">
+      <div class="display jp" style="font-size:2.9rem;line-height:0.94;color:var(--accent)">高分子<br>化学</div>
+      <div class="display" style="font-size:1.6rem;line-height:1.0;color:var(--text-muted);margin-top:10px">Polymer Chemistry</div>
+      <p class="text-sm mt-3" style="color:var(--text-muted)">From first principles to battery materials.</p>
     </div>
   `;
 }
@@ -123,10 +121,6 @@ function buildPath() {
   return `
     <div class="animate-in">
       ${buildHero()}
-      <div class="mt-4 mb-2">
-        <h1 class="jp animate-ink">高分子化学</h1>
-        <p class="text-muted text-sm mt-1">Polymer Chemistry — from first principles to battery materials.</p>
-      </div>
 
       <div class="card mb-6">
         <div class="flex justify-between items-center mb-2">
@@ -145,7 +139,7 @@ function buildPath() {
             <div class="card" style="padding:0;overflow:hidden">
               <div class="flex items-center justify-between p-4" style="cursor:pointer" onclick="toggleModule('${m.id}')">
                 <div class="flex items-center gap-3">
-                  <div style="font-size:1.6rem">${m.icon}</div>
+                  <div class="jewel-disc" style="background:radial-gradient(circle at 35% 30%, color-mix(in srgb, var(${JEWELS[(m.order-1) % JEWELS.length]}) 55%, white), var(${JEWELS[(m.order-1) % JEWELS.length]}))">${m.icon}</div>
                   <div>
                     <div class="flex items-center gap-2">
                       <span class="text-xs text-muted display">第${m.order}章</span>
@@ -160,17 +154,18 @@ function buildPath() {
                   <span style="transform:rotate(${open ? 180 : 0}deg);transition:transform 0.2s;color:var(--text-muted)">${icons.chevron}</span>
                 </div>
               </div>
-              <div style="height:3px;background:var(--surface2)"><div style="height:100%;width:${mp.pct}%;background:var(--accent);transition:width 0.4s"></div></div>
+              <div style="height:3px;background:var(--surface2)"><div style="height:100%;width:${mp.pct}%;background:var(${JEWELS[(m.order-1) % JEWELS.length]});transition:width 0.4s"></div></div>
               ${open ? `
                 <div class="animate-in" style="border-top:1px solid var(--border)">
                   <p class="text-sm text-muted p-4" style="padding-bottom:8px">${m.desc}</p>
                   ${conceptsOf(m.id).map((c, i) => {
                     const done = state.progress[c.id]?.read;
                     const mastered = state.progress[c.id]?.mastered;
+                    const jewel = JEWELS[(m.order-1) % JEWELS.length];
                     return `
                       <div class="flex items-center justify-between" style="padding:12px 16px;cursor:pointer;border-top:1px solid var(--border)" onclick="openConcept('${c.id}')">
                         <div class="flex items-center gap-3">
-                          <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid ${done ? 'var(--accent)' : 'var(--border-strong)'};background:${done ? 'var(--accent)' : 'transparent'};color:${done ? '#fff' : 'var(--text-faint)'};display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0">
+                          <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid ${done ? 'var(' + jewel + ')' : 'var(--border-strong)'};background:${done ? 'var(' + jewel + ')' : 'transparent'};color:${done ? '#fff' : 'var(--text-faint)'};display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0">
                             ${done ? icons.check : (i + 1)}
                           </div>
                           <div>
@@ -225,6 +220,8 @@ function buildConceptPage() {
 
         <div class="ink-divider"></div>
 
+        ${buildEnrichment(c.id)}
+
         <!-- Intro -->
         ${section('はじめに  Intuition', c.intro)}
 
@@ -271,9 +268,24 @@ function buildConceptPage() {
           `).join('')}
         </div>
 
+        ${c.flashcards ? `
+          <h2 class="mb-3">Flashcards</h2>
+          <p class="text-sm text-muted mb-3">Tap a card to flip it. ${c.flashcards.length} cards.</p>
+          <div class="grid-2 mb-6">
+            ${c.flashcards.map(f => `
+              <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                  <div class="flashcard-face flashcard-front"><span class="font-bold">${f.front}</span></div>
+                  <div class="flashcard-face flashcard-back"><span class="text-sm" style="line-height:1.5">${f.back}</span></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
         <div class="flex flex-col gap-3">
           <button class="btn btn-primary btn-full btn-lg" onclick="startConceptQuiz()">
-            Test yourself (${c.examQA.length} questions)
+            Test yourself (${((c.mcq || []).length + (c.examQA || []).length)} questions)
           </button>
           ${done
             ? `<div class="card text-center" style="border-color:var(--success);background:var(--success-light)"><p style="color:var(--success)">${icons.check} Concept completed</p></div>`
@@ -290,6 +302,33 @@ function section(title, body) {
   return `
     <h2 class="mb-3 mt-6">${title}</h2>
     <div class="card">${mdToHtml(body)}</div>
+  `;
+}
+
+// Plain-English summary + analogy + figure, shown above the rigorous content.
+function inlineMd(t) {
+  return t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+}
+function buildEnrichment(id) {
+  const en = (typeof POLYMER_ENRICH !== 'undefined') ? POLYMER_ENRICH[id] : null;
+  if (!en) return '';
+  return `
+    ${en.figure ? `<div class="card mb-3 text-center" style="padding:18px">${en.figure}</div>` : ''}
+    ${en.simple ? `
+      <div class="card mb-3" style="border-left:5px solid var(--accent)">
+        <div class="badge badge-accent mb-2">In simple terms</div>
+        <p style="line-height:1.65;font-size:0.95rem">${inlineMd(en.simple)}</p>
+      </div>` : ''}
+    ${en.analogy ? `
+      <div class="card mb-3" style="background:var(--accent-light)">
+        <div class="flex items-start gap-2">
+          <span style="font-size:1.1rem">💡</span>
+          <div>
+            <div class="font-bold text-sm" style="color:var(--accent);margin-bottom:2px">Analogy</div>
+            <p style="line-height:1.6;font-size:0.92rem">${inlineMd(en.analogy)}</p>
+          </div>
+        </div>
+      </div>` : ''}
   `;
 }
 
@@ -323,44 +362,80 @@ function mdToHtml(text) {
   return html;
 }
 
-// ─── Concept Quiz ─────────────────────────────────────────────────────────────
+// ─── Concept Quiz (MCQ + recall) ──────────────────────────────────────────────
 function buildConceptQuiz() {
-  const { questions, index, revealed, finished } = state.quizState;
-  if (finished) return buildQuizResults();
-  const q = questions[index];
+  const qs = state.quizState;
+  if (qs.finished) return buildQuizResults();
+  const q = qs.questions[qs.index];
+  const total = qs.questions.length;
 
   return `
     <nav class="nav">
       <div class="nav-inner">
         <button class="btn btn-ghost btn-sm" onclick="exitQuiz()">${icons.back} Exit</button>
-        <span class="text-sm text-muted">${index + 1} / ${questions.length}</span>
+        <span class="text-sm text-muted">${qs.index + 1} / ${total}</span>
       </div>
     </nav>
     <main class="main-content container">
       <div class="animate-in">
-        <div class="progress mb-6"><div class="progress-fill" style="width:${(index / questions.length) * 100}%"></div></div>
-        <div class="card card-lg mb-4">
-          <div class="badge badge-seal mb-3">${icons.prof} Recall question</div>
-          <p class="font-medium text-lg" style="line-height:1.6">${q.q}</p>
-          <p class="text-sm text-muted mt-3">Think through your full answer, then reveal to self-check.</p>
-        </div>
-        ${revealed ? `
-          <div class="card animate-in" style="border-color:var(--success);background:var(--success-light)">
-            <div class="text-xs font-bold mb-2" style="color:var(--success)">MODEL ANSWER</div>
-            <p class="text-sm" style="line-height:1.7">${q.a}</p>
-          </div>
-          <div class="card mt-4">
-            <p class="text-sm font-medium mb-3 text-center">How did you do?</p>
-            <div class="grid-2">
-              <button class="btn btn-secondary" onclick="gradeAnswer(false)">Need review</button>
-              <button class="btn btn-gold" onclick="gradeAnswer(true)">Got it ✓</button>
-            </div>
-          </div>
-        ` : `
-          <button class="btn btn-primary btn-full btn-lg" onclick="revealAnswer()">Reveal model answer</button>
-        `}
+        <div class="progress mb-6"><div class="progress-fill" style="width:${(qs.index / total) * 100}%"></div></div>
+        ${q.type === 'mcq' ? buildMcqQuestion(q, total) : buildRecallQuestion(q, total)}
       </div>
     </main>
+  `;
+}
+
+function buildMcqQuestion(q, total) {
+  const qs = state.quizState;
+  const correct = qs.selectedMcq === q.answer;
+  return `
+    <div class="card card-lg mb-4">
+      <div class="badge badge-accent mb-3">Multiple choice</div>
+      <p class="font-medium text-lg" style="line-height:1.6">${q.q}</p>
+    </div>
+    <div class="flex flex-col gap-3">
+      ${q.options.map((opt, i) => {
+        let style = 'color:var(--text);';
+        if (qs.mcqResult) {
+          if (i === q.answer) style += 'border-color:var(--success);background:var(--success-light);';
+          else if (i === qs.selectedMcq) style += 'border-color:var(--seal);background:var(--seal-light);';
+        }
+        return `<button class="card card-sm text-left" style="cursor:pointer;width:100%;${style}" onclick="submitMcq(${i})" ${qs.mcqResult ? 'disabled' : ''}><span class="text-sm mr-2" style="opacity:0.55">${String.fromCharCode(65 + i)}.</span>${opt}</button>`;
+      }).join('')}
+    </div>
+    ${qs.mcqResult ? `
+      <div class="card mt-4 ${correct ? 'animate-pop' : 'animate-shake'}" style="border-color:${correct ? 'var(--success)' : 'var(--seal)'};background:${correct ? 'var(--success-light)' : 'var(--seal-light)'}">
+        <p class="font-medium" style="color:${correct ? 'var(--success)' : 'var(--seal)'}">${correct ? '✓ Correct!' : '✗ Not quite'}</p>
+        <p class="text-sm mt-1" style="line-height:1.6">${q.explain}</p>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg mt-4" onclick="nextQ()">${qs.index + 1 < total ? 'Next question →' : 'See results'}</button>
+    ` : ''}
+  `;
+}
+
+function buildRecallQuestion(q, total) {
+  const qs = state.quizState;
+  return `
+    <div class="card card-lg mb-4">
+      <div class="badge badge-seal mb-3">${icons.prof} Recall question</div>
+      <p class="font-medium text-lg" style="line-height:1.6">${q.q}</p>
+      <p class="text-sm text-muted mt-3">Think through your full answer, then reveal to self-check.</p>
+    </div>
+    ${qs.revealed ? `
+      <div class="card animate-in" style="border-color:var(--success);background:var(--success-light)">
+        <div class="text-xs font-bold mb-2" style="color:var(--success)">MODEL ANSWER</div>
+        <p class="text-sm" style="line-height:1.7">${q.a}</p>
+      </div>
+      <div class="card mt-4">
+        <p class="text-sm font-medium mb-3 text-center">How did you do?</p>
+        <div class="grid-2">
+          <button class="btn btn-secondary" onclick="gradeAnswer(false)">Need review</button>
+          <button class="btn btn-gold" onclick="gradeAnswer(true)">Got it ✓</button>
+        </div>
+      </div>
+    ` : `
+      <button class="btn btn-primary btn-full btn-lg" onclick="revealAnswer()">Reveal model answer</button>
+    `}
   `;
 }
 
@@ -468,18 +543,36 @@ function toggleQA(i) { document.getElementById(`qa-${i}`)?.classList.toggle('hid
 function markRead(id) { state.progress[id] = { ...state.progress[id], read: true, lastSeen: Date.now() }; save(); render(); }
 
 function startConceptQuiz() {
-  state.quizState = { conceptId: state.concept.id, questions: [...state.concept.examQA], index: 0, correct: 0, revealed: false, finished: false };
+  const c = state.concept;
+  const mcqs = (c.mcq || []).map(m => ({ type: 'mcq', q: m.q, options: m.options, answer: m.answer, explain: m.explain }));
+  const recalls = (c.examQA || []).map(e => ({ type: 'recall', q: e.q, a: e.a }));
+  state.quizState = {
+    conceptId: c.id,
+    questions: [...mcqs, ...recalls],
+    index: 0, correct: 0,
+    revealed: false, selectedMcq: null, mcqResult: false, finished: false,
+  };
   state.conceptView = 'quiz';
   render(); window.scrollTo(0, 0);
 }
 function revealAnswer() { state.quizState.revealed = true; render(); }
-function gradeAnswer(got) {
-  if (got) state.quizState.correct++;
-  state.quizState.index++;
-  state.quizState.revealed = false;
-  if (state.quizState.index >= state.quizState.questions.length) state.quizState.finished = true;
+function submitMcq(i) {
+  const qs = state.quizState;
+  if (qs.mcqResult) return;
+  qs.selectedMcq = i;
+  qs.mcqResult = true;
+  if (i === qs.questions[qs.index].answer) qs.correct++;
+  render();
+}
+function advance() {
+  const qs = state.quizState;
+  qs.index++;
+  qs.revealed = false; qs.selectedMcq = null; qs.mcqResult = false;
+  if (qs.index >= qs.questions.length) qs.finished = true;
   render(); window.scrollTo(0, 0);
 }
+function nextQ() { advance(); }
+function gradeAnswer(got) { if (got) state.quizState.correct++; advance(); }
 function exitQuiz() { state.conceptView = 'learn'; state.quizState = null; render(); window.scrollTo(0, 0); }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────

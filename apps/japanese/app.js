@@ -13,11 +13,14 @@ let state = {
   quizState: null,     // active quiz
   filter: 'all',       // category filter
   showTranslation: {},  // scenarioId -> bool
+  grammarProgress: {},  // "w1d1" -> true (day studied)
+  openDay: null,        // "w1d1" currently expanded day
+  grammarTab: 'n2',     // 'n2' | 'n3'
 };
 
 // ─── Persistence ─────────────────────────────────────────────────────────────
 function save() {
-  const toSave = { progress: state.progress, vocab: state.vocab, streak: state.streak, darkMode: state.darkMode };
+  const toSave = { progress: state.progress, vocab: state.vocab, streak: state.streak, darkMode: state.darkMode, grammarProgress: state.grammarProgress };
   localStorage.setItem(DB_KEY, JSON.stringify(toSave));
 }
 
@@ -102,7 +105,7 @@ function buildPage() {
   return `
     <nav class="nav">
       <div class="nav-inner">
-        <a href="../" class="nav-logo">${icons.back} <span>日本語</span></a>
+        <a href="../../index.html" class="nav-logo">${icons.back} <span>日本語</span></a>
         <button class="btn btn-ghost btn-sm" onclick="toggleDark()">
           ${state.darkMode ? icons.sun : icons.moon}
         </button>
@@ -159,6 +162,8 @@ function buildHome() {
         </div>
       </div>
 
+      ${buildWizardTip()}
+
       <div class="card mb-4">
         <div class="flex justify-between items-center mb-2">
           <span class="text-sm font-medium">Overall progress</span>
@@ -209,46 +214,78 @@ function buildHome() {
   `;
 }
 
-function buildHeroBanner() {
-  // Sumi-e ink-wash banner — inspired by Unohana Retsu / Bleach aesthetic
+// 5-point star polygon
+function star(cx, cy, r, fill) {
+  let pts = '';
+  for (let i = 0; i < 10; i++) {
+    const ang = -Math.PI / 2 + i * Math.PI / 5;
+    const rad = i % 2 ? r * 0.42 : r;
+    pts += `${(cx + Math.cos(ang) * rad).toFixed(1)},${(cy + Math.sin(ang) * rad).toFixed(1)} `;
+  }
+  return `<polygon points="${pts.trim()}" fill="${fill}"/>`;
+}
+
+// Sensei — the wizard guide. body = main fill, detail = stars/eye accent.
+function buildWizard(body = '#fff', detail = 'var(--accent)') {
   return `
-    <div class="card" style="padding:0;overflow:hidden;position:relative;border-color:var(--border-strong)">
-      <svg viewBox="0 0 700 200" preserveAspectRatio="xMidYMid slice" style="width:100%;height:140px;display:block">
-        <defs>
-          <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="var(--surface)"/>
-            <stop offset="100%" stop-color="var(--surface2)"/>
-          </linearGradient>
-          <radialGradient id="inkblot" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0%" stop-color="var(--ink)" stop-opacity="0.16"/>
-            <stop offset="100%" stop-color="var(--ink)" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="700" height="200" fill="url(#paper)"/>
-        <!-- distant ink-wash mountains / mist -->
-        <ellipse cx="120" cy="60" rx="180" ry="70" fill="url(#inkblot)"/>
-        <ellipse cx="560" cy="40" rx="150" ry="60" fill="url(#inkblot)"/>
-        <!-- flowing ink hair strokes (Unohana's hair) -->
-        <path d="M70 -20 Q90 80 60 200" stroke="var(--ink)" stroke-width="14" fill="none" opacity="0.85" stroke-linecap="round"/>
-        <path d="M110 -20 Q130 90 95 200" stroke="var(--ink)" stroke-width="20" fill="none" opacity="0.9" stroke-linecap="round"/>
-        <path d="M150 -20 Q140 100 175 200" stroke="var(--ink)" stroke-width="11" fill="none" opacity="0.7" stroke-linecap="round"/>
-        <!-- gold hairpin accents -->
-        <g stroke="var(--accent-bright)" stroke-width="4" stroke-linecap="round" opacity="0.95">
-          <line x1="92" y1="44" x2="100" y2="58"/>
-          <line x1="104" y1="40" x2="112" y2="54"/>
-          <line x1="116" y1="44" x2="124" y2="58"/>
-        </g>
-        <!-- bamboo / branch sweeping across -->
-        <path d="M620 10 Q400 60 230 90" stroke="var(--ink-soft)" stroke-width="2" fill="none" opacity="0.4"/>
-        <!-- vertical title 墨 -->
-        <text x="650" y="70" font-family="var(--font-jp)" font-size="46" fill="var(--ink)" opacity="0.9" text-anchor="middle">墨</text>
-        <text x="650" y="120" font-family="var(--font-jp)" font-size="22" fill="var(--text-muted)" text-anchor="middle">日本語</text>
-        <!-- ink splatter accents -->
-        <circle cx="300" cy="150" r="3" fill="var(--ink)" opacity="0.5"/>
-        <circle cx="330" cy="165" r="1.8" fill="var(--ink)" opacity="0.4"/>
-        <circle cx="280" cy="170" r="1.2" fill="var(--ink)" opacity="0.3"/>
-      </svg>
-      <div class="seal-mark" style="top:auto;bottom:12px;right:14px">学</div>
+    <svg viewBox="0 0 150 185" style="width:100%;height:auto;display:block" aria-label="wizard guide">
+      <!-- hat -->
+      <path d="M74 8 C71 42 54 82 41 106 L119 106 C107 76 91 40 74 8 Z" fill="${body}"/>
+      <!-- drooping tip -->
+      <path d="M74 9 C83 28 97 31 106 23" fill="none" stroke="${body}" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="108" cy="21" r="6.5" fill="${body}"/>
+      ${star(64, 72, 9, detail)}
+      ${star(93, 60, 6.5, detail)}
+      ${star(82, 92, 5.5, detail)}
+      <!-- brim -->
+      <ellipse cx="80" cy="108" rx="53" ry="10" fill="${body}"/>
+      <!-- face -->
+      <path d="M55 114 C53 142 74 154 92 143 L97 153 C68 170 43 150 46 118 Z" fill="${body}"/>
+      <!-- nose -->
+      <path d="M49 126 C39 130 36 137 45 141" fill="none" stroke="${body}" stroke-width="7" stroke-linecap="round"/>
+      <!-- eye -->
+      <circle cx="64" cy="122" r="2.6" fill="${detail}"/>
+      <!-- beard -->
+      <path d="M55 140 C58 166 88 172 97 152 C92 165 64 162 60 140 Z" fill="${body}"/>
+      <!-- casting arm + sparkles -->
+      <path d="M44 146 C30 150 20 156 13 166" fill="none" stroke="${body}" stroke-width="8" stroke-linecap="round"/>
+      ${star(20, 138, 7, body)}
+      ${star(9, 126, 5, body)}
+      ${star(30, 122, 4, body)}
+    </svg>
+  `;
+}
+
+const WIZARD_TIPS = [
+  '今日も一歩ずつ。 Small steps every day — that\'s how fluency is cast. ✨',
+  'A little review beats a long cram. Open one scenario and begin.',
+  'Stuck on a grammar point? Tap it twice — repetition is the real magic.',
+  '毎日five minutes. The streak is the spell; don\'t break it. 🔥',
+  'Read each example aloud. Your mouth remembers what your eyes forget.',
+  'N2 is a marathon, not a curse. You\'ve got this, Edward.',
+];
+
+function buildWizardTip() {
+  const tip = WIZARD_TIPS[new Date().getDate() % WIZARD_TIPS.length];
+  return `
+    <div class="card card-sm mb-4 flex items-center gap-3" style="background:var(--accent-light)">
+      <div style="width:46px;flex-shrink:0">${buildWizard('var(--accent)', '#fff')}</div>
+      <p class="text-sm" style="line-height:1.45">${tip}</p>
+    </div>
+  `;
+}
+
+function buildHeroBanner() {
+  // Blue + white wizard banner
+  return `
+    <div class="card" style="padding:0;overflow:hidden;background:var(--accent);border-radius:var(--radius)">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;min-height:160px">
+        <div style="padding:22px 0 24px 22px">
+          <div class="display jp" style="color:#fff;font-size:2.6rem;line-height:0.92">日本語</div>
+          <div class="display" style="color:rgba(255,255,255,0.72);font-size:1rem;letter-spacing:0.04em;margin-top:8px">N2 GRAMMAR</div>
+        </div>
+        <div style="width:135px;flex-shrink:0;margin-right:14px">${buildWizard()}</div>
+      </div>
     </div>
   `;
 }
@@ -582,35 +619,321 @@ function buildVocab() {
 }
 
 // ─── Grammar Tab ──────────────────────────────────────────────────────────────
+// ─── Furigana ─────────────────────────────────────────────────────────────────
+// Curated reading dictionary. Longest matches applied first so compounds win.
+// Add new words here as future weeks are injected — furi() applies everywhere.
+const FURIGANA = {
+  // compounds (kept first via length sort)
+  '新入社員': 'しんにゅうしゃいん', '自転車': 'じてんしゃ',
+  '英語力': 'えいごりょく',
+  '病気': 'びょうき', '最近': 'さいきん', '仕事': 'しごと', '残業': 'ざんぎょう',
+  '緊張': 'きんちょう', '上着': 'うわぎ', '道路': 'どうろ', '運転': 'うんてん',
+  '免許': 'めんきょ', '試験': 'しけん', '未定': 'みてい', '料理': 'りょうり',
+  '女優': 'じょゆう', '演技': 'えんぎ', '旅行': 'りょこう', '留学': 'りゅうがく',
+  '無理': 'むり', '心配': 'しんぱい', '家族': 'かぞく', '方法': 'ほうほう',
+  '仕方': 'しかた', '時間': 'じかん', '工事': 'こうじ', '不便': 'ふべん',
+  '毎日': 'まいにち', '漢字': 'かんじ', '態度': 'たいど', '店員': 'てんいん',
+  '一言': 'ひとこと', '文句': 'もんく',
+  // single kanji
+  '申': 'もう', '込': 'こ', '見': 'み', '子': 'こ',
+  '今': 'いま', '人': 'ひと', '目': 'め', '頃': 'ころ', '彼': 'かれ', '年': 'とし',
+  '顔': 'かお', '国': 'くに', '車': 'くるま', '味': 'あじ', '母': 'はは', '隣': 'となり',
+  '家': 'いえ', '駅': 'えき', '音': 'おと', '耳': 'みみ', '言': 'い', '休': 'やす',
+  '忘': 'わす', '安': 'やす', '疲': 'つか', '続': 'つづ', '帰': 'かえ', '脱': 'ぬ',
+  '暑': 'あつ', '遅': 'おそ', '混': 'こ', '行': 'い', '知': 'し', '持': 'も',
+  '受': 'う', '食': 'た', '炒': 'いた', '待': 'ま', '会': 'あ', '何': 'なに',
+  '遠': 'とお', '好': 'す', '難': 'むずか', '覚': 'おぼ', '悪': 'わる', '取': 'と',
+  // ── Week 1 Day 6 + Week 2 compounds ──
+  '日本語': 'にほんご', '携帯電話': 'けいたいでんわ', '一生懸命': 'いっしょうけんめい',
+  '自動車': 'じどうしゃ', '真実': 'しんじつ', '悲惨': 'ひさん', '体験': 'たいけん',
+  '失敗': 'しっぱい', '田中': 'たなか', '連休': 'れんきゅう', '努力': 'どりょく',
+  '希望': 'きぼう', '大学': 'だいがく', '合格': 'ごうかく', '結婚': 'けっこん',
+  '手術': 'しゅじゅつ', '愛犬': 'あいけん', '予選': 'よせん', '練習': 'れんしゅう',
+  '生徒': 'せいと', '借金': 'しゃっきん', '海外': 'かいがい', '小説': 'しょうせつ',
+  '博士': 'はかせ', '間違': 'まちが', '情報': 'じょうほう', '大変': 'たいへん',
+  '自信': 'じしん', '授業': 'じゅぎょう', '教室': 'きょうしつ', '布団': 'ふとん',
+  '日本': 'にほん', '必要': 'ひつよう', '生活': 'せいかつ', '習慣': 'しゅうかん',
+  '健康': 'けんこう', '研究': 'けんきゅう', '以上': 'いじょう', '入場': 'にゅうじょう',
+  '無料': 'むりょう', '女性': 'じょせい', '男性': 'だんせい', '化粧': 'けしょう',
+  '時計': 'とけい', '成功': 'せいこう', '注意': 'ちゅうい', '信頼': 'しんらい',
+  '物価': 'ぶっか', '解決': 'かいけつ', '不安': 'ふあん', '外国': 'がいこく',
+  '勉強': 'べんきょう', '目的': 'もくてき', '期待': 'きたい', '苦痛': 'くつう',
+  '迷惑': 'めいわく', '本当': 'ほんとう', '選手': 'せんしゅ', '監督': 'かんとく',
+  '住民': 'じゅうみん', '社会': 'しゃかい', '参加': 'さんか', '山田': 'やまだ',
+  '中心': 'ちゅうしん', '環境': 'かんきょう', '問題': 'もんだい', '番組': 'ばんぐみ',
+  '来日': 'らいにち', '自然': 'しぜん', '増加': 'ぞうか', '人口': 'じんこう',
+  '資源': 'しげん', '消費': 'しょうひ', '大会': 'たいかい', '通行': 'つうこう',
+  '機能': 'きのう', '低下': 'ていか', '発展': 'はってん', '花見': 'はなみ',
+  '苦労': 'くろう', '工業': 'こうぎょう', '深刻': 'しんこく',
+  // ── Week 1 Day 6 + Week 2 single kanji ──
+  '確': 'たし', '決': 'けっ', '死': 'し', '落': 'お', '教': 'おし', '思': 'おも',
+  '合': 'あ', '付': 'つ', '読': 'よ', '本': 'ほん', '走': 'はし',
+  '抜': 'ぬ', '桜': 'さくら', '終': 'お', '出': 'で', '入': 'はい', '眠': 'ねむ',
+  '改': 'あらた', '調': 'しら', '歳': 'さい', '方': 'かた', '雨': 'あめ', '買': 'か',
+  '薬': 'くすり', '治': 'なお', '厳': 'きび', '悩': 'なや', '祈': 'いの',
+  '大': 'おお', '犬': 'いぬ', '猫': 'ねこ', '飼': 'か', '夢': 'ゆめ', '生': 'い',
+  '負': 'ま', '同': 'おな', '始': 'はじ', '高': 'たか', '薄': 'うす', '息': 'いき',
+  '苦': 'くる', '増': 'ふ', '町': 'まち', '少': 'すく', '体': 'からだ', '先': 'さき',
+  '忙': 'いそが', '遊': 'あそ', '頼': 'たよ', '迷': 'まよ', '親': 'おや',
+  // ── Week 3 compounds ──
+  '予報': 'よほう', '友達': 'ともだち', '自分': 'じぶん', '契約': 'けいやく',
+  '彼女': 'かのじょ', '相手': 'あいて', '離婚': 'りこん', '再婚': 'さいこん',
+  '名字': 'みょうじ', '定価': 'ていか', '重要': 'じゅうよう', '会議': 'かいぎ',
+  '会社': 'かいしゃ', '税金': 'ぜいきん', '進学': 'しんがく', '就職': 'しゅうしょく',
+  '建物': 'たてもの', '建設': 'けんせつ', '中止': 'ちゅうし', '病院': 'びょういん',
+  '検査': 'けんさ', '異常': 'いじょう', '工場': 'こうじょう', '火事': 'かじ',
+  '風邪': 'かぜ', '日曜日': 'にちようび', '学生': 'がくせい', '手紙': 'てがみ',
+  '部屋': 'へや', '去年': 'きょねん', '忘年会': 'ぼうねんかい', '一人': 'ひとり',
+  '二人': 'ふたり', '電車': 'でんしゃ', '東京': 'とうきょう', '一方': 'いっぽう',
+  '人気': 'にんき', '予想': 'よそう', '専門家': 'せんもんか', '専門': 'せんもん', '景気': 'けいき',
+  '回復': 'かいふく', '新商品': 'しんしょうひん', '商品': 'しょうひん', '反面': 'はんめん',
+  '便利': 'べんり', '学者': 'がくしゃ', '精神': 'せいしん', '人間': 'にんげん',
+  '大気': 'たいき', '濃度': 'のうど', '上昇': 'じょうしょう', '地球': 'ちきゅう',
+  '温暖': 'おんだん', '天気': 'てんき', '野菜': 'やさい', '値段': 'ねだん',
+  '予算': 'よさん', '無駄': 'むだ',
+  // ── Week 3 single kanji ──
+  '困': 'こま', '降': 'ふ', '外': 'はず', '足': 'あし', '向': 'む', '歩': 'ある',
+  '驚': 'おどろ', '震': 'ふる', '太': 'ふと', '寒': 'さむ', '雪': 'ゆき', '円': 'えん',
+  '千': 'せん', '万': 'まん', '払': 'はら', '窓': 'まど', '開': 'あ', '風': 'かぜ',
+  '酒': 'さけ', '飲': 'の', '赤': 'あか', '酔': 'よ', '騒': 'さわ', '寝': 'ね',
+  '末': 'すえ', '話': 'はな', '来': 'き', '咲': 'さ', '散': 'ち', '花': 'はな',
+  '急': 'いそ', '問': 'と', '物': 'もの', '届': 'とど', '夏': 'なつ', '暇': 'ひま',
+  '使': 'つか', '服': 'ふく', '立': 'た', '弱': 'よわ', '水': 'みず', '強': 'つよ',
+  '熱': 'ねつ', '静': 'しず', '進': 'すす', '売': 'う', '反': 'はん',
+  // ── Week 4 compounds ──
+  '地図': 'ちず', '相談': 'そうだん', '返事': 'へんじ', '約束': 'やくそく', '理論': 'りろん',
+  '実験': 'じっけん', '英語': 'えいご', '学習': 'がくしゅう', '初心者': 'しょしんしゃ',
+  '教科書': 'きょうかしょ', '製品': 'せいひん', '生産': 'せいさん', '国内': 'こくない',
+  '輸出': 'ゆしゅつ', '場合': 'ばあい', '気持': 'きも', '電話': 'でんわ', '連絡': 'れんらく',
+  '変更': 'へんこう', '場所': 'ばしょ', '花火': 'はなび', '意見': 'いけん', '営業': 'えいぎょう',
+  '延長': 'えんちょう', '目上': 'めうえ', '失礼': 'しつれい', '都市': 'とし', '農村': 'のうそん',
+  '法律': 'ほうりつ', '未成年': 'みせいねん', '飲酒': 'いんしゅ', '地震': 'じしん',
+  '被害': 'ひがい', '過去': 'かこ', '最大': 'さいだい', '汚職': 'おしょく', '事件': 'じけん',
+  '逮捕': 'たいほ', '息子': 'むすこ', '開発': 'かいはつ', '言葉': 'ことば', '先生': 'せんせい',
+  '進路': 'しんろ', '医療': 'いりょう', '進歩': 'しんぽ', '新種': 'しんしゅ', '全国': 'ぜんこく',
+  '大学生': 'だいがくせい', '我が家': 'わがや', '国家': 'こっか', '看護': 'かんご',
+  '戦争': 'せんそう', '卒業': 'そつぎょう', '簡単': 'かんたん', '日常': 'にちじょう',
+  '英会話': 'えいかいわ', '会話': 'かいわ', '使用': 'しよう', '長年': 'ながねん',
+  '図書館': 'としょかん', '図書': 'としょ', '利用': 'りよう', '学業': 'がくぎょう',
+  '資料': 'しりょう', '説明': 'せつめい', '開店': 'かいてん', '関係': 'かんけい',
+  '新製品': 'しんせいひん', '調査': 'ちょうさ', '台風': 'たいふう', '影響': 'えいきょう',
+  '関東': 'かんとう', '地方': 'ちほう', '範囲': 'はんい', '昨日': 'きのう',
+  // ── Week 4 single kanji ──
+  '近': 'ちか', '考': 'かんが', '選': 'えら', '守': 'まも', '量': 'りょう', '戻': 'もど',
+  '対': 'たい', '減': 'へ', '禁': 'きん', '命': 'いのち', '失': 'うしな', '盗': 'ぬす',
+  '繰': 'く', '返': 'かえ', '狭': 'せま', '楽': 'たの', '長': 'なが', '広': 'ひろ',
+  '点': 'てん', '単': 'たん', '努': 'つと',
+  // ── Week 5 compounds ──
+  '文法': 'ぶんぽう', '全部': 'ぜんぶ', '実力': 'じつりょく', '国際': 'こくさい',
+  '依頼': 'いらい', '富士山': 'ふじさん', '名前': 'なまえ', '名所': 'めいしょ',
+  '大勢': 'おおぜい', '遅刻': 'ちこく', '親切': 'しんせつ', '手伝': 'てつだ',
+  '実物': 'じつぶつ', '当然': 'とうぜん', '同然': 'どうぜん', '中古': 'ちゅうこ',
+  '新品': 'しんぴん', '財産': 'ざいさん', '無職': 'むしょく', '給料': 'きゅうりょう',
+  '水泳': 'すいえい', '一流': 'いちりゅう', '快適': 'かいてき', '丈夫': 'じょうぶ',
+  '投資': 'とうし', '価値': 'かち', '納得': 'なっとく', '成績': 'せいせき',
+  '学校': 'がっこう', '汚染': 'おせん', '飛行機': 'ひこうき', '泥棒': 'どろぼう',
+  '作文': 'さくぶん', '葬式': 'そうしき', '同窓会': 'どうそうかい', '後悔': 'こうかい',
+  '事実': 'じじつ', '制作': 'せいさく', '写真': 'しゃしん', '訪問': 'ほうもん',
+  '計画': 'けいかく', '経験': 'けいけん', '教育': 'きょういく', '結果': 'けっか',
+  '能力': 'のうりょく', '青空': 'あおぞら', '元気': 'げんき', '指導': 'しどう',
+  '論文': 'ろんぶん', '裏切': 'うらぎ', '林': 'はやし',
+  // ── Week 5 single kanji ──
+  '信': 'しん', '放': 'ほう', '訳': 'わけ', '引': 'ひ', '許': 'ゆる', '現': 'あらわ',
+  '時': 'とき', '止': 'と', '流': 'なが', '当': 'あ', '前': 'まえ', '嫌': 'きら',
+  '勝': 'か', '怒': 'おこ', '首': 'くび', '若': 'わか', '泳': 'およ', '壊': 'こわ',
+  '乗': 'の', '良': 'よ', '美': 'うつく', '片': 'かた', '祝': 'いわ', '直': 'なお',
+  '空': 'そら', '泣': 'な', '怖': 'こわ', '際': 'さい', '喜': 'よろこ', '語': 'かた',
+  '市': 'し', '応': 'おう', '書': 'か', '基': 'もと', '客': 'きゃく',
+  // ── Week 6 compounds ──
+  '以来': 'いらい', '入学': 'にゅうがく', '一度': 'いちど', '試合': 'しあい', '立場': 'たちば',
+  '入り口': 'いりぐち', '品質': 'ひんしつ', '症状': 'しょうじょう', '心臓': 'しんぞう',
+  '社長': 'しゃちょう', '服装': 'ふくそう', '題名': 'だいめい', '外国人': 'がいこくじん',
+  '現代': 'げんだい', '食品': 'しょくひん', '手続': 'てつづ', '許可': 'きょか',
+  '再開発': 'さいかいはつ', '一番': 'いちばん', '二度': 'にど', '絶対': 'ぜったい',
+  '上級': 'じょうきゅう', '結局': 'けっきょく', '犯人': 'はんにん', '表現': 'ひょうげん',
+  '全力': 'ぜんりょく', '前進': 'ぜんしん', '愛情': 'あいじょう', '裏返': 'うらがえ',
+  '中国': 'ちゅうごく', '野球': 'やきゅう', '憲法': 'けんぽう', '改正': 'かいせい',
+  '論争': 'ろんそう', '制度': 'せいど', '京都': 'きょうと', '役割': 'やくわり',
+  '主張': 'しゅちょう', '疑問': 'ぎもん', '現地': 'げんち', '解散': 'かいさん', '世界': 'せかい',
+  // ── Week 6 single kanji ──
+  '住': 'す', '折': 'おり', '寄': 'よ', '借': 'か', '店': 'みせ', '口': 'くち', '面': 'めん',
+  '周': 'まわ', '暗': 'くら', '妙': 'みょう', '昔': 'むかし', '速': 'はや',
+  '歌': 'うた', '違': 'ちが', '必': 'かなら', '後': 'あと', '積': 'つ', '重': 'かさ',
+  '様': 'さま', '争': 'あらそ',
+  // ── Week 7 compounds ──
+  '国籍': 'こくせき', '本日': 'ほんじつ', '歓迎': 'かんげい', '年齢': 'ねんれい',
+  '性別': 'せいべつ', '昼夜': 'ちゅうや', '男女': 'だんじょ', '季節': 'きせつ',
+  '鼻水': 'はなみず', '受験': 'じゅけん', '下手': 'へた', '夜中': 'よなか',
+  '常識': 'じょうしき', '専門店': 'せんもんてん', '感謝': 'かんしゃ', '友人': 'ゆうじん',
+  '祖父': 'そふ', '今夜': 'こんや', '四国': 'しこく', '上陸': 'じょうりく',
+  '満員': 'まんいん', '通勤': 'つうきん', '渋滞': 'じゅうたい', '発明': 'はつめい',
+  '調整': 'ちょうせい', '機械': 'きかい', '祝日': 'しゅくじつ', '休業': 'きゅうぎょう',
+  '契機': 'けいき', '独立': 'どくりつ', '住所': 'じゅうしょ', '安全': 'あんぜん',
+  '対策': 'たいさく', '強化': 'きょうか', '通り': 'とおり',
+  // ── Week 7 single kanji ──
+  '集': 'あつ', '靴': 'くつ', '鼻': 'はな', '聞': 'き', '似': 'に', '心': 'こころ',
+  '編': 'あ', '愛': 'あい', '贈': 'おく', '恐': 'おそ', '割': 'わ', '壁': 'かべ',
+  '倒': 'たお', '多': 'おお', '幸': 'しあわ', '手': 'て', '越': 'こ', '机': 'つくえ',
+  // ── Week 8 compounds ──
+  '反対': 'はんたい', '三日': 'みっか', '出発': 'しゅっぱつ', '我々': 'われわれ',
+  '設計': 'せっけい', '来週': 'らいしゅう', '火曜日': 'かようび', '午後': 'ごご',
+  '午前': 'ごぜん', '挑戦': 'ちょうせん', '欠席': 'けっせき', '二十歳': 'はたち',
+  '外出': 'がいしゅつ', '具合': 'ぐあい', '誠実': 'せいじつ', '教授': 'きょうじゅ',
+  '講義': 'こうぎ', '集合': 'しゅうごう', '飲食': 'いんしょく', '禁止': 'きんし',
+  '詳細': 'しょうさい', '次回': 'じかい', '日時': 'にちじ', '予定': 'よてい',
+  '大敗': 'たいはい', '入賞': 'にゅうしょう', '才能': 'さいのう', '美人': 'びじん',
+  '性格': 'せいかく', '湿気': 'しっけ', '年々': 'ねんねん', '月曜日': 'げつようび',
+  '木曜日': 'もくようび', '金曜日': 'きんようび', '水曜日': 'すいようび',
+  '収集': 'しゅうしゅう', '毎月': 'まいつき',
+  // ── Week 8 single kanji ──
+  '道': 'みち', '働': 'はたら', '父': 'ちち', '吸': 'す', '朝': 'あさ', '願': 'ねが',
+  '春': 'はる', '兄': 'あに', '貧': 'まず', '破': 'やぶ', '過': 'す', '卵': 'たまご',
+  '棚': 'たな', '除': 'のぞ', '別': 'べつ', '件': 'けん', '塗': 'ぬ', '痛': 'いた',
+  '要': 'よう', '力': 'ちから', '差': 'さ', '泊': 'と', '古': 'ふる', '燃': 'も',
+};
+const FURI_RE = new RegExp(Object.keys(FURIGANA).sort((a, b) => b.length - a.length).join('|'), 'g');
+function furi(text) {
+  return text.replace(FURI_RE, m => `<ruby>${m}<rt>${FURIGANA[m]}</rt></ruby>`);
+}
+
 function buildGrammar() {
   return `
     <div class="animate-in">
-      <h1 class="mb-2">Grammar Reference</h1>
-      <p class="text-muted text-sm mb-4">N3 patterns used in your scenarios</p>
-      <div class="flex flex-col gap-3">
-        ${JAPANESE_CONTENT.grammarPoints.map(g => `
-          <div class="card" style="border-left:3px solid var(--accent)">
-            <div class="jp font-bold" style="color:var(--accent);font-size:1.1rem">${g.pattern}</div>
-            <div class="text-sm font-medium mt-1">${g.meaning}</div>
-            <div class="bg-surface2 rounded p-3 mt-3">
-              <p class="jp text-sm">${g.example}</p>
-            </div>
-          </div>
-        `).join('')}
+      <h1 class="mb-1">Grammar 文法</h1>
+      <p class="text-muted text-sm mb-4">N2 Sou Matome (week by week) + your N3 reference</p>
+      <div class="flex gap-2 mb-4">
+        <button class="chip ${state.grammarTab === 'n2' ? 'active' : ''}" onclick="setGrammarTab('n2')">N2 総まとめ</button>
+        <button class="chip ${state.grammarTab === 'n3' ? 'active' : ''}" onclick="setGrammarTab('n3')">N3 reference</button>
       </div>
-      <h2 class="mt-6 mb-3">From your scenarios</h2>
-      <div class="flex flex-col gap-3">
-        ${JAPANESE_CONTENT.scenarios.map(s => `
-          <div class="card card-sm" style="border-left:3px solid var(--primary)">
-            <div class="jp font-bold" style="color:var(--primary)">${s.grammar.pattern}</div>
-            <div class="text-sm">${s.grammar.meaning}</div>
-            <div class="text-xs text-muted mt-1">${s.title}</div>
-          </div>
-        `).join('')}
-      </div>
+      ${state.grammarTab === 'n2' ? buildN2Grammar() : buildN3Grammar()}
     </div>
   `;
 }
+
+function n2Stats() {
+  const weeks = JAPANESE_CONTENT.n2Grammar.weeks;
+  let totalDays = 0, doneDays = 0, totalPoints = 0;
+  weeks.forEach(w => w.days.forEach(d => {
+    totalDays++;
+    totalPoints += d.points.length;
+    if (state.grammarProgress[`w${w.week}d${d.day}`]) doneDays++;
+  }));
+  return { totalDays, doneDays, totalPoints };
+}
+
+function buildN2Grammar() {
+  const { weeks } = JAPANESE_CONTENT.n2Grammar;
+  const st = n2Stats();
+  const pct = Math.round((st.doneDays / st.totalDays) * 100);
+  return `
+    <div class="card mb-4" style="border-color:var(--border-strong)">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-medium jp">日本語総まとめ N2 文法</span>
+        <span class="text-sm text-muted">${st.doneDays}/${st.totalDays} days</span>
+      </div>
+      <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <p class="text-xs text-muted mt-2">${st.totalPoints} grammar points loaded · 2 pages a day, like the book</p>
+    </div>
+
+    ${weeks.map(w => `
+      <div class="mb-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="badge badge-accent">第${w.week}週</span>
+          <h2 class="jp">${w.title}</h2>
+        </div>
+        <p class="text-xs text-muted mb-3">${w.titleEn} — ${w.theme}</p>
+        <div class="flex flex-col gap-2">
+          ${w.days.map(d => buildDayCard(w, d)).join('')}
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function buildDayCard(w, d) {
+  const key = `w${w.week}d${d.day}`;
+  const open = state.openDay === key;
+  const done = state.grammarProgress[key];
+  return `
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="flex items-center justify-between p-4" style="cursor:pointer" onclick="toggleDay('${key}')">
+        <div class="flex items-center gap-3">
+          <div style="width:30px;height:30px;border-radius:50%;border:1.5px solid ${done ? 'var(--accent)' : 'var(--border-strong)'};background:${done ? 'var(--accent)' : 'transparent'};color:${done ? '#fff' : 'var(--text-faint)'};display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0">
+            ${done ? '✓' : d.day}
+          </div>
+          <div>
+            <div class="text-xs text-muted display">${d.day}日目</div>
+            <div class="font-medium text-sm jp">${d.theme}</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-muted">${d.points.length} pts</span>
+          <span style="transform:rotate(${open ? 180 : 0}deg);transition:transform 0.2s;color:var(--text-muted)">${icons.chevron || '▾'}</span>
+        </div>
+      </div>
+      ${open ? `
+        <div class="animate-in" style="border-top:1px solid var(--border);padding:12px 14px">
+          <div class="flex flex-col gap-3">
+            ${d.points.map(buildN2PointCard).join('')}
+          </div>
+          <button class="btn ${done ? 'btn-secondary' : 'btn-gold'} btn-full mt-4" onclick="event.stopPropagation(); toggleDayDone('${key}')">
+            ${done ? '✓ Studied — tap to undo' : 'Mark this day studied'}
+          </button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function buildN2PointCard(p) {
+  return `
+    <div class="card" style="border-left:3px solid var(--accent)">
+      <div class="jp font-bold" style="color:var(--accent);font-size:1.15rem">${p.pattern}</div>
+      <div class="text-sm font-medium mt-1">${p.meaning}</div>
+      <div class="text-xs text-muted mt-1 jp">接続: ${p.connection}</div>
+      <div class="flex flex-col gap-2 mt-3">
+        ${p.examples.map(ex => `
+          <div class="bg-surface2 rounded p-3">
+            <p class="jp text-sm" style="line-height:2">${furi(ex.jp)}</p>
+            <p class="text-xs text-muted mt-1">${ex.en}</p>
+          </div>
+        `).join('')}
+      </div>
+      ${p.note ? `<p class="text-xs text-muted mt-2" style="line-height:1.5">💡 ${p.note}</p>` : ''}
+    </div>
+  `;
+}
+
+function buildN3Grammar() {
+  return `
+    <p class="text-muted text-sm mb-3">N3 patterns used in your scenarios</p>
+    <div class="flex flex-col gap-3">
+      ${JAPANESE_CONTENT.grammarPoints.map(g => `
+        <div class="card" style="border-left:3px solid var(--primary)">
+          <div class="jp font-bold" style="color:var(--primary);font-size:1.1rem">${g.pattern}</div>
+          <div class="text-sm font-medium mt-1">${g.meaning}</div>
+          <div class="bg-surface2 rounded p-3 mt-3">
+            <p class="jp text-sm">${g.example}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <h2 class="mt-6 mb-3">From your scenarios</h2>
+    <div class="flex flex-col gap-3">
+      ${JAPANESE_CONTENT.scenarios.map(s => `
+        <div class="card card-sm" style="border-left:3px solid var(--primary)">
+          <div class="jp font-bold" style="color:var(--primary)">${s.grammar.pattern}</div>
+          <div class="text-sm">${s.grammar.meaning}</div>
+          <div class="text-xs text-muted mt-1">${s.title}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function setGrammarTab(t) { state.grammarTab = t; render(); window.scrollTo(0, 0); }
+function toggleDay(key) { state.openDay = state.openDay === key ? null : key; render(); }
+function toggleDayDone(key) { state.grammarProgress[key] = !state.grammarProgress[key]; save(); render(); }
 
 // ─── Event handlers ───────────────────────────────────────────────────────────
 function bindEvents() {}

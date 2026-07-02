@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#1f43e0">
   <title>日本語 Study — Edward</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="../../assets/icon.png">
+  <link rel="icon" type="image/svg+xml" href="../../assets/icon.svg">
+  <link rel="apple-touch-icon" href="../../assets/icon.png">
   <link rel="stylesheet" href="../../shared/css/style.css">
   <style>
     /* Extra styles specific to Japanese app */
@@ -15,15 +20,30 @@
       font-family: var(--font-jp);
       color: var(--text);
       background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
     }
     input[type="text"]:focus {
-      box-shadow: 0 0 0 3px rgba(91,79,207,0.2);
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
     }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
+    /* Furigana */
+    ruby { ruby-position: over; -webkit-ruby-position: over; }
+    rt {
+      font-size: 0.5em;
+      color: var(--accent);
+      font-weight: 600;
+      user-select: none;
+      letter-spacing: 0;
+    }
   </style>
 </head>
 <body>
   <div id="app"></div>
+  <script src="../../shared/js/usage.js"></script>
+  <script src="../../shared/js/pwa.js"></script>
   <script src="content.js"></script>
   <script src="app.js"></script>
 </body>

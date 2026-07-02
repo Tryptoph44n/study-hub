@@ -1,0 +1,108 @@
+/* ═══════════════════════════════════════════════════════════════════
+   POLYMER — Lime green + maroon (Swiss / Helvetica bold)
+   Inspired by "sex house & helvetica bold": chartreuse ground, maroon type.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #e4ee5e;            /* lime / chartreuse */
+  --surface: #eef5a0;       /* lighter lime card */
+  --surface2: #d8e34a;
+  --border: #cdd94f;
+  --border-strong: #b3c23a;
+
+  --ink: #1a1a1a;
+  --ink-soft: #3a3a3a;
+  --primary: #b3185f;       /* maroon/magenta */
+  --primary-light: #f6dfec;
+  --primary-dark: #8f1149;
+
+  --accent: #b3185f;        /* maroon — titles, highlights */
+  --accent-bright: #d11f72;
+  --accent-light: #f7dce9;
+
+  --seal: #b3185f;
+  --seal-light: #f7dce9;
+
+  --success: #3b7d2a;
+  --success-light: #dcebbf;
+  --warning: #b3185f;
+  --warning-light: #f7dce9;
+
+  --text: #1a1a1a;
+  --text-muted: #5a5e2e;    /* olive-tinted muted on lime */
+  --text-faint: #87893f;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+[data-theme="dark"] {
+  --bg: #1b1e0a;            /* deep olive-black */
+  --surface: #262a0f;
+  --surface2: #313618;
+  --border: #3c4220;
+  --border-strong: #515a2c;
+
+  --ink: #eef5a0;
+  --ink-soft: #d4dd7e;
+  --primary: #f7569f;       /* bright maroon-pink on dark */
+  --primary-light: #3a1226;
+  --primary-dark: #ff6fae;
+
+  --accent: #f7569f;
+  --accent-bright: #ff7ab5;
+  --accent-light: #3a1226;
+
+  --seal: #f7569f;
+  --seal-light: #3a1226;
+
+  --success: #9ccb5e;
+  --success-light: #252d12;
+  --warning: #f7569f;
+  --warning-light: #3a1226;
+
+  --text: #eef5a0;
+  --text-muted: #aeb673;
+  --text-faint: #767c46;
+}
+
+body { background: var(--bg); }
+
+/* Headers in maroon, heavy Helvetica */
+h1, h2 { color: var(--accent); }
+[data-theme="dark"] h1, [data-theme="dark"] h2 { color: var(--accent); }
+
+/* Cards: clean white-ish lime panels */
+.card { background: var(--surface); }
+
+/* Progress bar maroon */
+.progress-fill { background: var(--accent); }
+
+/* Active chips/tabs maroon */
+.chip.active { background: var(--accent); color: #fff; }
+.tab-item.active { color: var(--accent); }
+.btn-primary { background: var(--accent); }
+.btn-primary:hover { background: var(--accent-bright); }
+.btn-gold { background: var(--accent); color: #fff; }
+
+/* Module jewel discs become flat maroon-on-lime number tiles */
+.jewel-disc {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+  background: var(--bg) !important;
+}
+
+/* Flashcards — tap to flip (3D) */
+.flashcard { height: 140px; perspective: 1000px; cursor: pointer; }
+.flashcard-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+.flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-face {
+  position: absolute; inset: 0;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; text-align: center;
+  border-radius: var(--radius); background: var(--surface);
+}
+.flashcard-front { border-left: 5px solid var(--accent); }
+.flashcard-back { transform: rotateY(180deg); background: var(--accent); color: #fff; }

@@ -4,8 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1f43e0">
   <title>高分子化学 Polymer Chemistry — Edward</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="/assets/icon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/icon.svg">
+  <link rel="apple-touch-icon" href="/assets/icon.png">
   <link rel="stylesheet" href="/shared/css/style.css">
+  <link rel="stylesheet" href="/apps/polymer/theme.css">
   <style>
     .card strong { color: var(--text); font-weight: 700; }
     [data-theme="dark"] .card strong { color: var(--ink); }
@@ -13,7 +19,10 @@
 </head>
 <body>
   <div id="app"></div>
+  <script src="/shared/js/usage.js"></script>
+  <script src="/shared/js/pwa.js"></script>
   <script src="/apps/polymer/content.js"></script>
+  <script src="/apps/polymer/enrichment.js"></script>
   <script src="/apps/polymer/app.js"></script>
 </body>
 </html>

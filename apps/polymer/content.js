@@ -186,6 +186,184 @@ For your battery interest: ester and ether groups carry lone-pair oxygens that c
       ],
       professorMode: `Tie mechanism to outcome: "The mechanism isn't trivia — it dictates the molecular weight distribution. Radical = random birth and death of chains = broad Ð. Living = simultaneous birth, no death = narrow Ð and control over architecture." This connects organic chemistry to materials properties, which is the heart of polymer science.`,
     },
+    {
+      id: 'sn2-mechanism',
+      module: 'organic',
+      level: 2,
+      title: 'SN2: Bimolecular Nucleophilic Substitution',
+      titleJp: '求核置換反応 SN2',
+      intro: `SN2 ("Substitution, Nucleophilic, bimolecular") is a **one-step, concerted** reaction: a nucleophile attacks a carbon at the exact moment the leaving group departs from the opposite side. There's no intermediate — bond-forming and bond-breaking happen simultaneously.`,
+      principle: `- **Mechanism**: the nucleophile attacks directly opposite (180° from) the leaving group — a "backside attack" — passing through a single trigonal-bipyramidal transition state.
+- **Rate law**: rate = k[Nu][substrate] — **bimolecular**, second order. Both the nucleophile and the substrate concentration matter.
+- **Stereochemistry**: backside attack forces **inversion of configuration** at that carbon (Walden inversion) — like an umbrella flipping inside-out in the wind.
+- **Favored by**: unhindered substrates (methyl > 1° >> 2°; 3° is essentially blocked by steric bulk), a strong/good nucleophile, a good leaving group, and a **polar aprotic** solvent (DMSO, DMF, acetone) — these solvate the cation but leave the nucleophile "naked" and reactive.`,
+      deepDive: `This is not just textbook trivia for you — it's how you actually made your PEO. **Anionic ring-opening polymerization** of epoxides (ethylene oxide → polyethylene oxide, the backbone of most solid polymer electrolytes) proceeds by exactly this mechanism: an alkoxide nucleophile attacks the strained epoxide carbon from the backside, inverting it and opening the ring. The epoxide's ring strain (~105 kJ/mol) is what makes an otherwise poor leaving group (an ether oxygen) willing to leave — strain release, not leaving-group ability, drives the reaction. Every propagation step in that polymerization is a textbook SN2.
+
+SN2 also shows up in your bench work directly: converting a polymer chain-end halide to an azide with NaN₃ (a classic prep step before "click" cycloaddition chemistry) is a plain SN2 substitution.`,
+      equations: [
+        { label: 'Rate law', expr: 'rate = k[Nu⁻][R–X]   (2nd order overall)' },
+      ],
+      examQA: [
+        { q: 'Why does SN2 fail on tertiary (3°) substrates?', a: 'The three bulky alkyl groups around the reactive carbon sterically block the nucleophile from approaching directly opposite the leaving group, so the backside attack the mechanism requires can\'t happen at a useful rate.' },
+        { q: 'Why is anionic ring-opening polymerization of ethylene oxide an SN2 reaction, even though ethers are normally poor electrophiles?', a: 'The epoxide ring is highly strained (~105 kJ/mol). An alkoxide nucleophile attacks the ring carbon from the backside, and relief of that ring strain provides the driving force to expel the ether oxygen as the new (now unstrained) alkoxide chain end — a backside attack with inversion, i.e. SN2.' },
+      ],
+      professorMode: `Lead with mechanism-to-kinetics logic: "SN2 is concerted, so both partners appear in the rate law — that's the diagnostic. Backside attack necessarily inverts configuration. And critically for my own synthesis work: anionic ROP of epoxides to make PEO is SN2 chemistry, just repeated thousands of times — the ring strain of the epoxide is what makes an ether oxygen a viable leaving group at all."`,
+      flashcards: [
+        { front: 'SN2 rate law', back: 'rate = k[Nu][substrate] — bimolecular, both concentrations matter.' },
+        { front: 'SN2 stereochemistry', back: 'Inversion of configuration (Walden inversion) — backside attack flips the center like an umbrella in the wind.' },
+        { front: 'Best substrate for SN2', back: 'Methyl or 1° — unhindered. 3° is blocked sterically; SN2 essentially doesn\'t happen there.' },
+        { front: 'Best solvent for SN2', back: 'Polar aprotic (DMSO, DMF, acetone) — solvates cations but leaves the nucleophile unhindered and reactive.' },
+      ],
+      mcq: [
+        { q: 'SN2 reactions proceed with what stereochemical outcome?', options: ['Retention of configuration', 'Inversion of configuration', 'Racemization', 'No stereocenter is affected'], answer: 1, explain: 'Backside attack opposite the leaving group forces the configuration to invert, like an umbrella flipping inside-out.' },
+        { q: 'Which solvent type best supports an SN2 reaction?', options: ['Polar protic (water, alcohols)', 'Polar aprotic (DMSO, DMF)', 'Nonpolar (hexane)', 'Solvent doesn\'t matter'], answer: 1, explain: 'Polar aprotic solvents solvate the cation but not the nucleophile, keeping it reactive and unhindered for backside attack.' },
+        { q: 'In anionic ring-opening polymerization of ethylene oxide, what drives the ring-opening step?', options: ['The leaving group is unusually good', 'Relief of epoxide ring strain', 'Radical stability', 'High temperature alone'], answer: 1, explain: 'The strained 3-membered ring makes the otherwise poor ether leaving group willing to leave, because opening the ring releases significant strain energy.' },
+      ],
+    },
+    {
+      id: 'sn1-mechanism',
+      module: 'organic',
+      level: 2,
+      title: 'SN1: Unimolecular Nucleophilic Substitution & Carbocations',
+      titleJp: '求核置換反応 SN1',
+      intro: `SN1 ("Substitution, Nucleophilic, unimolecular") happens in **two steps**: first the leaving group departs on its own, forming a flat, positively charged **carbocation**; then a nucleophile attacks that cation from either face. Because ionization is slow and attack is fast, the *rate only depends on the substrate*.`,
+      principle: `- **Step 1 (slow, rate-determining)**: C–X bond breaks heterolytically, generating a planar sp² carbocation and a free leaving group.
+- **Step 2 (fast)**: a nucleophile attacks the flat cation from either face.
+- **Rate law**: rate = k[substrate] — **unimolecular**, first order. Nucleophile concentration doesn't appear at all.
+- **Stereochemistry**: attack from either face of the flat cation gives (mostly) **racemization**, not clean inversion.
+- **Favored by**: substrates that form stable carbocations (3° > 2° >> 1°, methyl essentially never), weak nucleophiles, and **polar protic** solvents (water, alcohols) that stabilize both the developing cation and the departing leaving group by solvation.`,
+      deepDive: `Carbocation **stability** is the whole story here, and it follows the **Hammond postulate**: since the rate-determining step passes through the high-energy cation, anything that stabilizes that cation (more alkyl groups donating electron density by hyperconjugation and induction) speeds up the whole reaction. Watch for **carbocation rearrangements** — a hydride or methyl shift will happen spontaneously if it produces a more stable cation, which can scramble the product skeleton entirely.
+
+This is precisely the chemistry underneath **cationic vinyl polymerization** (e.g. polyisobutylene / butyl rubber). Initiation ionizes a monomer–initiator complex to generate a carbocation — an SN1-style ionization step. The propagating chain end *is* a carbocation the entire time it's growing, and it's stable enough to persist only because it's tertiary-like (isobutylene's two methyl groups stabilize it, which is exactly why isobutylene polymerizes cationically so readily). Each monomer addition is a nucleophile (the alkene's π electrons) attacking that cation, just like the second step of SN1.`,
+      equations: [
+        { label: 'Rate law', expr: 'rate = k[R–X]   (1st order, independent of [Nu])' },
+      ],
+      examQA: [
+        { q: 'Why does SN1 rate depend only on substrate concentration, not nucleophile concentration?', a: 'The rate-determining step is the slow ionization of the substrate into a carbocation, which happens before the nucleophile is involved at all. The fast nucleophilic attack that follows doesn\'t affect the overall rate, so only [substrate] appears in the rate law.' },
+        { q: 'How does carbocation stability relate to cationic vinyl polymerization?', a: 'The propagating chain end in cationic polymerization is a carbocation, exactly like the SN1 intermediate. Monomers like isobutylene polymerize readily because their substitution pattern stabilizes that cation (analogous to a tertiary carbocation), just as tertiary substrates react fastest via SN1.' },
+      ],
+      professorMode: `Anchor on the Hammond postulate: "SN1 rate is set entirely by how stable the carbocation intermediate is, because that's the high point on the reaction coordinate. That's not just substitution trivia — it's literally the mechanism I rely on in cationic polymerization, where the growing chain end is a carbocation the whole time, and monomer choice is really a choice of how well that cation is stabilized."`,
+      flashcards: [
+        { front: 'SN1 rate law', back: 'rate = k[substrate] — unimolecular; nucleophile concentration doesn\'t matter.' },
+        { front: 'SN1 stereochemistry', back: 'Racemization (mostly) — the flat carbocation is attacked from either face.' },
+        { front: 'Carbocation stability order', back: '3° > 2° > 1° > methyl — more alkyl groups donate electron density (hyperconjugation + induction).' },
+        { front: 'Carbocation rearrangement', back: 'A hydride or methyl shift occurs spontaneously if it produces a more stable cation — can scramble the product skeleton.' },
+      ],
+      mcq: [
+        { q: 'What determines the rate of an SN1 reaction?', options: ['Nucleophile concentration only', 'Both substrate and nucleophile concentration', 'Substrate concentration only', 'Solvent polarity only'], answer: 2, explain: 'The slow, rate-determining step is ionization of the substrate; the nucleophile only participates afterward in a fast step.' },
+        { q: 'Which substrate reacts fastest via SN1?', options: ['Methyl halide', '1° halide', '2° halide', '3° halide'], answer: 3, explain: 'Tertiary substrates form the most stable carbocation, and by the Hammond postulate that lowers the barrier to the rate-determining ionization step.' },
+        { q: 'Why is the growing chain end in cationic vinyl polymerization mechanistically similar to an SN1 intermediate?', options: ['Both are radicals', 'Both are carbocations attacked by a nucleophile', 'Both involve a strong base', 'They are unrelated'], answer: 1, explain: 'The propagating cationic chain end is a carbocation, and monomer addition is nucleophilic attack on it — the same species and step as SN1\'s second step.' },
+      ],
+    },
+    {
+      id: 'e2-mechanism',
+      module: 'organic',
+      level: 2,
+      title: 'E2: Bimolecular (Concerted) Elimination',
+      titleJp: '脱離反応 E2',
+      intro: `E2 ("Elimination, bimolecular") removes a leaving group and a hydrogen from the adjacent (β) carbon in **one concerted step**, forming a C=C double bond. A strong base pulls off the β-hydrogen at the exact moment the leaving group departs.`,
+      principle: `- **Mechanism**: a strong base removes a β-H while the C–X bond breaks simultaneously, forming the new π bond in one step.
+- **Geometric requirement**: the H and the leaving group must be **anti-periplanar** (180° apart in the reactive conformation) for the orbitals to align properly.
+- **Rate law**: rate = k[base][substrate] — bimolecular, second order.
+- **Favored by**: strong bases (especially bulky ones like KOtBu), and works on 2° and 3° substrates readily (unlike SN2, steric bulk at the substrate doesn't block E2 the same way).
+- **Product selectivity**: small, unhindered bases (NaOEt) tend to remove the most accessible β-H, favoring the **Zaitsev** (more substituted, more stable) alkene. Bulky bases (KOtBu) can't reach the more hindered β-H, so they favor the **Hofmann** (less substituted) alkene instead.`,
+      deepDive: `E2 competes directly with SN2 whenever a strong base/nucleophile meets a 2° or 3° substrate — the outcome hinges on whether the reagent acts as a base (grabbing H, → E2) or a nucleophile (attacking carbon, → SN2). Bulky bases push the balance toward elimination because their bulk makes backside attack on carbon (needed for SN2) sterically painful, while grabbing a peripheral hydrogen is comparatively unhindered.
+
+Elimination chemistry isn't only a side reaction to avoid — it's sometimes the whole point of a polymer synthesis. In the classic **sulfonium precursor route to PPV** (poly(p-phenylene vinylene), a conjugated polymer used in OLED materials), a soluble, non-conjugated precursor polymer bearing sulfonium leaving groups is treated with base. A base-mediated, E2-like 1,2-elimination strips off the leaving groups and unveils the conjugated C=C backbone that makes the polymer optically active — elimination chemistry is literally how the functional material gets made.`,
+      equations: [
+        { label: 'Rate law', expr: 'rate = k[Base][R–X]   (2nd order overall)' },
+      ],
+      examQA: [
+        { q: 'Why must the β-H and leaving group be anti-periplanar in E2?', a: 'The C–H and C–X σ bonds must be aligned 180° apart so their orbitals can overlap properly as they break, allowing the new π bond to form in a single concerted step. Without that alignment, the transition state geometry doesn\'t work.' },
+        { q: 'How does base bulk affect E2 product selectivity?', a: 'Small, unhindered bases can reach the most accessible β-H, typically giving the more substituted (Zaitsev) alkene. Bulky bases like KOtBu are sterically prevented from reaching the more hindered β-H, so they preferentially remove a more accessible but less-substituted hydrogen, favoring the less-substituted (Hofmann) alkene.' },
+      ],
+      professorMode: `Emphasize the geometry requirement first: "E2 isn't just 'base removes H, leaving group leaves' — it only works when H and the leaving group are anti-periplanar, because the mechanism is concerted and needs proper orbital alignment. And base bulk is a selectivity lever: small bases give Zaitsev, bulky bases give Hofmann, because bulk determines which β-H is even reachable." If it fits the conversation, mention that elimination is also a deliberate synthetic tool — the sulfonium precursor route to PPV literally unveils a conjugated polymer via base-induced elimination.`,
+      flashcards: [
+        { front: 'E2 rate law', back: 'rate = k[base][substrate] — bimolecular, concerted, one step.' },
+        { front: 'E2 geometric requirement', back: 'Anti-periplanar: the β-H and leaving group must be 180° apart for orbital overlap.' },
+        { front: 'Zaitsev vs Hofmann (E2)', back: 'Small base → Zaitsev (more substituted alkene). Bulky base (e.g. KOtBu) → Hofmann (less substituted), because it can\'t reach the more hindered β-H.' },
+        { front: 'E2 vs SN2 competition', back: 'Same strong reagent, same substrate — whether it acts as a base (E2) or nucleophile (SN2) decides the outcome; bulk pushes toward E2.' },
+      ],
+      mcq: [
+        { q: 'What geometric arrangement does E2 require between the β-H and the leaving group?', options: ['Syn-periplanar (eclipsed)', 'Anti-periplanar (180° apart)', 'Gauche (60° apart)', 'No specific geometry needed'], answer: 1, explain: 'The concerted mechanism needs the C–H and C–X bonds aligned 180° apart for proper orbital overlap as both bonds break.' },
+        { q: 'A bulky base like potassium tert-butoxide (KOtBu) in an E2 reaction tends to favor which product?', options: ['The Zaitsev (more substituted) alkene', 'The Hofmann (less substituted) alkene', 'Substitution product only', 'A racemic mixture'], answer: 1, explain: 'Its bulk prevents it from reaching the more hindered β-hydrogens, so it removes a more accessible but less-substituted one instead.' },
+        { q: 'E2 and SN2 often compete under the same conditions because...', options: ['They have different rate laws', 'The same strong reagent can act as either a base (E2) or nucleophile (SN2)', 'E2 never happens with strong bases', 'SN2 requires no nucleophile'], answer: 1, explain: 'Whether the reagent grabs a β-hydrogen (elimination) or attacks the carbon backside (substitution) determines which pathway wins.' },
+      ],
+    },
+    {
+      id: 'e1-mechanism',
+      module: 'organic',
+      level: 2,
+      title: 'E1: Unimolecular Elimination',
+      titleJp: '脱離反応 E1',
+      intro: `E1 ("Elimination, unimolecular") shares its **first step with SN1**: the leaving group departs on its own to form a carbocation. Then, instead of a nucleophile attacking the cation, a weak base removes a β-hydrogen to form a double bond.`,
+      principle: `- **Step 1 (slow, rate-determining)**: same ionization as SN1 — C–X breaks to form a carbocation.
+- **Step 2 (fast)**: a weak base removes a β-H, and the electrons form the new π bond.
+- **Rate law**: rate = k[substrate] — unimolecular, independent of base concentration.
+- **Favored by**: the same conditions as SN1 — 3° > 2° substrates, weak base/nucleophile, polar protic solvent, and (importantly) **higher temperature**, which favors elimination's entropy gain.
+- **Product selectivity**: since the carbocation intermediate lives long enough to reach the lowest-energy transition state, E1 favors the **Zaitsev** (more substituted, more stable) alkene, and can also give rearranged products if a hydride/methyl shift occurs first.`,
+      deepDive: `E1 and SN1 are constant competitors because they share the exact same carbocation intermediate — the only question is whether a nucleophile attacks the cation (SN1) or a base grabs an adjacent proton (E1). Heat pushes the balance toward E1: elimination increases the number of independent product molecules (entropy gain), and higher temperature makes that entropic term more favorable relative to enthalpy.
+
+This split shows up directly in **cationic vinyl polymerization**. The same propagating carbocation that reacts with monomer to keep the chain growing (the SN1-like propagation step, see the SN1 concept) can instead lose a β-proton to a base or counter-ion — an E1-type step. This is the classic **chain-transfer-to-monomer** mechanism that terminates a growing cationic chain, capping it with a terminal alkene (often a vinylidene) end group and starting a fresh chain elsewhere. It's a major reason cationic polymerizations are hard to push to very high molecular weight — the same reactive cation that builds the chain is always one β-proton loss away from ending it.`,
+      equations: [
+        { label: 'Rate law', expr: 'rate = k[R–X]   (1st order, independent of [Base])' },
+      ],
+      examQA: [
+        { q: 'Why do SN1 and E1 always compete for the same substrate?', a: 'Both mechanisms share the identical first step — ionization of the substrate to a carbocation. Once that cation forms, whether a nucleophile attacks it (SN1) or a base removes a β-hydrogen (E1) determines which product forms, so any conditions that favor SN1 substrates (3°, polar protic solvent) also set up E1 as a competing pathway.' },
+        { q: 'What is "chain-transfer-to-monomer" in cationic polymerization, and how is it E1-like?', a: 'It\'s a termination pathway where the propagating carbocation chain end loses a β-proton (to a base or counter-ion) instead of reacting with another monomer, forming a terminal alkene end group and ending that chain — mechanistically the same proton-loss-from-a-cation step as E1, just occurring on a polymer chain end instead of a small molecule.' },
+      ],
+      professorMode: `Frame E1 as "SN1's sibling, not a separate topic": "E1 and SN1 share the same rate-determining ionization step — that's why anything that favors one substrate for SN1 also opens the door to E1 as a competitor, and why heat pushes the balance toward elimination via the entropy term. In my own field, this exact competition — cation reacts with monomer vs. loses a proton — is precisely what limits molecular weight in cationic polymerization through chain-transfer-to-monomer."`,
+      flashcards: [
+        { front: 'E1 rate law', back: 'rate = k[substrate] — unimolecular; same rate-determining step as SN1.' },
+        { front: 'E1 vs SN1', back: 'Identical first step (ionization to carbocation); nucleophile attack = SN1, β-H removal by base = E1.' },
+        { front: 'What favors E1 over SN1?', back: 'Higher temperature (entropy gain from forming more product particles) and weaker/bulkier nucleophiles that struggle to attack the cation.' },
+        { front: 'Chain-transfer-to-monomer (cationic polymerization)', back: 'An E1-type step: the propagating carbocation loses a β-proton instead of adding monomer, ending that chain with a terminal alkene.' },
+      ],
+      mcq: [
+        { q: 'E1 and SN1 differ in which step?', options: ['The rate-determining ionization step', 'Only the second step — what happens to the carbocation', 'Neither forms a carbocation', 'E1 has no rate-determining step'], answer: 1, explain: 'Both share the same slow ionization; they diverge only in whether a nucleophile attacks the cation (SN1) or a base removes a β-H (E1).' },
+        { q: 'What effect does raising the temperature typically have on the SN1/E1 mixture?', options: ['Favors SN1 (substitution)', 'Favors E1 (elimination)', 'Has no effect', 'Stops the reaction entirely'], answer: 1, explain: 'Elimination has a more favorable entropy change (more independent product particles), and that term matters more at higher temperature.' },
+        { q: 'In cationic vinyl polymerization, chain-transfer-to-monomer terminates a chain by...', options: ['A radical combination', 'The carbocation losing a β-proton (E1-type step)', 'An SN2 attack on the chain end', 'Simple chain scission'], answer: 1, explain: 'The propagating cation loses a β-hydrogen instead of reacting with another monomer, capping the chain with a terminal alkene — the same elementary step as E1.' },
+      ],
+    },
+    {
+      id: 'sn-e-decision',
+      module: 'organic',
+      level: 3,
+      title: 'Choosing the Mechanism: SN1 vs SN2 vs E1 vs E2',
+      titleJp: '機構の選択',
+      intro: `In real problems, nobody labels the mechanism for you — you're given a substrate, a reagent, and a solvent, and you have to figure out which of the four pathways applies. This is the single most commonly tested organic chemistry skill, and it's really just reading four clues in order.`,
+      principle: `A practical decision order:
+1. **Count carbons at the reactive center.** Methyl/1° → SN2 is sterically wide open (E2 possible with a very bulky base). 3° → SN2 is sterically blocked entirely, so it's always SN1/E1/E2. 2° is the genuine "it depends" case — read the rest of the clues.
+2. **Read the reagent.** Strong + small (NaOEt, NaOH, NaN₃) → substitution-favoring (SN2) or Zaitsev elimination if forced. Strong + bulky (KOtBu) → pushed toward elimination (E2), and toward Hofmann product. Weak (H₂O, ROH) → SN1/E1 territory.
+3. **Read the solvent.** Polar aprotic (DMSO, DMF, acetone) → supports SN2. Polar protic (H₂O, ROH) → supports SN1/E1 by stabilizing the ionic intermediate.
+4. **Read the temperature.** Heat favors elimination (E) over substitution (S) in general, because elimination's entropy gain (more independent particles) becomes more favorable at higher T.`,
+      deepDive: `The classic overlap cases are worth memorizing directly:
+- **1°/methyl + strong small Nu/base, polar aprotic** → clean SN2.
+- **1° + strong bulky base (KOtBu)** → E2 even on a 1° substrate, because the base can't get close enough to attack carbon but can still reach a β-H.
+- **2° + strong small Nu/base, polar aprotic** → SN2 dominant.
+- **2° + strong bulky base** → E2 dominant.
+- **2°/3° + weak Nu/base, polar protic, heat** → SN1/E1 mixture, usually with more E1 as temperature rises, and watch for rearrangement.
+- **3° + any strong base** → E2 exclusively — SN2 is sterically impossible regardless of base bulk, and a strong base reacts fast enough that it doesn't wait around for spontaneous ionization (which would open SN1/E1).
+
+Notice the pattern: substrate sterics decide *what's even possible*, and reagent/solvent/temperature decide *which of the possible pathways wins*.`,
+      examQA: [
+        { q: 'A 3° alkyl halide is treated with a strong, bulky base in a polar aprotic solvent. What mechanism dominates, and why?', a: 'E2. SN2 is sterically impossible on a 3° carbon regardless of base bulk. Because the base is strong, it reacts via the fast concerted E2 pathway rather than waiting for the substrate to spontaneously ionize (which would be needed for SN1/E1).' },
+        { q: 'A 2° alkyl bromide is heated in ethanol (a weak nucleophile, polar protic solvent) with no added base. What mechanism(s) dominate, and what product is favored?', a: 'SN1/E1 dominate, since the polar protic solvent stabilizes the carbocation intermediate and the nucleophile/base is weak. Heat pushes the balance further toward E1, and the more substituted (Zaitsev) alkene is favored, with the possibility of a rearranged product if a more stable cation is accessible.' },
+      ],
+      professorMode: `Present it as an explicit algorithm, because that's what professors are actually testing: "First I check the substrate's substitution level — that tells me what's sterically possible. Then I read the reagent's strength and bulk, then the solvent, then the temperature. Substrate sterics gate the possibilities; the other three variables pick the winner among them." Walking through the four checks out loud, in order, is exactly the reasoning graders want to see, not just a memorized final answer.`,
+      flashcards: [
+        { front: 'Decision step 1', back: 'Count carbons at the reactive center: methyl/1° opens SN2; 3° blocks SN2 entirely.' },
+        { front: 'Decision step 2', back: 'Reagent strength + bulk: strong+small → substitution/Zaitsev; strong+bulky → elimination/Hofmann; weak → SN1/E1.' },
+        { front: 'Decision step 3', back: 'Solvent: polar aprotic supports SN2; polar protic supports SN1/E1.' },
+        { front: 'Decision step 4', back: 'Temperature: heat favors elimination over substitution (entropy gain from more product particles).' },
+        { front: '3° substrate + any strong base', back: 'Always E2 — SN2 is sterically impossible, and the strong base outcompetes spontaneous ionization.' },
+      ],
+      mcq: [
+        { q: 'What is the very first thing to check when deciding between SN1/SN2/E1/E2?', options: ['The solvent', 'The temperature', 'The substitution level of the reactive carbon (methyl/1°/2°/3°)', 'The color of the reagent'], answer: 2, explain: 'Substrate sterics determine what\'s even possible — SN2 is only viable on unhindered carbons — before reagent, solvent, or temperature can narrow it further.' },
+        { q: 'A 1° substrate reacts with a strong, very bulky base. What mechanism is most likely?', options: ['SN2, because 1° substrates always favor SN2', 'E2, because the base is too bulky to attack carbon but can still reach a β-H', 'SN1, because 1° carbocations are stable', 'No reaction occurs'], answer: 1, explain: 'Even on an unhindered 1° carbon, a sufficiently bulky base prefers grabbing an accessible β-hydrogen over squeezing in for backside attack.' },
+        { q: 'Raising the reaction temperature generally shifts the SN1/E1 balance toward...', options: ['SN1', 'E1', 'Neither — temperature has no effect', 'SN2'], answer: 1, explain: 'Elimination produces more independent particles (entropy increase), and that entropic term becomes more favorable as temperature rises.' },
+      ],
+    },
 
     // ─── POLYMER FUNDAMENTALS ─────────────────────────────────────────────
     {

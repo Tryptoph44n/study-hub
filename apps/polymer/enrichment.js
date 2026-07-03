@@ -63,6 +63,113 @@ const POLYMER_ENRICH = {
     </svg>`,
   },
 
+  'sn2-mechanism': {
+    simple: "SN2 happens in one clean motion: a nucleophile shoves in from the exact opposite side as the leaving group walks out. Because it attacks from the back, the molecule's shape flips inside-out. It only works if the reaction site isn't too crowded.",
+    analogy: "Like an umbrella flipping inside-out in a strong wind — the push comes from behind at the same instant the front gives way, so the whole shape inverts in one motion.",
+    figure: `<svg viewBox="0 0 300 140" style="width:100%;height:auto">
+      <circle cx="35" cy="70" r="20" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <text x="35" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">Nu⁻</text>
+      <line x1="57" y1="70" x2="112" y2="70" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrSN2)"/>
+      <line x1="150" y1="45" x2="150" y2="60" stroke="var(--text)" stroke-width="1.5"/>
+      <line x1="150" y1="80" x2="150" y2="95" stroke="var(--text)" stroke-width="1.5"/>
+      <circle cx="150" cy="70" r="3.5" fill="var(--text)"/>
+      <text x="150" y="33" text-anchor="middle" font-size="11" fill="var(--text)">‡ transition state</text>
+      <line x1="153" y1="70" x2="195" y2="70" stroke="var(--text)" stroke-width="2" stroke-dasharray="3 2"/>
+      <line x1="205" y1="70" x2="255" y2="70" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrSN2)"/>
+      <text x="225" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">X⁻</text>
+      <defs><marker id="arrSN2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker></defs>
+      <text x="150" y="120" text-anchor="middle" font-size="10.5" fill="var(--text)">attacks opposite X, one step → inverted product</text>
+    </svg>`,
+  },
+
+  'sn1-mechanism': {
+    simple: "SN1 happens in two steps: first the leaving group falls off by itself, leaving behind a flat, positively-charged carbon (a carbocation). Then a nucleophile can attack from either face of that flat shape — so the product often comes out as a 50/50 mixed pair.",
+    analogy: "Like a table losing one leg and going flat — once it's flat, anyone can walk up and touch it from either side, top or bottom, equally easily.",
+    figure: `<svg viewBox="0 0 320 140" style="width:100%;height:auto">
+      <circle cx="45" cy="70" r="3.5" fill="var(--text)"/>
+      <text x="45" y="55" text-anchor="middle" font-size="12" fill="var(--text)">C</text>
+      <line x1="49" y1="70" x2="85" y2="70" stroke="var(--text)" stroke-width="2"/>
+      <text x="95" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">X</text>
+      <line x1="105" y1="65" x2="140" y2="65" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrSN1)"/>
+      <text x="122" y="50" text-anchor="middle" font-size="9" fill="var(--text)">slow</text>
+      <circle cx="175" cy="70" r="18" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <text x="175" y="75" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">C⁺</text>
+      <text x="175" y="42" text-anchor="middle" font-size="10" fill="var(--text)">flat (sp²)</text>
+      <line x1="192" y1="60" x2="228" y2="38" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrSN1)"/>
+      <line x1="192" y1="80" x2="228" y2="102" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrSN1)"/>
+      <text x="270" y="33" text-anchor="middle" font-size="10" fill="var(--text)">Nu from top</text>
+      <text x="270" y="112" text-anchor="middle" font-size="10" fill="var(--text)">Nu from bottom</text>
+      <defs><marker id="arrSN1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker></defs>
+      <text x="160" y="128" text-anchor="middle" font-size="10.5" fill="var(--text)">flat cation attacked from both faces → racemic mixture</text>
+    </svg>`,
+  },
+
+  'e2-mechanism': {
+    simple: "E2 rips off a hydrogen and the leaving group at the same time, from opposite sides of the molecule, forming a new double bond in one single step. It needs a strong base and the right geometry — the H and leaving group have to line up directly across from each other.",
+    analogy: "Like two people yanking off opposite ends of a zipper at the exact same moment — it only works cleanly if they're pulling from directly opposite sides.",
+    figure: `<svg viewBox="0 0 320 150" style="width:100%;height:auto">
+      <text x="50" y="35" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">B⁻</text>
+      <line x1="58" y1="42" x2="100" y2="72" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrE2)"/>
+      <text x="112" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">H</text>
+      <line x1="112" y1="86" x2="112" y2="100" stroke="var(--text)" stroke-width="2"/>
+      <circle cx="112" cy="105" r="3.5" fill="var(--text)"/>
+      <text x="112" y="122" text-anchor="middle" font-size="11" fill="var(--text)">Cβ</text>
+      <line x1="118" y1="105" x2="192" y2="105" stroke="var(--text)" stroke-width="2"/>
+      <line x1="120" y1="111" x2="190" y2="111" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrE2)"/>
+      <circle cx="198" cy="105" r="3.5" fill="var(--text)"/>
+      <text x="198" y="122" text-anchor="middle" font-size="11" fill="var(--text)">Cα</text>
+      <line x1="198" y1="99" x2="198" y2="75" stroke="var(--text)" stroke-width="2"/>
+      <line x1="200" y1="72" x2="238" y2="42" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrE2)"/>
+      <text x="252" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">X⁻</text>
+      <defs><marker id="arrE2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker></defs>
+      <text x="160" y="142" text-anchor="middle" font-size="10.5" fill="var(--text)">H and X anti (opposite sides), one step → alkene</text>
+    </svg>`,
+  },
+
+  'e1-mechanism': {
+    simple: "E1 shares its first move with SN1 — the leaving group falls off by itself, forming that same flat carbocation. But instead of a nucleophile attacking, a base plucks off a neighboring hydrogen, and a double bond forms where the cation used to be.",
+    analogy: "Same broken table as SN1 — but this time, instead of someone touching the flat top, someone kicks out a nearby leg too, and the whole thing collapses into a new, flatter shape (the alkene).",
+    figure: `<svg viewBox="0 0 320 150" style="width:100%;height:auto">
+      <circle cx="45" cy="75" r="3.5" fill="var(--text)"/>
+      <text x="45" y="60" text-anchor="middle" font-size="12" fill="var(--text)">C</text>
+      <line x1="49" y1="75" x2="85" y2="75" stroke="var(--text)" stroke-width="2"/>
+      <text x="95" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">X</text>
+      <line x1="105" y1="70" x2="135" y2="70" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrE1)"/>
+      <text x="120" y="55" text-anchor="middle" font-size="9" fill="var(--text)">slow</text>
+      <circle cx="170" cy="75" r="18" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <text x="170" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">C⁺</text>
+      <line x1="182" y1="60" x2="182" y2="38" stroke="var(--text)" stroke-width="2"/>
+      <text x="182" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text)">H (β)</text>
+      <line x1="192" y1="66" x2="230" y2="38" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrE1)"/>
+      <text x="252" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">B⁻</text>
+      <defs><marker id="arrE1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker></defs>
+      <text x="160" y="128" text-anchor="middle" font-size="10.5" fill="var(--text)">fast: base removes a β-H from the cation → alkene</text>
+    </svg>`,
+  },
+
+  'sn-e-decision': {
+    simple: "Nobody tells you which mechanism to use — you have to read four clues in order: how crowded is the reacting carbon, how strong/bulky is the reagent, what's the solvent, and how hot is it. Crowding decides what's even possible; the rest decide which possible path wins.",
+    analogy: "Like triaging a patient: first check what's even survivable given their condition (substrate), then read the other vitals (reagent, solvent, temperature) to decide the actual treatment.",
+    figure: `<svg viewBox="0 0 320 170" style="width:100%;height:auto">
+      <rect x="115" y="8" width="90" height="30" rx="8" fill="none" stroke="var(--accent)" stroke-width="2"/>
+      <text x="160" y="27" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text)">substrate?</text>
+      <line x1="140" y1="38" x2="65" y2="65" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrDec)"/>
+      <line x1="180" y1="38" x2="255" y2="65" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrDec)"/>
+      <text x="60" y="60" text-anchor="middle" font-size="10" fill="var(--text)">1° / methyl</text>
+      <text x="262" y="60" text-anchor="middle" font-size="10" fill="var(--text)">3°</text>
+      <rect x="10" y="68" width="110" height="28" rx="8" fill="none" stroke="var(--text)" stroke-width="1.5"/>
+      <text x="65" y="86" text-anchor="middle" font-size="10" fill="var(--text)">strong Nu → SN2</text>
+      <rect x="200" y="68" width="110" height="28" rx="8" fill="none" stroke="var(--text)" stroke-width="1.5"/>
+      <text x="255" y="86" text-anchor="middle" font-size="10" fill="var(--text)">SN2 blocked → E2</text>
+      <line x1="160" y1="38" x2="160" y2="100" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrDec)"/>
+      <text x="185" y="55" text-anchor="middle" font-size="10" fill="var(--text)">2°</text>
+      <rect x="95" y="103" width="130" height="28" rx="8" fill="none" stroke="var(--text)" stroke-width="1.5"/>
+      <text x="160" y="121" text-anchor="middle" font-size="10" fill="var(--text)">"it depends" zone</text>
+      <text x="160" y="150" text-anchor="middle" font-size="10" fill="var(--text)">read: Nu/base strength + bulk, solvent, heat</text>
+      <defs><marker id="arrDec" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)"/></marker></defs>
+    </svg>`,
+  },
+
   'what-is-polymer': {
     simple: "A polymer is one tiny unit (a monomer) repeated thousands of times, like beads on a string. Same beads — but how you arrange the string (straight, branched, or a net) changes whether you get a bag, a bottle, or rubber.",
     analogy: "Monomers are LEGO bricks; a polymer is what you build by clicking the same brick over and over.",

@@ -1,22 +1,28 @@
 // Bump CACHE_NAME whenever PRECACHE_URLS or app assets change meaningfully.
-const CACHE_NAME = 'study-hub-v1';
+const CACHE_NAME = 'study-hub-v2';
 
+// Relative to the service worker's scope (the deployment root), so this works
+// both at a domain root and at a GitHub Pages project sub-path.
 const PRECACHE_URLS = [
-  '/index.html',
-  '/manifest.json',
-  '/shared/css/style.css',
-  '/shared/js/usage.js',
-  '/shared/js/pwa.js',
-  '/assets/icon.png',
-  '/assets/icon.svg',
-  '/apps/japanese/index.html',
-  '/apps/japanese/app.js',
-  '/apps/japanese/content.js',
-  '/apps/polymer/index.html',
-  '/apps/polymer/app.js',
-  '/apps/polymer/content.js',
-  '/apps/polymer/enrichment.js',
-  '/apps/polymer/theme.css',
+  'index.html',
+  'manifest.json',
+  'shared/css/style.css',
+  'shared/js/usage.js',
+  'shared/js/pwa.js',
+  'assets/icon.png',
+  'assets/icon.svg',
+  'apps/japanese/index.html',
+  'apps/japanese/app.js',
+  'apps/japanese/content.js',
+  'apps/polymer/index.html',
+  'apps/polymer/app.js',
+  'apps/polymer/content.js',
+  'apps/polymer/enrichment.js',
+  'apps/polymer/theme.css',
+  'apps/history/index.html',
+  'apps/history/app.js',
+  'apps/history/content.js',
+  'apps/history/theme.css',
 ];
 
 self.addEventListener('install', event => {

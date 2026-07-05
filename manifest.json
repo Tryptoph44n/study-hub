@@ -1,14 +1,14 @@
 {
   "name": "Study Hub — Edward",
   "short_name": "Study Hub",
-  "description": "Japanese & Polymer Chemistry study hub",
-  "start_url": "/index.html",
-  "scope": "/",
+  "description": "Japanese, Polymer Chemistry & World History study hub",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#1f43e0",
   "icons": [
-    { "src": "/assets/icon.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "assets/icon.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

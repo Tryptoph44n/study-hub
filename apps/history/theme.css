@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════════════════════════
+   HISTORY — warm paper + terracotta (Swiss / Helvetica, image-forward)
+   Distinct from Japanese (blue) and Polymer (lime/maroon).
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #f4efe6;            /* warm paper */
+  --surface: #fffdf8;       /* near-white card */
+  --surface2: #e8e1d2;
+  --border: #e3dccb;
+  --border-strong: #cdc3ac;
+
+  --ink: #211d18;
+  --ink-soft: #3a352c;
+  --primary: #b8532a;       /* terracotta */
+  --primary-light: #f6e2d6;
+  --primary-dark: #8f3d1c;
+
+  --accent: #b8532a;        /* terracotta — era labels, dates, active */
+  --accent-bright: #d0642f;
+  --accent-light: #f6e2d6;
+
+  --seal: #8a5a2b;
+  --seal-light: #efe4d2;
+
+  --success: #4f7a3a;
+  --success-light: #e2edd6;
+  --warning: #b8532a;
+  --warning-light: #f6e2d6;
+
+  --text: #211d18;
+  --text-muted: #6b6152;
+  --text-faint: #9c9384;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+[data-theme="dark"] {
+  --bg: #191510;
+  --surface: #241f18;
+  --surface2: #2f2920;
+  --border: #3a3327;
+  --border-strong: #4c4433;
+
+  --ink: #f2ebdd;
+  --ink-soft: #d8cfbd;
+  --primary: #e08048;       /* warm terracotta on dark */
+  --primary-light: #38251a;
+  --primary-dark: #ef9058;
+
+  --accent: #e08048;
+  --accent-bright: #f0925a;
+  --accent-light: #38251a;
+
+  --seal: #c99a5e;
+  --seal-light: #322717;
+
+  --success: #8fb56a;
+  --success-light: #232c17;
+  --warning: #e08048;
+  --warning-light: #322717;
+
+  --text: #f2ebdd;
+  --text-muted: #a89e8b;
+  --text-faint: #6f6656;
+}
+
+body { background: var(--bg); }
+
+h1, h2 { color: var(--text); }
+.progress-fill { background: var(--accent); }
+.chip.active { background: var(--accent); color: #fff; }
+.tab-item.active { color: var(--accent); }
+.btn-primary { background: var(--accent); }
+.btn-primary:hover { background: var(--accent-bright); }
+
+/* Event card media header (image on top, with typographic fallback behind) */
+.evt-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--accent-light);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.evt-media .evt-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 20px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 22%, var(--surface2)), var(--surface2));
+}
+.evt-media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  z-index: 1;
+}
+.evt-media .evt-date-badge {
+  position: relative; z-index: 2;
+  margin: 12px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+  font-weight: 700; font-size: 0.78rem; letter-spacing: -0.01em;
+  padding: 5px 12px; border-radius: 100px;
+}
+.evt-card { overflow: hidden; padding: 0; }
+.evt-body { padding: 18px 20px 20px; }

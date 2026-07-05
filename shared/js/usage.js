@@ -17,6 +17,7 @@
   // Which app is this page? (null = hub or other)
   const app = location.pathname.includes('/polymer/') ? 'polymer'
             : location.pathname.includes('/japanese/') ? 'japanese'
+            : location.pathname.includes('/history/') ? 'history'
             : null;
 
   function ensure(d) {
@@ -51,7 +52,8 @@
     if (acc <= 0) return;
     const data = ensure(load());
     const t = todayStr();
-    dayBucket(data, t)[app] += acc;
+    const b = dayBucket(data, t);
+    b[app] = (b[app] || 0) + acc;
     data.hours[new Date().getHours()] = (data.hours[new Date().getHours()] || 0) + acc;
     data.lastUse = t;
     save(data);

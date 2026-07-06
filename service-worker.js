@@ -1,5 +1,5 @@
 // Bump CACHE_NAME whenever PRECACHE_URLS or app assets change meaningfully.
-const CACHE_NAME = 'study-hub-v2';
+const CACHE_NAME = 'study-hub-v3';
 
 // Relative to the service worker's scope (the deployment root), so this works
 // both at a domain root and at a GitHub Pages project sub-path.
@@ -22,6 +22,7 @@ const PRECACHE_URLS = [
   'apps/history/index.html',
   'apps/history/app.js',
   'apps/history/content.js',
+  'apps/history/geo.js',
   'apps/history/theme.css',
 ];
 

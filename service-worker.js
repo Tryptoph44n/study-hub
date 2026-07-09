@@ -1,5 +1,5 @@
 // Bump CACHE_NAME whenever PRECACHE_URLS or app assets change meaningfully.
-const CACHE_NAME = 'study-hub-v3';
+const CACHE_NAME = 'study-hub-v4';
 
 // Relative to the service worker's scope (the deployment root), so this works
 // both at a domain root and at a GitHub Pages project sub-path.

@@ -604,6 +604,156 @@ The soldiers found the birds almost impossible to bring down in useful numbers. 
 The "Emu War" thus went down as one of the few wars, tongue firmly in cheek, that a nation lost to a flock of birds. It's a genuine, well-documented episode — a reminder that history is not only tragedy and grandeur, but also, sometimes, gloriously absurd.`,
       image: 'Dromaius_novaehollandiae_-_台北市立動物園.jpg', caption: 'Emus — the unlikely victors of 1932.', tags: ['adventure', 'mystery'],
     },
+
+    // ─────────── JAPAN ───────────
+    {
+      id: 'tale-of-genji', era: 'medieval', title: 'The Tale of Genji', date: 'c. 1008',
+      blurb: "Around 1008, a lady of the Japanese imperial court wrote what many scholars call the world's first true novel — The Tale of Genji. Its psychological depth and elegance were centuries ahead of anything being written in Europe.",
+      detail: `The author, known to us as Murasaki Shikibu, was a lady-in-waiting at the Heian court in Kyoto — the dazzling, hyper-refined imperial capital of early Japan. We do not even know her real name; "Murasaki" comes from a character in her own book. At a time when elite Japanese men wrote in Chinese, considered the "serious" language, aristocratic women wrote in the flowing Japanese kana script — and it was in that supposedly lesser medium that one of them produced a masterpiece.
+
+The Tale of Genji follows the life and many loves of Hikaru Genji, the charming son of an emperor, and then the generation that follows him. Across 54 chapters and some 400 characters, it is astonishingly modern: less about action than about emotion, memory, jealousy, ageing and the bittersweet passing of time. It reads like a psychological novel written nine hundred years before the term existed.
+
+The world it captures is that of the Heian aristocracy (roughly 794–1185), a court obsessed with beauty, poetry, calligraphy, incense and the exact shading of a robe's colours. Its guiding aesthetic was mono no aware — a gentle, wistful sensitivity to the impermanence of things, the sadness woven into fleeting beauty, like cherry blossoms precisely because they fall. That sensibility still runs deep in Japanese culture today.
+
+Remarkably, the book has never gone out of readership in its thousand-year life. It has been endlessly illustrated, adapted, translated and studied, and it stands as a founding monument not only of Japanese literature but of world literature — and as a reminder that some of the most sophisticated art of the medieval world came from the brush of a court woman whose name we have lost.`,
+      image: 'Genji_emaki_01003_002.jpg', caption: 'Scene from an illustrated Tale of Genji handscroll.', tags: ['ideas', 'art'],
+    },
+    {
+      id: 'mongol-invasions-japan', era: 'medieval', title: 'The Mongol Invasions & the Kamikaze', date: '1274 & 1281',
+      blurb: "Twice the Mongol Empire hurled vast invasion fleets at Japan, and twice enormous typhoons smashed them apart. The Japanese called these storms kamikaze — the 'divine wind' that saved their islands.",
+      detail: `By the 1270s, the Mongols under Kublai Khan had conquered China and founded the Yuan dynasty, and they turned their gaze to the island kingdom of Japan. When the Japanese refused to submit, Kublai launched an invasion in 1274 — a huge fleet carrying tens of thousands of Mongol, Chinese and Korean troops that landed at Hakata Bay in Kyushu. The samurai, used to formal one-on-one combat, were shaken by the Mongols' massed tactics, exploding bombs and poisoned arrows.
+
+Then the weather intervened. A powerful storm blew in and wrecked much of the fleet at anchor, forcing the survivors to retreat. Undeterred, Kublai returned in 1281 with an even more colossal force — one of the largest seaborne invasions in history before the 20th century, with some accounts describing over 4,000 ships and 140,000 men. The samurai, who had spent years building a defensive wall along the coast, held them at the beaches for weeks.
+
+And once again, a massive typhoon struck, battering the anchored invasion fleet against the shore and drowning a huge portion of the invaders. Japan was saved a second time. The Japanese became convinced that their islands were divinely protected, and named the miraculous storms kamikaze — "divine wind."
+
+The legend had a long and dark afterlife. Centuries later, in the desperate final months of World War II, Japan revived the word "kamikaze" for its suicide pilots, invoking that same idea of a divine wind that would repel a foreign invasion. In recent decades, underwater archaeologists have actually found the wreckage of Kublai's lost fleets off the Japanese coast, confirming the astonishing scale of the invasions the storms destroyed.`,
+      image: 'Mōko_Shūrai_Ekotoba.jpg', caption: 'A samurai faces Mongol invaders (Moko Shurai Ekotoba scroll).', tags: ['war', 'empire'],
+    },
+    {
+      id: 'sengoku-unification', era: 'exploration', title: 'The Unification of Japan', date: '1467–1615',
+      blurb: "After a century of civil war, three warlords — Oda Nobunaga, Toyotomi Hideyoshi and Tokugawa Ieyasu — unified Japan one after another. A famous proverb captures each of their characters by how he would make a cuckoo sing.",
+      detail: `For over a hundred years, Japan tore itself apart in the Sengoku ("Warring States") period, as regional warlords called daimyo fought endlessly for territory while the emperor and shogun looked on, powerless. Out of this chaos rose three extraordinary men who, in succession, would reunite the country.
+
+First came Oda Nobunaga, a brilliant and ruthless innovator who embraced the newly-arrived European firearms and used them to devastating effect, crushing rivals and seizing central Japan before being betrayed and forced to take his own life by one of his own generals. His most capable follower, Toyotomi Hideyoshi — a man of humble, near-peasant origins, which made his rise almost unthinkable in that rigid society — avenged him and completed the conquest, becoming the effective ruler of all Japan.
+
+After Hideyoshi's death, the patient and calculating Tokugawa Ieyasu outmaneuvered his rivals, won the decisive Battle of Sekigahara in 1600, and by 1615 had eliminated the last opposition. He founded the Tokugawa shogunate, which would rule Japan in peace for over 250 years — the era of the samurai, isolation, and the flourishing culture of Edo.
+
+The Japanese remember the three unifiers through a famous proverb about a cuckoo that will not sing. Nobunaga says, "If the cuckoo does not sing, kill it." Hideyoshi says, "If the cuckoo does not sing, make it want to sing." Ieyasu says, "If the cuckoo does not sing, wait." In three short lines it captures the ruthless conqueror, the persuasive schemer, and the patient strategist who ultimately outlasted them both — and it's still used in Japan today to describe personality and leadership.`,
+      image: 'Odanobunaga.jpg', caption: 'Oda Nobunaga, the first of the three unifiers.', tags: ['war', 'politics'],
+    },
+    {
+      id: 'great-wave-hokusai', era: 'revolutions', title: "Hokusai's Great Wave", date: 'c. 1831',
+      blurb: "Katsushika Hokusai's woodblock print 'The Great Wave off Kanagawa' is one of the most recognised images on Earth — and a product of Edo Japan's booming popular art form, ukiyo-e.",
+      detail: `During Japan's peaceful, prosperous Edo period, a vibrant urban culture flourished in cities like Edo (modern Tokyo), and with it came ukiyo-e — "pictures of the floating world." These were woodblock prints depicting the pleasures of city life: kabuki actors, fashionable beauties, landscapes and famous views. Crucially, because prints could be mass-produced from carved blocks, they were cheap and popular art for ordinary townspeople, not treasures locked away for the elite.
+
+The undisputed master was Katsushika Hokusai, an eccentric, endlessly inventive artist who claimed he only truly began to understand his craft in old age. Around 1831, when he was already about seventy, he created his series Thirty-Six Views of Mount Fuji — and its first print, The Great Wave off Kanagawa, became the most famous Japanese artwork in the world.
+
+Look closely and the composition is genius: a towering, claw-like wave rears up, dwarfing three slender boats of terrified fishermen, while in the distance the serene, snow-capped Mount Fuji sits small and calm — the still, eternal centre against nature's fury. Hokusai used a brilliant new imported pigment, Prussian blue, to give the wave its vivid, lasting colour.
+
+When Japan later opened to the West, prints like these flooded into Europe and set off a craze called Japonisme. Their bold flat colours, daring compositions and everyday subjects astonished and influenced Western artists — Monet collected them, Van Gogh copied them, and the composer Debussy put the Great Wave on the cover of his orchestral work La Mer. A humble, mass-produced print from Edo had quietly helped reshape the course of modern art.`,
+      image: 'The_Great_Wave_off_Kanagawa.jpg', caption: 'The Great Wave off Kanagawa, by Katsushika Hokusai.', tags: ['art', 'ideas'],
+    },
+    {
+      id: 'japan-economic-miracle', era: 'modern', title: "Japan's Economic Miracle", date: '1945–1990',
+      blurb: "From the ashes and rubble of World War II, Japan rebuilt itself into the second-largest economy in the world within just a few decades — symbolised by the 1964 Tokyo Olympics and the first high-speed bullet train.",
+      detail: `In 1945 Japan lay devastated: its cities firebombed, two obliterated by atomic weapons, its industry in ruins and its people facing hunger. Almost no one imagined that within a single generation the country would become an economic superpower. Yet that is exactly what happened, in a transformation so dramatic it is simply called the "economic miracle."
+
+Through a combination of intense national effort, close cooperation between government and industry, heavy investment in education and technology, and a fierce dedication to manufacturing quality, Japan rebuilt at astonishing speed. Companies like Toyota, Sony, Honda and Panasonic grew from small firms into global giants, and "Made in Japan" went from meaning "cheap" to meaning "reliable and advanced." By the late 1960s Japan had the world's second-largest economy.
+
+The symbolic moment came in 1964, when Tokyo hosted the Olympic Games — a proud announcement to the world that Japan had returned. Days before the opening ceremony, the country unveiled the Tōkaidō Shinkansen, the world's first high-speed "bullet train," streaking between Tokyo and Osaka at speeds no train had reached in regular service. It became an enduring emblem of Japanese engineering and ambition.
+
+The boom eventually inflated into a colossal asset bubble in the 1980s, and its bursting around 1990 led to a long economic slowdown. But the achievement remains one of the great stories of the 20th century: a nation that turned total defeat into peaceful, world-leading prosperity in a matter of decades — and, incidentally, built the modern, high-tech Japan whose language is studied elsewhere in this app.`,
+      image: 'Shinkansen_0_JNR.jpg', caption: 'The original 0-series Shinkansen bullet train.', tags: ['economy', 'technology'],
+    },
+
+    // ─────────── INDONESIA & SOUTHEAST ASIA ───────────
+    {
+      id: 'borobudur', era: 'medieval', title: 'Borobudur', date: 'c. 800',
+      blurb: "On the Indonesian island of Java stands Borobudur, the largest Buddhist temple in the world — a colossal stone mandala built around 800 AD, then mysteriously abandoned and buried under volcanic ash and jungle for centuries.",
+      detail: `Borobudur was built around 800 AD by the Sailendra dynasty, at a time when Java was a wealthy and sophisticated centre of Buddhist civilisation. It is not a temple you enter, but one you climb: an immense stepped pyramid of some two million blocks of volcanic stone, rising through nine stacked platforms toward a great central dome, forming a giant three-dimensional mandala — a map of the Buddhist cosmos in stone.
+
+The scale of its artistry is staggering. Its walls carry more than 2,600 relief panels — the largest and most complete collection of Buddhist reliefs on Earth — telling stories of the Buddha's life and teachings, alongside 504 seated Buddha statues. Pilgrims were meant to walk clockwise up through the levels, moving symbolically from the world of desire, through the world of forms, to the formless enlightenment at the summit.
+
+Then, remarkably, it was abandoned. Within a couple of centuries the centre of Javanese power shifted east, the island gradually converted to Islam, and Borobudur was left to the jungle. Volcanic eruptions blanketed it in ash, and vegetation swallowed it, until this colossal monument effectively vanished from memory for hundreds of years.
+
+It was brought back to the world's attention in 1814, during a brief British administration of Java, when Sir Thomas Stamford Raffles heard rumours of a great buried monument and sent men to investigate. What they uncovered astonished them. After major 20th-century restoration efforts, Borobudur is once again a place of pilgrimage and a UNESCO World Heritage Site — a breathtaking reminder of the depth and grandeur of Southeast Asia's own ancient civilisations.`,
+      image: 'Borobudur_Temple.jpg', caption: 'Borobudur, Central Java, Indonesia.', tags: ['religion', 'architecture'],
+    },
+    {
+      id: 'majapahit', era: 'exploration', title: 'The Majapahit Empire', date: 'c. 1293–1527',
+      blurb: "Based on Java, Majapahit was the greatest maritime empire of medieval Southeast Asia, its trade and naval power reaching across much of what is now Indonesia — and its memory still shapes the nation today.",
+      detail: `Founded in 1293, the Majapahit Empire grew from its heartland in eastern Java into the dominant power of the region, a "thalassocracy" — an empire of the sea. Rather than ruling through conquest of vast land territories, it projected influence across the islands of the archipelago through naval strength, trade and diplomacy, controlling the lucrative flow of spices, gold and goods that passed through Southeast Asian waters.
+
+Its golden age is associated with the powerful prime minister Gajah Mada, who according to tradition swore a famous oath — the Palapa oath — that he would taste no spice or luxury until he had brought the whole archipelago, or Nusantara, under Majapahit's sway. Under his leadership the empire reached its greatest extent, its influence touching much of modern Indonesia and beyond.
+
+Majapahit was a Hindu-Buddhist civilisation, and its court produced sophisticated literature, art and law, blending Indian religious traditions with local Javanese culture. Merchants from China, India and the Middle East thronged its ports, making it a genuinely cosmopolitan hub of the medieval maritime world.
+
+The empire gradually declined through the 1400s and 1500s amid internal conflict and the steady spread of Islam through the trading networks of the islands, eventually giving way to the Muslim sultanates. But Majapahit never faded from memory. Modern Indonesia consciously draws on it as a founding symbol of national unity across the archipelago — even Gajah Mada's word "Nusantara" was chosen as the name of the country's new capital, a direct link across seven centuries to that medieval empire of the sea.`,
+      image: 'Majapahit_Empire.svg', caption: 'The extent of the Majapahit Empire.', tags: ['empire', 'exploration'],
+    },
+    {
+      id: 'krakatoa', era: 'revolutions', title: 'The Eruption of Krakatoa', date: '1883',
+      blurb: "The 1883 eruption of Krakatoa in Indonesia produced one of the loudest sounds ever recorded — heard nearly 5,000 km away — and its tsunamis killed tens of thousands. It even cooled the entire planet.",
+      detail: `In August 1883, the volcanic island of Krakatoa, sitting in the strait between Java and Sumatra, tore itself apart in a series of colossal explosions. The climactic blast is considered one of the most violent volcanic events in recorded history, and it produced what may be the loudest sound humans have ever documented: it was clearly heard on Rodrigues Island nearly 5,000 kilometres away, and the atmospheric pressure wave it generated was detected circling the entire globe multiple times on barometers around the world.
+
+The greatest killer was not the eruption itself but the sea. The collapse of the island triggered enormous tsunamis, some over 30 metres high, that slammed into the densely populated coasts of Java and Sumatra and killed an estimated 36,000 people. Ships were carried far inland; entire towns were swept away.
+
+The eruption's reach was global. It hurled so much ash and gas into the upper atmosphere that average world temperatures dropped for years, and skies around the planet were tinted with strange, vivid red sunsets — so striking that some scholars believe the lurid sky in Edvard Munch's painting The Scream was inspired by them.
+
+Krakatoa also became one of the first great natural disasters of the modern connected age: thanks to the newly-laid global telegraph network, news of it flashed around the world within hours, and people everywhere followed the catastrophe almost in real time. The volcano itself was not finished — decades later a new cone, Anak Krakatau ("Child of Krakatoa"), rose from the sea where the old island had been, and it remains restless and dangerous today.`,
+      image: 'Krakatoa_eruption_lithograph.jpg', caption: 'An 1888 lithograph of the 1883 Krakatoa eruption.', tags: ['disaster', 'science'],
+    },
+    {
+      id: 'indonesia-independence', era: 'modern', title: 'Indonesian Independence', date: '1945',
+      blurb: "Two days after Japan's surrender ended World War II, Sukarno proclaimed Indonesia's independence — sparking a four-year revolution against returning Dutch colonial rule that finally triumphed in 1949.",
+      detail: `For over three centuries, the vast archipelago that is now Indonesia had been colonised by the Dutch, who grew fabulously wealthy from its spices, coffee, sugar and rubber while the local population had little say over their own land. A nationalist movement had been building for decades, led by figures like the charismatic Sukarno, who dreamed of a single unified nation stretching across the thousands of islands.
+
+The turning point came with World War II. Japan occupied the Dutch East Indies from 1942 to 1945, shattering the myth of European invincibility and, in some ways, giving nationalist leaders more room to organise. When Japan suddenly surrendered in August 1945, a window opened. On 17 August 1945 — just two days later — Sukarno and Mohammad Hatta read out a short, momentous Proclamation of Independence, declaring the birth of the Republic of Indonesia.
+
+Independence was proclaimed, but it still had to be won. The Dutch attempted to reassert colonial control, and there followed four years of bitter armed struggle and tense diplomacy — the Indonesian National Revolution — marked by fierce battles like the one at Surabaya. Under growing international pressure, the Netherlands finally recognised Indonesian sovereignty in December 1949.
+
+The new nation was the fourth most populous country on Earth and the largest Muslim-majority nation in the world, an astonishingly diverse patchwork of hundreds of ethnic groups and languages spread across an archipelago wider than the United States. Its national motto, Bhinneka Tunggal Ika — "Unity in Diversity" — captured the enormous challenge and promise of binding so many peoples into one country. 17 August is still celebrated every year as Indonesia's Independence Day.`,
+      image: 'Indonesia_declaration_of_independence_17_August_1945.jpg', caption: 'Sukarno proclaims Indonesian independence, 17 August 1945.', tags: ['revolution', 'politics'],
+    },
+
+    // ─────────── BROADER ASIA ───────────
+    {
+      id: 'zheng-he', era: 'exploration', title: "Zheng He's Treasure Voyages", date: '1405–1433',
+      blurb: "Nearly a century before Columbus, the Chinese admiral Zheng He led seven epic voyages across the Indian Ocean with fleets of gigantic 'treasure ships' that dwarfed anything Europe would build for centuries.",
+      detail: `In the early 1400s, Ming dynasty China launched a series of maritime expeditions on a scale the world had never seen. They were commanded by Zheng He, a remarkable figure — a Muslim court eunuch of humble origins who rose to become the emperor's grand admiral. Between 1405 and 1433 he led seven great voyages westward across the seas.
+
+The fleets were staggering. Contemporary records describe "treasure ships" that some historians estimate were up to 120 metres long — several times the length of Columbus's Santa María — sailing in armadas of hundreds of vessels carrying as many as 27,000 sailors, soldiers, translators, doctors and craftsmen. Nothing in Europe came close for another five centuries.
+
+Yet unlike the later European voyages of conquest, Zheng He's expeditions were mainly about prestige, diplomacy and trade. He sailed to Southeast Asia, India, the Persian Gulf, Arabia and the east coast of Africa, exchanging gifts, establishing tributary relationships, and returning with exotic treasures — most famously a live giraffe from Africa, which caused a sensation at the Chinese court, where some took it for the mythical qilin, a sign of heavenly favour.
+
+Then, abruptly, it all stopped. After the voyages ended, a more inward-looking faction gained power at court, the expeditions were halted as wasteful, and the great fleets were left to rot; some records were even destroyed. China turned away from the oceans just as Europe was about to turn toward them. It stands as one of history's great "what ifs" — a moment when the most powerful maritime nation on Earth chose to sail home and shut the door.`,
+      image: 'Tribute_Giraffe_with_Attendant.jpg', caption: 'A giraffe brought back by Zheng He, depicted in a Ming painting.', tags: ['exploration', 'empire'],
+    },
+    {
+      id: 'taj-mahal', era: 'exploration', title: 'The Taj Mahal', date: '1632–1653',
+      blurb: "The Mughal emperor Shah Jahan built the Taj Mahal as a tomb for his beloved wife — a monument of white marble so perfect it is widely considered the most beautiful building ever made.",
+      detail: `In the 17th century, the Mughal Empire ruled most of the Indian subcontinent in fabulous wealth and splendour, blending Persian, Islamic and Indian traditions into a dazzling court culture. Its emperor, Shah Jahan, was a passionate builder — but his greatest creation was born of grief. When his beloved wife Mumtaz Mahal died giving birth to their fourteenth child, the heartbroken emperor resolved to build her a tomb worthy of his love.
+
+The result, constructed over roughly two decades from around 1632, was the Taj Mahal at Agra. It reportedly took more than 20,000 workers and craftsmen, along with over a thousand elephants to haul materials, drawing artisans from across the empire and beyond. The gleaming white marble was inlaid with thousands of semi-precious stones — jade, turquoise, lapis lazuli — in intricate floral patterns.
+
+Its beauty lies in its perfect balance. The whole complex is almost flawlessly symmetrical, set within formal gardens and reflected in a long watercourse, with four slender minarets framing the central dome. The marble seems to change colour with the light — soft pink at dawn, dazzling white at midday, silvery under the moon — as if the building itself were alive.
+
+There is a poignant coda. In his old age, Shah Jahan was overthrown and imprisoned by his own ruthless son, Aurangzeb. He spent his final years confined in the Agra Fort, from where, it is said, he could gaze across the river at the tomb he had built for his wife. When he died, he was laid to rest beside her inside it. The Taj Mahal endures as both a masterpiece of Indo-Islamic architecture and the world's most famous monument to love.`,
+      image: 'Taj_Mahal_(Edited).jpeg', caption: 'The Taj Mahal at Agra, India.', tags: ['architecture', 'empire'],
+    },
+    {
+      id: 'gandhi-independence', era: 'modern', title: 'Gandhi & Indian Independence', date: '1947',
+      blurb: "Mohandas Gandhi led India to independence from the British Empire through mass nonviolent resistance — a strategy that won freedom for one-fifth of humanity and inspired civil-rights movements worldwide.",
+      detail: `For nearly two centuries, Britain ruled India — the "jewel in the crown" of its empire — governing hundreds of millions of people. The movement that ended that rule was led, above all, by Mohandas Karamchand Gandhi, a slight, softly-spoken lawyer who became one of the most influential figures of the 20th century, revered as "Mahatma" (great soul).
+
+Gandhi's revolutionary idea was satyagraha — nonviolent resistance. Rather than meeting imperial power with weapons, he mobilised ordinary Indians in mass campaigns of civil disobedience: boycotting British goods, refusing to cooperate with unjust laws, and enduring beatings and imprisonment without striking back. His most famous act was the Salt March of 1930, a 385-kilometre walk to the sea to make salt in defiance of the British monopoly — a simple, brilliant gesture that galvanised the whole nation and drew the world's attention.
+
+After decades of struggle, and weakened by the Second World War, Britain finally agreed to leave. India won its independence on 15 August 1947. But the triumph was shadowed by tragedy: the subcontinent was partitioned into two nations, India and Pakistan, along religious lines. The Partition uprooted an estimated 15 million people in a chaotic mass migration and unleashed horrific communal violence in which hundreds of thousands died.
+
+Gandhi himself, heartbroken by the bloodshed and pleading for peace between Hindus and Muslims, was assassinated in 1948 by an extremist who opposed his tolerance. Yet his method of principled nonviolence became one of the most powerful ideas of the modern age, directly inspiring Martin Luther King Jr. in the American civil-rights movement and Nelson Mandela's long struggle against apartheid — proof that immense political change can be won without firing a shot.`,
+      image: 'Mahatma-Gandhi,_studio,_1931.jpg', caption: 'Mahatma Gandhi, photographed in 1931.', tags: ['revolution', 'rights'],
+    },
   ],
 };
 

@@ -49,6 +49,18 @@ const HISTORY_GEO = {
   'house-of-wisdom':    { year: 800,   lat: 33.31, lng: 44.36,  place: 'Baghdad' },
   'year-without-summer':{ year: 1816,  lat: -8.25, lng: 118.00, place: 'Mt. Tambora, Indonesia' },
   'emu-war':            { year: 1932,  lat: -30.00,lng: 117.90, place: 'Western Australia' },
+  'tale-of-genji':      { year: 1008,  lat: 35.01, lng: 135.77, place: 'Kyoto, Japan' },
+  'mongol-invasions-japan':{ year: 1274,lat: 33.59,lng: 130.40, place: 'Hakata Bay, Japan' },
+  'sengoku-unification':{ year: 1600,  lat: 35.37, lng: 136.46, place: 'Sekigahara, Japan' },
+  'great-wave-hokusai': { year: 1831,  lat: 35.44, lng: 139.64, place: 'Kanagawa, Japan' },
+  'japan-economic-miracle':{ year: 1964,lat: 35.68,lng: 139.69, place: 'Tokyo, Japan' },
+  'borobudur':          { year: 800,   lat: -7.61, lng: 110.20, place: 'Java, Indonesia' },
+  'majapahit':          { year: 1350,  lat: -7.55, lng: 112.38, place: 'Trowulan, Java' },
+  'krakatoa':           { year: 1883,  lat: -6.10, lng: 105.42, place: 'Krakatoa, Indonesia' },
+  'indonesia-independence':{ year: 1945,lat: -6.17,lng: 106.83, place: 'Jakarta, Indonesia' },
+  'zheng-he':           { year: 1405,  lat: 32.06, lng: 118.80, place: 'Nanjing / Indian Ocean' },
+  'taj-mahal':          { year: 1632,  lat: 27.17, lng: 78.04,  place: 'Agra, India' },
+  'gandhi-independence':{ year: 1947,  lat: 28.61, lng: 77.21,  place: 'Delhi, India' },
 };
 
 if (typeof module !== 'undefined') module.exports = HISTORY_GEO;

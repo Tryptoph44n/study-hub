@@ -13,6 +13,7 @@ const HISTORY_CONTENT = {
     { id: 'revolutions', order: 4, name: 'The Age of Revolutions',     range: '1700s – 1800s',   blurb: 'People overthrew kings, machines overthrew muscle, and the modern world took shape.' },
     { id: 'modern',      order: 5, name: 'The Modern World',           range: '1900s',           blurb: 'World wars, the atom, and a footprint on the Moon — all within one century.' },
     { id: 'curveball',   order: 6, name: "Wait, That's Real?",         range: 'across all eras',  blurb: 'True stories from history that sound completely made up.' },
+    { id: 'mythology',   order: 7, name: 'Myth & Legend',              range: 'stories across cultures', blurb: 'The gods, monsters and epics that humans told to explain the world.' },
   ],
 
   events: [
@@ -753,6 +754,254 @@ After decades of struggle, and weakened by the Second World War, Britain finally
 
 Gandhi himself, heartbroken by the bloodshed and pleading for peace between Hindus and Muslims, was assassinated in 1948 by an extremist who opposed his tolerance. Yet his method of principled nonviolence became one of the most powerful ideas of the modern age, directly inspiring Martin Luther King Jr. in the American civil-rights movement and Nelson Mandela's long struggle against apartheid — proof that immense political change can be won without firing a shot.`,
       image: 'Mahatma-Gandhi,_studio,_1931.jpg', caption: 'Mahatma Gandhi, photographed in 1931.', tags: ['revolution', 'rights'],
+    },
+
+    // ─────────── SOUTH AMERICA & THE AMERICAS ───────────
+    {
+      id: 'bolivar', era: 'revolutions', title: 'Bolívar & Latin American Independence', date: '1808–1826',
+      blurb: "Inspired by the American and French Revolutions, much of Spanish South America rose up and won its freedom — led above all by Simón Bolívar, 'El Libertador,' who liberated six nations.",
+      detail: `For three centuries, Spain and Portugal ruled vast empires across Central and South America, extracting enormous wealth in silver and gold while keeping power in the hands of Europe-born elites. When Napoleon invaded Spain in 1808 and toppled its king, the colonies were suddenly cut loose — and long-simmering resentments erupted into a continent-wide struggle for independence.
+
+The towering figure of that struggle was Simón Bolívar, a wealthy, brilliant and relentless Venezuelan known ever after as El Libertador — "The Liberator." Over nearly two decades of grinding warfare, he led armies across some of the most punishing terrain on Earth, including an audacious march over the freezing high Andes to surprise Spanish forces. His campaigns helped free the territories that became Venezuela, Colombia, Ecuador, Panama, Peru and Bolivia — the last of which is named in his honour.
+
+Bolívar dreamed of uniting the liberated lands into a single great federation, a "United States of South America" strong enough to stand against any foreign power. For a time he created a huge republic called Gran Colombia. But the sheer scale of the continent, regional rivalries and political infighting pulled it apart, and a disillusioned Bolívar died in 1826 believing much of his life's work had failed.
+
+He was wrong about that. The many nations of Latin America that emerged from these wars — including parallel struggles led by figures like José de San Martín in the south — trace their freedom to this era. Bolívar remains a revered symbol across the continent, a reminder that the age of revolutions was not confined to North America and France but reshaped the entire New World.`,
+      image: 'Simón_Bolívar_2.jpg', caption: 'Simón Bolívar, "El Libertador".', tags: ['revolution', 'politics'],
+    },
+    {
+      id: 'maya', era: 'ancient', title: 'The Maya Civilization', date: 'c. 250–900 (peak)',
+      blurb: "Deep in the rainforests of Central America, the Maya built towering pyramid-cities and developed the most advanced writing, mathematics and astronomy in the ancient Americas — including a concept of zero.",
+      detail: `The Maya were not a single empire but a brilliant network of independent city-states spread across what is now southern Mexico, Guatemala, Belize and Honduras. During their Classic period, roughly 250 to 900 AD, cities like Tikal and Palenque rose from the jungle with soaring stone pyramids, palaces and plazas, home to populations in the tens of thousands.
+
+Their intellectual achievements were extraordinary. The Maya developed the most sophisticated writing system in the pre-Columbian Americas — a complex script of hundreds of glyphs that scholars only fully began to decipher in recent decades. They were superb astronomers who tracked the movements of the Sun, Moon and Venus with remarkable precision, and their mathematicians independently developed the concept of zero, centuries before it reached medieval Europe. Their famously accurate calendar is the same one that sparked the (entirely mistaken) "2012 end of the world" craze.
+
+Around the 9th century, many of the great southern Maya cities were mysteriously abandoned within a relatively short span — the so-called "Maya collapse." The causes are still debated, but likely involved a combination of severe drought, overpopulation, warfare and environmental strain, a cautionary tale that still interests scientists studying societal resilience today.
+
+Crucially, the Maya did not vanish. The cities emptied, but the people endured, and millions of Maya still live across Central America today, speaking Mayan languages and preserving traditions descended from that ancient civilisation — a living link to one of humanity's most impressive independent cultures.`,
+      image: 'Tikal_Temple1_2006_08_11.JPG', caption: 'Temple I at Tikal, Guatemala.', tags: ['empire', 'science'],
+    },
+    {
+      id: 'nazca-lines', era: 'ancient', title: 'The Nazca Lines', date: 'c. 500 BC – 500 AD',
+      blurb: "Etched into the Peruvian desert are enormous drawings — a hummingbird, a monkey, a spider — so vast they can only be fully seen from the air. The people who made them could never have viewed them whole.",
+      detail: `Across a high, dry plateau in southern Peru, the ancient Nazca people created one of the world's most enigmatic wonders: hundreds of gigantic designs scratched into the desert floor, known as the Nazca Lines. They range from simple straight lines and geometric shapes running for kilometres to intricate figures of animals and plants — a hummingbird, a monkey with a curling tail, a spider, a condor — some stretching over 300 metres across.
+
+They were made by carefully removing the reddish surface stones to reveal the pale ground beneath, and the region's stable, windless, rainless climate has preserved them for up to 2,000 years. The most haunting thing about them is a matter of perspective: the figures are so enormous that they can only be appreciated as complete images from high in the air — a vantage point the Nazca themselves, with no aircraft, could never have had.
+
+That mystery has fuelled endless speculation, including some famously wild theories about ancient aliens. Serious archaeologists have more grounded explanations: the lines may have been sacred pathways walked in religious rituals, offerings to gods associated with water and fertility (desperately important in that arid land), or linked to astronomical and seasonal observations.
+
+Whatever their exact purpose, the Nazca Lines are a stunning testament to the ambition, organisation and spiritual life of a people who could plan and execute artworks on a scale bigger than anything they would ever see with their own eyes — a genuine ancient marvel hiding in plain sight in the South American desert.`,
+      image: 'Nazca_colibri.jpg', caption: 'The hummingbird geoglyph, Nazca, Peru.', tags: ['mystery', 'art'],
+    },
+    {
+      id: 'cahokia', era: 'medieval', title: 'Cahokia: A Lost American City', date: 'c. 1050–1350',
+      blurb: "Near modern St. Louis once stood Cahokia — a Native American city so large that, at its height, it rivalled the population of London at the time. Most people have never heard of it.",
+      detail: `Long before Europeans arrived, North America was home to a great urban civilisation centred on Cahokia, near where the Mississippi and Missouri rivers meet in modern Illinois. Founded around 1050 AD by the Mississippian culture, at its peak it may have held 15,000 to 20,000 people — comparable to London at the same time, and larger than any city that would exist in what is now the United States until Philadelphia in the late 1700s.
+
+Cahokia was a planned metropolis of thousands of homes, plazas and, above all, enormous earthen mounds. The greatest of them, Monks Mound, is a flat-topped pyramid of packed earth larger at its base than the Great Pyramid of Giza — the biggest earthwork in the Americas, built entirely by human labour carrying baskets of soil. The city was a hub of trade, religion and astronomy, complete with a "woodhenge" of timber posts used to track the sun.
+
+Then, over the 1300s, Cahokia was gradually abandoned, and by the time Europeans arrived its great mounds stood empty and unexplained. As with other collapses, the likely causes were a mix of environmental pressures, resource depletion, flooding, and possibly political and social upheaval.
+
+Cahokia is a powerful correction to the myth that pre-contact North America was an empty wilderness of scattered tribes. It was home to cities, monumental architecture and complex societies — and its story is only now becoming more widely known, reminding us how much of the Americas' deep history was erased or overlooked.`,
+      image: 'Monks_Mound_in_July.jpg', caption: 'Monks Mound at Cahokia, Illinois.', tags: ['empire', 'architecture'],
+    },
+
+    // ─────────── AFRICA, PERSIA & KOREA ───────────
+    {
+      id: 'cyrus-persia', era: 'ancient', title: 'Cyrus the Great & Persia', date: 'c. 550–330 BC',
+      blurb: "Cyrus the Great forged the Persian Empire — the largest the world had yet seen — and became famous not just for conquest but for an early form of tolerance and human rights.",
+      detail: `In the 6th century BC, Cyrus the Great united the Persians and built, with astonishing speed, the Achaemenid Empire — the largest empire the world had ever seen up to that point, eventually stretching from the Indus River to the edge of Greece and down into Egypt. It was so vast and diverse that governing it required genuine political genius, not just military might.
+
+Cyrus is remembered as an unusually enlightened conqueror. Rather than crushing the peoples he absorbed, he generally allowed them to keep their own religions, customs and local governance. Most famously, he freed the Jewish people from their captivity in Babylon and permitted them to return home and rebuild their temple — an act that earned him praise even in the Hebrew Bible. A clay artefact known as the Cyrus Cylinder, describing his policies of tolerance, is sometimes called one of the earliest declarations of human rights.
+
+His successors, especially Darius I, organised the empire into provinces with governors, built the famous Royal Road for rapid communication, standardised coinage, and constructed the magnificent ceremonial capital of Persepolis. The Persian Empire became a model of how to administer a multicultural superstate.
+
+Its long rivalry with the Greek city-states produced legendary clashes — Marathon, Thermopylae, Salamis — that Greeks remembered as the defence of freedom against tyranny (a rather one-sided telling). The empire finally fell to Alexander the Great, who burned Persepolis. But Persia's traditions of administration, art and kingship endured for centuries and deeply influenced every empire that followed in the region.`,
+      image: 'Persepolis_The_Persian_Soldiers.jpg', caption: 'Relief of Persian guards at Persepolis.', tags: ['empire', 'rights'],
+    },
+    {
+      id: 'aksum', era: 'ancient', title: 'The Kingdom of Aksum', date: 'c. 100–800 AD',
+      blurb: "In the highlands of Ethiopia, the powerful trading kingdom of Aksum minted its own coins, raised giant stone obelisks, and became one of the first states on Earth to adopt Christianity.",
+      detail: `The Kingdom of Aksum, centred in what is now northern Ethiopia and Eritrea, was one of the great powers of the ancient world — so important that a Persian writer of the era ranked it among the four greatest kingdoms on Earth, alongside Rome, Persia and China. Its wealth came from commanding the trade routes of the Red Sea, exporting ivory, gold and goods between Africa, the Roman world and India.
+
+Aksum was sophisticated and confident. It was one of the very few African states to mint its own coinage in gold, silver and bronze, stamped with the images of its kings. Its most striking monuments are the giant carved stone stelae (obelisks) it raised as royal markers — the largest, had it not fallen, would have been among the tallest single pieces of stone ever erected by humans.
+
+Around the 4th century AD, the Aksumite king Ezana converted to Christianity, making Aksum one of the earliest kingdoms in the world to officially adopt the faith — earlier than most of Europe. That legacy endures in the Ethiopian Orthodox Church, one of the oldest Christian traditions on the planet, and Ethiopia proudly remembers Aksum as the setting for the legend of the Queen of Sheba and, by tradition, the resting place of the Ark of the Covenant.
+
+Aksum declined from around the 7th–8th centuries as the rise of Islam shifted trade routes and its ports lost importance. But it stands as a powerful reminder that sub-Saharan Africa was home to wealthy, literate, coin-minting, monument-building civilisations engaged with the wider ancient world.`,
+      image: 'Obelisk_of_Axum.jpg', caption: 'A giant stele at Aksum, Ethiopia.', tags: ['empire', 'religion'],
+    },
+    {
+      id: 'great-zimbabwe', era: 'medieval', title: 'Great Zimbabwe', date: 'c. 1100–1450',
+      blurb: "In southern Africa stand the massive stone walls of Great Zimbabwe — a medieval city built without mortar by a wealthy African kingdom, and later so impressive that colonisers refused to believe Africans had built it.",
+      detail: `Great Zimbabwe was the capital of a prosperous kingdom that flourished in southern Africa between roughly the 12th and 15th centuries. Its name comes from a local word for "houses of stone," and that is exactly what makes it extraordinary: enormous curving walls of precisely fitted granite blocks, some sections eleven metres high and five metres thick, all built without any mortar to hold them together — the largest ancient stone structures south of the Sahara.
+
+At its height the city was home to perhaps 18,000 people and sat at the centre of a rich trading network. Archaeologists have found goods there from as far away as China and Persia, along with gold and ivory, showing that this inland African kingdom was plugged into the great Indian Ocean trade that linked much of the medieval world. Soapstone carvings of birds found at the site became a national symbol and now appear on the flag of the modern nation of Zimbabwe, which took its name from the ruins.
+
+There is a darker chapter to its story. When European colonisers encountered the ruins in the 19th century, many simply refused to accept that Africans could have built something so grand, and invented fanciful theories crediting ancient foreigners instead. The colonial government of the time even suppressed archaeological findings that pointed to African builders — a stark example of how racism distorted the writing of history.
+
+Modern archaeology has thoroughly confirmed the obvious truth: Great Zimbabwe was built by the ancestors of the local Shona people. It stands proudly as evidence of a sophisticated, wealthy and monumental African civilisation — and as a lesson in how the stories we tell about the past can be twisted by prejudice.`,
+      image: 'Great-Zimbabwe-2.jpg', caption: 'The Great Enclosure at Great Zimbabwe.', tags: ['empire', 'architecture'],
+    },
+    {
+      id: 'sejong-hangul', era: 'exploration', title: 'King Sejong & Hangul', date: '1443',
+      blurb: "A Korean king did something almost no ruler in history has done: he personally helped invent a brand-new writing system, designed so that ordinary people could finally learn to read and write.",
+      detail: `In 15th-century Korea, reading and writing were the privilege of a small elite. Korean was written using complex Chinese characters, which took years to master, so literacy — and therefore knowledge and power — was locked away from the common people. King Sejong the Great, one of the most admired rulers in Korean history, decided to change that.
+
+In 1443 he introduced Hangul, an entirely new alphabet for the Korean language, which he is credited with helping to design himself — an almost unheard-of act for a monarch. What makes Hangul remarkable is that it was deliberately engineered to be easy: it uses a small set of simple, logical symbols whose very shapes are based on the position of the mouth and tongue when making each sound. Sejong reportedly said that a wise person could learn it in a morning and even a fool within ten days.
+
+The scholarly elite, whose status depended on their hard-won mastery of Chinese characters, often resisted and looked down on the new "vulgar" script. But its sheer usefulness eventually won out. Today Hangul is the writing system of both Koreas and is celebrated by linguists as one of the most scientific and rational alphabets ever devised — so much so that South Korea honours it with a national holiday, Hangul Day.
+
+Sejong's reign was a golden age of Korean invention more broadly, producing advances in astronomy, agriculture, printing and even rain gauges. But giving his people their own writing system — a tool for literacy consciously designed for the many rather than the few — remains his most beloved legacy.`,
+      image: 'Hunminjeongeum.jpg', caption: 'The document promulgating Hangul, 1446.', tags: ['ideas', 'technology'],
+    },
+    {
+      id: 'admiral-yi', era: 'exploration', title: 'Admiral Yi & the Turtle Ships', date: '1592–1598',
+      blurb: "When Japan invaded Korea with a massive army, one admiral — Yi Sun-sin — repeatedly shattered their fleets, undefeated in dozens of battles, using armored 'turtle ships' and brilliant tactics.",
+      detail: `In 1592, the Japanese warlord Toyotomi Hideyoshi launched a huge invasion of Korea as a stepping stone toward conquering China. Japanese armies overran much of the Korean peninsula on land. But at sea, they ran into one of the most gifted naval commanders in all of history: Admiral Yi Sun-sin.
+
+Yi is famous for the geobukseon, or "turtle ship" — a warship covered with a protective roof (possibly plated with iron spikes and armour) to repel boarders and arrows, bristling with cannon and fronted by a dragon's head. Combined with Korea's sturdy, cannon-armed panokseon warships and Yi's masterful use of the local tides and narrow straits, this gave the outnumbered Korean navy a decisive edge.
+
+Yi's record is almost unbelievable: across dozens of naval engagements, he never lost a battle. His most legendary victory came at the Battle of Myeongnyang, where — reduced to just thirteen ships after political rivals had him removed and his replacement lost most of the fleet — he lured a Japanese armada of well over a hundred vessels into a treacherous channel and destroyed a large part of it. By cutting the enemy's sea supply lines, he crippled the entire invasion.
+
+Admiral Yi was killed by a stray bullet during the final battle of the war in 1598, reportedly telling his men to hide his death so as not to break their morale mid-victory. He is revered in Korea as a national hero and studied by naval officers around the world as one of the greatest admirals who ever lived.`,
+      image: 'Statue_of_Yi_Sun-sin.jpg', caption: 'Statue of Admiral Yi Sun-sin, Seoul.', tags: ['war'],
+    },
+    {
+      id: 'benin-kingdom', era: 'exploration', title: 'The Kingdom of Benin', date: 'c. 1200–1897',
+      blurb: "The West African Kingdom of Benin built a grand walled capital and produced dazzling brass sculptures so fine they stunned Europe — before the city was looted and burned by a British force in 1897.",
+      detail: `The Kingdom of Benin (in what is now southern Nigeria, and unrelated to the modern country of Benin) was a powerful and sophisticated West African state that flourished for centuries. Its capital, Benin City, was a large, well-planned metropolis surrounded by an enormous system of walls and earthworks — collectively among the largest earthworks ever built by human hands, dwarfing many better-known structures. European visitors in the 1600s described its broad streets, order and grandeur with admiration.
+
+Benin is most famous today for its art. Its craftsmen created thousands of intricate sculptures and plaques in brass and bronze, along with carved ivory, depicting kings, warriors, court life and history in breathtaking detail. These "Benin Bronzes" are considered some of the finest metal artworks ever produced anywhere — so refined that when they reached Europe, some observers arrogantly assumed Africans could not have made them.
+
+In 1897, a British punitive expedition invaded, sacked and burned Benin City, ending the kingdom's independence and folding it into colonial Nigeria. The soldiers looted the royal treasures, carrying off thousands of the Bronzes, which were sold and scattered into museums and private collections across Europe and North America.
+
+Today the Benin Bronzes sit at the heart of one of the world's biggest debates over cultural restitution, with Nigeria and many others calling for their return. The story of Benin is thus both a celebration of a great African civilisation and a stark example of the plunder of the colonial era — and of history's unfinished arguments about who owns the past.`,
+      image: 'Benin_bronze_in_the_Ethnological_Museum,_Berlin_-_050.jpg', caption: 'A Benin Bronze plaque.', tags: ['empire', 'art'],
+    },
+
+    // ─────────── MORE CURVEBALLS ───────────
+    {
+      id: 'double-a-bomb', era: 'curveball', title: 'The Man Who Survived Two Atomic Bombs', date: '1945',
+      blurb: "Tsutomu Yamaguchi was on a business trip in Hiroshima when the first atomic bomb fell. Badly burned, he went home — to Nagasaki — just in time for the second. He survived both, and lived to 93.",
+      detail: `On 6 August 1945, a Japanese engineer named Tsutomu Yamaguchi was finishing a business trip in the city of Hiroshima. He was walking to the shipyard when the world's first atomic bomb used in war detonated a few kilometres away. The blast ruptured his eardrums, temporarily blinded him and left him badly burned, but he survived, sheltered overnight, and made his way to the train station.
+
+He travelled home to recover — and home was Nagasaki. On 9 August, bandaged and injured, he was reportedly describing the Hiroshima explosion to a disbelieving supervisor when the second atomic bomb detonated over Nagasaki. Once again, he was within a few kilometres of ground zero, and once again he survived.
+
+Yamaguchi was far from the only person caught in both cities, but he is the only one officially recognised by the Japanese government as a survivor of both atomic bombings — a "nijū hibakusha," or double-bomb survivor. He lived with the physical and emotional scars for the rest of his life.
+
+Rather than let it destroy him, in his later years Yamaguchi became an outspoken advocate for nuclear disarmament, sharing his almost impossible story with the world as a warning. He died in 2010 at the age of 93 — a man who stood at the centre of humanity's two most devastating single moments, and walked away from both.`,
+      image: 'Nagasakibomb.jpg', caption: 'The mushroom cloud over Nagasaki, 1945.', tags: ['war', 'mystery'],
+    },
+    {
+      id: 'vasa', era: 'curveball', title: 'The Warship That Sank in Minutes', date: '1628',
+      blurb: "Sweden's mighty warship Vasa was the most powerful and ornate vessel of its day. On its maiden voyage in 1628 it sailed about 1,300 metres, tipped over, and sank in front of the whole city.",
+      detail: `In the 1620s, the ambitious king of Sweden ordered the construction of a magnificent warship, the Vasa, intended to be a floating symbol of Swedish power: heavily armed with two decks of bronze cannon and covered in hundreds of gilded and painted sculptures. It was one of the most expensive and lavishly decorated ships of its age.
+
+There was just one fatal problem: it was dangerously top-heavy. The ship was built tall and narrow with two gun decks, but it lacked enough ballast in the hull to keep it stable — partly because adding more would have sunk the lower gun ports beneath the waterline. A stability test before launch reportedly showed men running side to side could rock it alarmingly, but with the king impatiently waiting, the voyage went ahead anyway.
+
+On 10 August 1628, the Vasa set sail from Stockholm on its maiden voyage before a large crowd gathered to celebrate. It travelled barely 1,300 metres. A gust of wind heeled it over, water poured in through the open lower gun ports, and the pride of the Swedish navy rolled onto its side and sank in the harbour, taking around thirty lives with it — a spectacular, humiliating disaster witnessed by the whole city.
+
+The story has a remarkable second act. The cold, low-salt waters of the Baltic preserved the wooden ship astonishingly well, and in 1961 the Vasa was raised almost completely intact after 333 years underwater. Today it is the centrepiece of its own museum in Stockholm — the world's best-preserved 17th-century ship, and a monument to the dangers of building something grand without checking whether it will actually float.`,
+      image: 'Vasa_from_port2.jpg', caption: 'The salvaged warship Vasa in its museum, Stockholm.', tags: ['disaster', 'mystery'],
+    },
+    {
+      id: 'molasses-flood', era: 'curveball', title: 'The Great Molasses Flood', date: '1919',
+      blurb: "In 1919, a giant storage tank in Boston burst and sent a wave of two million gallons of molasses surging through the streets at 55 km/h. It killed 21 people. It is entirely real.",
+      detail: `On 15 January 1919, in the North End of Boston, a huge steel tank holding around 2.3 million gallons (about 8.7 million litres) of molasses suddenly and catastrophically failed. The tank had been poorly built and rushed into service, and on an unseasonably warm day the pressure inside proved too much.
+
+The result sounds like a cartoon but was a genuine horror. A wave of thick molasses estimated at up to 8 metres high burst out and surged through the streets at speeds reported around 55 kilometres per hour. Because molasses is so dense and heavy, the wave carried tremendous force — it snapped the supports of an elevated railway, crushed buildings, swept people and horses off their feet, and trapped victims in a rising, sticky, suffocating tide.
+
+Twenty-one people were killed and about 150 injured. Rescuers struggled for hours in the waist-deep goo, and the cleanup took weeks; residents said the neighbourhood smelled of molasses for a long time afterward, and local legend claims you could catch it on a hot day for decades.
+
+The disaster led to a landmark court case in which the company was found responsible for the shoddy tank, helping to strengthen engineering safety and building regulations in the United States. The Great Molasses Flood endures as one of history's strangest true disasters — a deadly reminder that even something as harmless-sounding as syrup can turn lethal at scale.`,
+      image: 'Boston_post-January_16,_1919.jpg', caption: 'Newspaper coverage of the 1919 Boston molasses disaster.', tags: ['disaster', 'mystery'],
+    },
+
+    // ─────────── MYTH & LEGEND ───────────
+    {
+      id: 'gilgamesh', era: 'mythology', title: 'The Epic of Gilgamesh', date: 'recorded c. 2100 BC',
+      blurb: "The oldest great story known to humanity, written on clay tablets over 4,000 years ago in Mesopotamia. It follows a king's adventures and his desperate, doomed quest to escape death.",
+      detail: `The Epic of Gilgamesh is, as far as we know, the oldest surviving masterpiece of world literature — first written down on clay tablets in cuneiform script in ancient Mesopotamia (modern Iraq) over four thousand years ago, older than the Bible and Homer's poems by many centuries. It tells the story of Gilgamesh, the powerful but arrogant king of the city of Uruk.
+
+The tale begins as an adventure: the gods create a wild man, Enkidu, to challenge Gilgamesh, but after an epic wrestling match the two become inseparable friends and set off to battle monsters together. When the gods punish them and Enkidu dies, everything changes. Confronted for the first time with the reality of death, Gilgamesh is consumed by grief and terror, and sets out on a desperate journey to find the secret of immortality.
+
+What makes the epic so moving is how deeply human it feels across such an immense gulf of time. Gilgamesh's fear of dying, his love for his friend, and his eventual, hard-won acceptance that death comes for everyone — and that what endures is the good one builds and the city one leaves behind — are emotions any reader can recognise today.
+
+The epic also contains a great flood story strikingly similar to the later biblical tale of Noah, in which a man is warned to build a boat and save life from a divine deluge — evidence of how myths and stories travelled and echoed across the ancient Near East. Lost for millennia, the tablets were rediscovered and deciphered in the 19th century, giving the modern world back its very first great story.`,
+      image: 'Library_of_Ashurbanipal_The_Flood_Tablet.jpg', caption: 'The Flood Tablet from the Epic of Gilgamesh.', tags: ['ideas', 'mystery'],
+    },
+    {
+      id: 'greek-mythology', era: 'mythology', title: 'The Greek Gods & Heroes', date: 'recorded c. 700 BC',
+      blurb: "Zeus and the gods of Mount Olympus, heroes like Heracles and Odysseus, and monsters like Medusa — the Greek myths are among the most influential stories ever told in the Western world.",
+      detail: `The ancient Greeks explained their world through a vast, interconnected web of myths, gathered and shaped by poets like Homer and Hesiod around 700 BC. At its centre were the twelve Olympian gods, ruled by Zeus, king of the sky and thunder, who had overthrown the older generation of Titans. The gods were immortal and powerful but strikingly human — jealous, lustful, petty and quarrelsome — which made their stories endlessly dramatic.
+
+Alongside the gods stood the heroes: Heracles (Hercules) and his twelve labours, the cunning Odysseus and his ten-year voyage home in the Odyssey, Theseus in the labyrinth, and Perseus who slew the snake-haired Medusa. And filling the world were unforgettable monsters and figures — the Minotaur, the Cyclops, the Sirens, Pandora and her box, Icarus who flew too close to the sun, and Prometheus who stole fire for humanity and was terribly punished for it.
+
+These were not just entertainment. Greek myths were woven into religion, ritual, art and civic identity, performed as tragedies in great theatres and carved onto temples. They grappled with the biggest human questions — fate versus free will, hubris and its punishment, love, loss and mortality — in stories vivid enough to be remembered for millennia.
+
+Their influence is almost impossible to overstate. Greek and Roman mythology (the Romans adopted the same gods under new names) runs through Western art, literature and language to this day — from the planets named after gods, to words like "panic" and "titanic," to the endless retellings in modern books and films. Few stories have shaped a civilisation so deeply.`,
+      image: 'Zeus_Otricoli_Pio-Clementino_Inv257.jpg', caption: 'Bust of Zeus, king of the Greek gods.', tags: ['ideas', 'religion'],
+    },
+    {
+      id: 'norse-mythology', era: 'mythology', title: 'Norse Myth & Ragnarök', date: 'recorded c. 1200',
+      blurb: "The gods of the Vikings — Odin, Thor and Loki — lived in a cosmos held together by a world-tree, and knew their world would one day end in Ragnarök, a final battle in which many of them would die.",
+      detail: `The myths of the Norse and other Germanic peoples, written down in Iceland around the 1200s in collections called the Eddas, describe one of the most vivid and fatalistic mythologies ever conceived. At its heart stands Yggdrasil, an immense world-tree whose branches and roots connect nine worlds, including Asgard (home of the gods), Midgard (the world of humans) and the realms of giants, elves and the dead.
+
+The gods themselves are unforgettable: Odin, the one-eyed All-Father who sacrificed an eye for wisdom and hung himself on the world-tree to gain knowledge of the runes; Thor, the mighty, red-bearded god of thunder with his hammer Mjölnir, protector of gods and humans; and Loki, the shape-shifting trickster whose cunning schemes bring both help and disaster. Their halls, feasts, feuds and adventures fill the myths with drama and dark humour.
+
+What makes Norse mythology so distinctive is its sense of doom. Unlike many mythologies, it foretells its own ending: Ragnarök, a cataclysmic final battle in which the gods, giants and monsters clash, Thor and Odin fall, and the world is consumed by fire and sinks into the sea. Yet even this is not the absolute end — from the destruction, the myths say, a new, green world will rise, and life will begin again.
+
+These stories shaped the worldview of the Viking Age and survived long after Scandinavia became Christian. Today they enjoy a huge second life in popular culture, from the days of our week (Wednesday is "Odin's day," Thursday "Thor's day") to blockbuster films and games — proof of the enduring power of the Vikings' grand, tragic vision of the cosmos.`,
+      image: 'Walhall_by_Emil_Doepler.jpg', caption: 'Valhalla, hall of the slain, by Emil Doepler.', tags: ['religion', 'ideas'],
+    },
+    {
+      id: 'egyptian-mythology', era: 'mythology', title: 'Osiris & the Egyptian Afterlife', date: 'from c. 2400 BC',
+      blurb: "The ancient Egyptians built an entire civilisation around the afterlife, guided by myths of the god Osiris — murdered, resurrected, and made lord of the dead — and a final judgment of the soul.",
+      detail: `For the ancient Egyptians, death was not an end but a passage, and their mythology was profoundly focused on the journey of the soul into the afterlife. Central to it was the story of Osiris: a benevolent god-king who was murdered and dismembered by his jealous brother Set, then lovingly reassembled and briefly revived by his wife Isis, becoming the ruler and judge of the underworld. His son Horus later avenged him — a myth of death, resurrection and rightful kingship that lay at the heart of Egyptian religion.
+
+The Egyptians believed that to reach the blessed afterlife, the dead had to pass a final test. In the "weighing of the heart," the heart of the deceased was placed on a scale against the feather of Ma'at, goddess of truth and justice. If the heart was light and pure, the soul passed into eternal paradise; if it was heavy with wrongdoing, it was devoured by a fearsome monster, and the person ceased to exist forever.
+
+This belief shaped an entire civilisation. It is why the Egyptians perfected mummification to preserve the body for the soul's use, why they filled tombs with food, treasure and everyday objects for the journey, and why they built the pyramids and painted tomb walls with spells — the "Book of the Dead" — to guide and protect the deceased.
+
+The result is that much of what survives of ancient Egypt comes from its cult of the afterlife: the tombs, the mummies, the golden treasures of pharaohs like Tutankhamun. A mythology centred on conquering death gave the world one of its most enduring and recognisable cultures — and a strangely comforting vision of justice awaiting every soul.`,
+      image: 'BD_Hunefer.jpg', caption: 'The weighing of the heart, from the Book of the Dead.', tags: ['religion', 'ideas'],
+    },
+    {
+      id: 'japanese-mythology', era: 'mythology', title: 'Amaterasu & the Shinto Gods', date: 'recorded 712',
+      blurb: "In Japanese myth, the world teems with kami — spirits and gods — chief among them Amaterasu, the sun goddess, from whom Japan's emperors traditionally claimed direct descent.",
+      detail: `Japan's native mythology, recorded in the 8th century in texts like the Kojiki ("Record of Ancient Matters"), underpins Shinto, the indigenous religion of the islands. It describes a cosmos alive with kami — countless gods, spirits and sacred forces present in nature, from great deities down to the spirit of a mountain, a river or an ancient tree.
+
+The creation story tells of the divine couple Izanagi and Izanami, who stirred the ocean with a jewelled spear and created the islands of Japan, then gave birth to many gods. From them came the most important deity of all: Amaterasu, the radiant goddess of the sun. A famous, beloved myth recounts how Amaterasu, insulted by her wild brother the storm god, hid herself in a cave and plunged the world into darkness — until the other gods lured her out with music, laughter and a mirror, restoring light to the world.
+
+This mythology was deeply tied to rule and identity. Japan's imperial family traditionally traced its ancestry directly back to Amaterasu herself, which gave the emperor a sacred aura and made the imperial line, by legend, unbroken and divine — a belief that had real political power well into the 20th century.
+
+Shinto remains woven into everyday Japanese life today, far more as living practice than doctrine: the torii gates marking sacred space, shrine visits at New Year, festivals honouring local kami, and rituals for weddings and blessings. Its reverence for nature, purity and the sacred in ordinary things is a quiet but constant presence in the culture — including the one studied in this app's Japanese section.`,
+      image: 'Amaterasu_cave_edit2.jpg', caption: 'Amaterasu emerges from the cave, restoring light.', tags: ['religion', 'ideas'],
+    },
+    {
+      id: 'hindu-mythology', era: 'mythology', title: 'The Hindu Epics', date: 'c. 400 BC – 400 AD',
+      blurb: "Two colossal epics — the Ramayana and the Mahabharata — and a vast family of gods like Vishnu, Shiva and Krishna form one of the world's richest and oldest living mythologies.",
+      detail: `Hindu mythology is among the oldest and most elaborate on Earth, and unlike many ancient mythologies it is still very much alive, central to a faith followed by around a billion people. Its gods are countless, but many are understood as aspects of a single divine reality, with a great trinity at the centre: Brahma the creator, Vishnu the preserver, and Shiva the destroyer and transformer.
+
+Its stories are preserved above all in two vast epic poems. The Ramayana tells of Prince Rama, an incarnation of Vishnu, and his quest to rescue his wife Sita from the demon king Ravana, aided by the beloved monkey god Hanuman. The Mahabharata — one of the longest poems ever composed, many times the length of the Iliad and Odyssey combined — recounts a devastating war between two branches of a royal family, and contains within it the Bhagavad Gita, a profound philosophical dialogue between the warrior Arjuna and the god Krishna about duty, righteousness and the nature of life.
+
+These myths are not confined to books. They are performed, danced, painted and celebrated across South and Southeast Asia, and their festivals — like Diwali, which celebrates Rama's return — are among the most widely observed in the world. The gods Vishnu, Shiva, Krishna, Ganesha and the goddess Durga are worshipped daily by millions.
+
+Hindu mythology also carries some of humanity's most expansive ideas about time and the cosmos, imagining vast cycles of creation and destruction stretching across billions of years — a scale that startled even modern scientists. It is a living, breathing tradition that connects the present directly to stories first told thousands of years ago.`,
+      image: 'Bhagavad_Gita,_a_19th_century_manuscript.jpg', caption: 'A 19th-century manuscript of the Bhagavad Gita.', tags: ['religion', 'ideas'],
+    },
+    {
+      id: 'quetzalcoatl', era: 'mythology', title: 'Quetzalcoatl & Mesoamerican Myth', date: 'across centuries',
+      blurb: "Across ancient Mexico, peoples like the Maya and Aztecs worshipped Quetzalcoatl, the 'feathered serpent' — a creator god of wind and wisdom whose legend may have shaped the fall of an empire.",
+      detail: `Long before the Aztecs, the peoples of ancient Mesoamerica shared a rich web of mythology, and one of its most important and enduring figures was Quetzalcoatl — the "feathered serpent," a striking image combining a snake with the brilliant plumage of the quetzal bird. Worshipped under different names across the region for well over a thousand years, he was associated with wind, wisdom, learning, and the creation of humankind.
+
+In the myths, Quetzalcoatl was a benevolent, civilising deity — credited with giving humanity maize, the calendar, and knowledge, and sometimes opposed to gods who demanded human sacrifice. Some legends told that he had departed across the eastern sea, promising one day to return. The Mesoamerican universe as a whole was seen as fragile and cyclical, sustained only by offerings — including, in the Aztec world, human sacrifice believed necessary to keep the sun moving across the sky.
+
+There is a famous and much-debated story that when the Spanish conquistador Hernán Cortés arrived from the east in 1519, the Aztec emperor Moctezuma may have wondered whether he was the returning Quetzalcoatl. Historians now treat this idea cautiously — it may have been exaggerated or invented after the fact — but it captures how deeply myth and history intertwined in the dramatic collision of the two worlds.
+
+Mesoamerican mythology, with its feathered serpents, jaguar gods, sacred ball games and vision of a cosmos requiring constant renewal, is a reminder that the Americas were home to profound and sophisticated spiritual traditions — much of which was tragically destroyed during the conquest, surviving today in fragments, ruins and the enduring cultures of Indigenous peoples.`,
+      image: 'Quetzalcoatl_telleriano.jpg', caption: 'Quetzalcoatl, the feathered serpent.', tags: ['religion', 'mystery'],
     },
   ],
 };

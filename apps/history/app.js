@@ -8,10 +8,13 @@ let state = {
   read: {},                // eventId -> true
   expanded: {},            // eventId -> true (detail open)
   selected: null,          // eventId shown under the map
+  quiz: null,              // { a, b, revealed, chosen }
+  quizStreak: 0,
+  quizBest: 0,
   darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
 };
 
-function save() { localStorage.setItem(DB_KEY, JSON.stringify({ read: state.read, darkMode: state.darkMode })); }
+function save() { localStorage.setItem(DB_KEY, JSON.stringify({ read: state.read, darkMode: state.darkMode, quizBest: state.quizBest })); }
 function load() { try { Object.assign(state, JSON.parse(localStorage.getItem(DB_KEY) || '{}')); } catch {} }
 
 function eraById(id) { return HISTORY_CONTENT.eras.find(e => e.id === id); }
@@ -25,7 +28,7 @@ function geo(id) { return (typeof HISTORY_GEO !== 'undefined' && HISTORY_GEO[id]
 // muted, earthy per-era colours for timeline/map dots
 const ERA_COLOR = {
   ancient: '#b8532a', medieval: '#7a5230', exploration: '#3f6f6f',
-  revolutions: '#9a6a1e', modern: '#4a5a86', curveball: '#8a4a6a',
+  revolutions: '#9a6a1e', modern: '#4a5a86', curveball: '#8a4a6a', mythology: '#6a4aa0',
 };
 
 function yearLabel(y) { return y < 0 ? (-y) + ' BC' : y + ''; }
@@ -51,7 +54,7 @@ function render() {
 function buildPage() {
   const eras = [...HISTORY_CONTENT.eras].sort((a, b) => a.order - b.order);
   const total = HISTORY_CONTENT.events.length;
-  const views = [['feed', 'Feed'], ['timeline', 'Timeline'], ['map', 'Map']];
+  const views = [['feed', 'Feed'], ['timeline', 'Timeline'], ['map', 'Map'], ['quiz', 'Quiz']];
 
   return `
     <nav class="nav">
@@ -71,7 +74,7 @@ function buildPage() {
         <!-- view toggle -->
         <div style="display:flex;gap:6px;background:var(--surface2);padding:4px;border-radius:100px;margin:16px 0 12px">
           ${views.map(([v, label]) => `
-            <button onclick="setView('${v}')" style="flex:1;border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:0.82rem;padding:9px 0;border-radius:100px;transition:all 0.15s;background:${state.view === v ? 'var(--accent)' : 'transparent'};color:${state.view === v ? '#fff' : 'var(--text-muted)'}">${label}</button>
+            <button onclick="setView('${v}')" style="flex:1;border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:0.76rem;padding:9px 2px;border-radius:100px;transition:all 0.15s;background:${state.view === v ? 'var(--accent)' : 'transparent'};color:${state.view === v ? '#fff' : 'var(--text-muted)'}">${label}</button>
           `).join('')}
         </div>
 
@@ -81,7 +84,7 @@ function buildPage() {
           ${eras.map(e => `<button class="chip ${state.era === e.id ? 'active' : ''}" style="flex-shrink:0" onclick="setEra('${e.id}')">${e.name}</button>`).join('')}
         </div>
 
-        ${state.view === 'feed' ? buildFeed() : state.view === 'timeline' ? buildTimeline() : buildMap()}
+        ${state.view === 'feed' ? buildFeed() : state.view === 'timeline' ? buildTimeline() : state.view === 'map' ? buildMap() : buildQuiz()}
 
         <div class="ink-divider"></div>
         <p class="text-center text-xs text-faint mb-4">Learn something. Then close the app.</p>
@@ -226,8 +229,82 @@ function buildMap() {
   `;
 }
 
+// ─── QUIZ: "Which came first?" ──────────────────────────────────────────────
+function newQuiz() {
+  const pool = HISTORY_CONTENT.events.filter(e => e.era !== 'mythology' && HISTORY_GEO[e.id]);
+  let a, b, guard = 0;
+  do {
+    a = pool[Math.floor(Math.random() * pool.length)];
+    b = pool[Math.floor(Math.random() * pool.length)];
+  } while ((++guard < 50) && (!a || !b || a.id === b.id || geo(a.id).year === geo(b.id).year));
+  state.quiz = { a: a.id, b: b.id, revealed: false, chosen: null };
+}
+
+function buildQuiz() {
+  const q = state.quiz;
+  if (!q) return '';
+  const a = eventById(q.a), b = eventById(q.b);
+  const earlier = geo(a.id).year < geo(b.id).year ? a.id : b.id;
+
+  const opt = (ev) => {
+    const isEarlier = ev.id === earlier;
+    let border = 'var(--border)';
+    if (q.revealed) border = isEarlier ? 'var(--success)' : (q.chosen === ev.id ? 'var(--seal)' : 'var(--border)');
+    return `
+      <button onclick="answerQuiz('${ev.id}')" ${q.revealed ? 'disabled' : ''}
+        style="text-align:left;width:100%;border:2px solid ${border};background:var(--surface);border-radius:var(--radius);padding:0;overflow:hidden;cursor:${q.revealed ? 'default' : 'pointer'}">
+        <div style="height:104px;position:relative;background:var(--accent-light)">
+          <img src="${imgUrl(ev.image, 500)}" alt="${ev.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="this.remove()">
+        </div>
+        <div style="padding:12px 13px">
+          <div class="text-xs" style="color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px">${eraById(ev.era).name}</div>
+          <div class="font-bold" style="font-size:0.98rem;line-height:1.2">${ev.title}</div>
+          ${q.revealed ? `<div class="display" style="margin-top:6px;font-size:0.95rem;color:${isEarlier ? 'var(--success)' : 'var(--text-muted)'}">${yearLabel(geo(ev.id).year)}</div>` : ''}
+        </div>
+      </button>`;
+  };
+
+  const gotIt = q.revealed && q.chosen === earlier;
+  return `
+    <div class="flex items-center justify-between mb-3">
+      <h2 style="font-size:1.15rem">Which came first?</h2>
+      <div class="text-sm" style="color:var(--text-muted)">Streak <b style="color:var(--accent)">${state.quizStreak}</b> · Best ${state.quizBest}</div>
+    </div>
+    <div class="grid-2" style="gap:12px;align-items:start">
+      ${opt(a)}${opt(b)}
+    </div>
+    ${q.revealed ? `
+      <div class="card mt-4 ${gotIt ? 'animate-pop' : 'animate-shake'}" style="text-align:center;border:2px solid ${gotIt ? 'var(--success)' : 'var(--seal)'}">
+        <div class="font-bold" style="color:${gotIt ? 'var(--success)' : 'var(--seal)'};font-size:1.05rem">${gotIt ? 'Correct!' : 'Not quite'}</div>
+        <p class="text-sm mt-1" style="color:var(--text-muted)">${eventById(earlier).title} came first — ${yearLabel(geo(earlier).year)}.</p>
+        <button class="btn btn-primary btn-full mt-3" onclick="nextQuiz()">Next question</button>
+      </div>
+    ` : `<p class="text-center text-sm text-faint mt-4">Tap the one you think happened earlier.</p>`}
+  `;
+}
+
+function answerQuiz(id) {
+  const q = state.quiz;
+  if (!q || q.revealed) return;
+  q.chosen = id; q.revealed = true;
+  const earlier = geo(q.a).year < geo(q.b).year ? q.a : q.b;
+  if (id === earlier) {
+    state.quizStreak++;
+    if (state.quizStreak > state.quizBest) state.quizBest = state.quizStreak;
+  } else {
+    state.quizStreak = 0;
+  }
+  save();
+  render();
+}
+function nextQuiz() { newQuiz(); render(); window.scrollTo(0, 0); }
+
 // ─── Handlers ─────────────────────────────────────────────────────────────────
-function setView(v) { state.view = v; render(); window.scrollTo(0, 0); }
+function setView(v) {
+  state.view = v;
+  if (v === 'quiz' && !state.quiz) newQuiz();
+  render(); window.scrollTo(0, 0);
+}
 function setEra(id) { state.era = id; state.selected = null; render(); window.scrollTo(0, 0); }
 function toggleDark() { state.darkMode = !state.darkMode; save(); render(); }
 
